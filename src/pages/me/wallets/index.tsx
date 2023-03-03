@@ -3,14 +3,34 @@ import UserSettingsHeader from "@/components/layouts/user/settings/header-settin
 import DefaultButton from "@/components/tools/button";
 import WalletAddButton from "@/components/tools/button/wallet-add-button";
 import WalletListItem from "@/components/tools/card/wallet-list-card";
+import { requestAxios } from "@/utils/helper/axios-helper";
+import { baseUrl } from "@/utils/interfaces/constants";
+import { WalletData } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { BiChevronLeft, BiListPlus } from "react-icons/bi";
 
 export default function MyWallets() {
+  const [wallets, setWallets] = useState<WalletData[]>([]);
   const router = useRouter();
   function stepBack() {
     return router.back();
   }
+
+  const getWallets = async () => {
+    try {
+      const response = await requestAxios({
+        url: baseUrl + "/wallet/me",
+      });
+      setWallets(response.data);
+      ///think later
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getWallets();
+  }, []);
+
   return (
     <UserSettingsLayout>
       <section id="wallets-index" className="space-y-4">
@@ -47,36 +67,16 @@ export default function MyWallets() {
           id="wallet-list"
           className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-5 m-auto max-[300px]:grid-cols-1 max-[300px]:gap-y-3">
           <WalletAddButton />
-          <WalletListItem
-            textHeader="Kas"
-            amount={2000000}
-            lastUpdated={"22/01/2023"}
-            linkToId="id"
-          />
-          <WalletListItem
-            textHeader="BCA"
-            amount={2000000}
-            lastUpdated={"22/01/2023"}
-            linkToId="id"
-          />
-          <WalletListItem
-            textHeader="BNI"
-            amount={2000000}
-            lastUpdated={"22/02/2023"}
-            linkToId="id"
-          />
-          <WalletListItem
-            textHeader="Gopay"
-            amount={520000}
-            lastUpdated={"22/02/2023"}
-            linkToId="id"
-          />
-          <WalletListItem
-            textHeader="OVO"
-            amount={520000}
-            lastUpdated={"22/02/2023"}
-            linkToId="id"
-          />
+
+          {wallets.map((wallet, index) => (
+            <WalletListItem
+              key={index}
+              textHeader={wallet.name}
+              amount={2000000}
+              lastUpdated={"22/01/2023"}
+              linkToId={wallet.id}
+            />
+          ))}
         </div>
       </section>
     </UserSettingsLayout>
