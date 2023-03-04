@@ -3,9 +3,10 @@ import UserSettingsHeader from "@/components/layouts/user/settings/header-settin
 import Alert from "@/components/tools/alerts/alert";
 import DefaultButton from "@/components/tools/button";
 import LinkButton from "@/components/tools/button/link-button";
+import { baseAlertStyle, deleteAlertStyle } from "@/utils/global/style";
 import { numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
-import { baseAlertStyle, baseUrl, deleteAlertStyle } from "@/utils/interfaces/constants";
+import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import { WalletData } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
@@ -35,7 +36,7 @@ export default function AddWallet() {
   const getCurrentData = async () => {
     try {
       const response = await requestAxios({ url: baseUrl + "/wallet/" + walletId });
-      console.log(response.data);
+      // console.log(response.data);
       setValue("id", response.data.id);
       setValue("name", response.data.name);
       setValue("description", response.data.description);
