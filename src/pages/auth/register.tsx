@@ -1,7 +1,7 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
-import { serverDevURL } from "@/utils/interfaces/constants";
+import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail, regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
@@ -46,7 +46,7 @@ export default function Register() {
 
   const onSubmit: SubmitHandler<FormState> = async (data: any) => {
     setErrMessage("");
-    await axios(`${serverDevURL}/auth/register`, {
+    await axios(`${baseUrl}/auth/register`, {
       method: "POST",
       data: {
         username: data.username,
