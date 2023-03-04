@@ -1,8 +1,10 @@
 import { AxiosHeaders } from "axios";
 import { SweetAlertOptions } from "sweetalert2";
 
+export const baseUrl = process.env.NEXT_PUBLIC_URL;
+export const protectedRoutes: string[] = ["/me/:path*", "/admin/:path*"];
+export const authRoutes: string[] = ["/auth"]
 
-export const baseUrl = process.env.NEXT_PUBLIC_URL
 export type AlertType = "info" | "danger" | "success" | "warning";
 
 export type ServerResponse = {
@@ -14,12 +16,3 @@ export type ServerResponse = {
     status: number | string;
 }
 
-export const baseAlertStyle: Partial<SweetAlertOptions> = {
-    cancelButtonColor: "#cb1a52",
-    confirmButtonColor: "#8c4dcb",
-}
-
-export const deleteAlertStyle: Partial<SweetAlertOptions> = {
-    confirmButtonColor: "#cb1a52",
-    cancelButtonColor: "#8c4dcb",
-}
