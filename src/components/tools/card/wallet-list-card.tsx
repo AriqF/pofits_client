@@ -1,6 +1,4 @@
 import { numFormatter } from "@/utils/helper";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface CardProps {
   color?: string;
@@ -8,7 +6,7 @@ interface CardProps {
   textHeader: string;
   amount: number;
   lastUpdated: string | Date;
-  linkToId: string;
+  linkToId: string | number;
 }
 
 export default function WalletListItem(props: CardProps) {

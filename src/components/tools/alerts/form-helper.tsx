@@ -1,12 +1,15 @@
 import { AlertType } from "@/utils/interfaces/constants";
 
 interface HelperProps {
-  text: string;
-  textColor: AlertType;
+  text: string | undefined;
+  textColor?: AlertType;
 }
 
 export default function FormHelper(props: HelperProps) {
-  const { text, textColor } = props;
+  let { text, textColor } = props;
+  if (typeof text === undefined) {
+    text = " ";
+  }
   let color: string;
   switch (textColor) {
     case "info":

@@ -8,7 +8,7 @@ import { ServerMessage } from "../../utils/interfaces/response-message";
 import { regEmail } from "@/utils/interfaces/regex";
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
-import { serverDevURL } from "@/utils/interfaces/constants";
+import { baseUrl } from "@/utils/interfaces/constants";
 interface FormState {
   email: string;
   password: string;
@@ -39,7 +39,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<FormState> = async (data: any) => {
     SetErrMessage("");
-    await axios(`${serverDevURL}/auth/login`, {
+    await axios(`${baseUrl}/auth/login`, {
       method: "POST",
       data: {
         email: data.email,
