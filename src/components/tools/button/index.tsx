@@ -35,10 +35,10 @@ export default function DefaultButton(props: ButtonProps) {
       type={type}
       ref={ref}
       className={
-        "text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md px-4 py-3.5 w-full " +
         colorClass +
         " " +
-        className
+        className +
+        " text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md px-4 py-3 w-full m-auto "
       }>
       {text}
     </button>

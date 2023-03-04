@@ -13,7 +13,7 @@ export default function UserSettingsHeader(props: HeaderProps) {
     return router.back();
   }
   return (
-    <header className="bg-white border-gray-500 rounded-sm p-6 shadow-md min-h-fit flex flex-col gap-y-4">
+    <header className="bg-white border-gray-200 rounded-sm p-6 shadow-md min-h-fit flex flex-col gap-y-4 border-b-2">
       <div className="basis-1">
         <a
           // onClick={stepBack}
