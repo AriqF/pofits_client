@@ -1,4 +1,37 @@
+import Router from "next/router";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import Swal, { SweetAlertIcon, SweetAlertOptions } from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+type AlertOptions = {
+  title?: string;
+  text?: string;
+  icon?: SweetAlertIcon;
+  linkToConfirm?: string;
+  reverseColor?: boolean;
+};
+
+export const CustomAlert = async (options?: AlertOptions) => {
+  const swal = withReactContent(Swal);
+
+  return swal
+    .fire({
+      title: options?.title ? options.title : "Terjadi kesalahan dalam proses data",
+      text: options?.text ? options.text : "",
+      icon: options?.icon ? options.icon : "error",
+      confirmButtonColor: options?.reverseColor ? "#cb1a52" : "#8c4dcb",
+      cancelButtonColor: options?.reverseColor ? "#8c4dcb" : "#cb1a52",
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        if (options?.linkToConfirm) {
+          Router.push(options.linkToConfirm);
+          return;
+        }
+        Router.back();
+      }
+    });
+};
 
 export const smoothScroll = (elementId: string, headerHeight: number) => {
   const scrollElement = document.getElementById(elementId)?.offsetTop || 0;
