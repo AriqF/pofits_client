@@ -12,7 +12,7 @@ export default function UserSettingsLayout(props: USettingsProps) {
   return (
     <>
       <UserNavbar />
-      <main className="min-h-screen lg:grid lg:grid-cols-3 lg:grid-flow-col lg:gap-x-10 lg:px-14 lg:py-8 bg-whitegrey">
+      <main className="min-h-screen mb-10 lg:mb-0 lg:grid lg:grid-cols-3 lg:grid-flow-col lg:gap-x-10 lg:px-14 lg:py-8 bg-whitegrey">
         <section id="settings-menu" className="hidden lg:flex lg:flex-col md:col-span-1 gap-y-4">
           <SettingProfileBox />
           <SettingMenuBox />
