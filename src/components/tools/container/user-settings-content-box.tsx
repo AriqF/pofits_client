@@ -10,7 +10,7 @@ export default function UserSettingContentBox(props: Props) {
   return (
     <div
       id={props.id}
-      className={"bg-white border-gray-500 rounded-sm p-6 shadow-md " + props.className}>
+      className={"bg-transparent border-gray-500 rounded-md p-6 shadow-lg " + props.className}>
       {props.children}
     </div>
   );
