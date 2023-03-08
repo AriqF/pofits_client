@@ -3,6 +3,7 @@ import UserSettingsHeader from "@/components/layouts/user/settings/header-settin
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import DefaultButton from "@/components/tools/button";
+import { baseAlertStyle } from "@/utils/global/style";
 import { numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
@@ -50,9 +51,10 @@ export default function AddWallet() {
           .fire({
             title: "Dompet berhasil ditambahkan!",
             icon: "success",
+            ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/wallets");
+            if (res.isConfirmed) router.push("/me/settings/wallets");
           });
       })
       .catch((error) => {
@@ -66,7 +68,7 @@ export default function AddWallet() {
   return (
     <UserSettingsLayout>
       <section id="wallet-add ">
-        <UserSettingsHeader backTo="/me/wallets">
+        <UserSettingsHeader backTo="/me/settings/wallets">
           <h3 className="text-2xl font-bold">Tambah Dompet Manual</h3>
         </UserSettingsHeader>
         <div className="bg-white border-gray-500 rounded-sm p-6 shadow-md min-h-screen md:min-h-fit flex flex-col gap-y-5">

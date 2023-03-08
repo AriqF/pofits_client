@@ -1,30 +1,30 @@
 import UserSettingsLayout from "@/components/layouts/user/settings";
 import UserSettingsHeader from "@/components/layouts/user/settings/header-settings";
-import DefaultButton from "@/components/tools/button";
+
 import WalletAddButton from "@/components/tools/button/wallet-add-button";
 import WalletListItem from "@/components/tools/card/wallet-list-card";
+import { FetchErrorAlert } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { WalletData } from "@/utils/interfaces/server-props";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BiChevronLeft, BiListPlus } from "react-icons/bi";
 
 export default function MyWallets() {
   const [wallets, setWallets] = useState<WalletData[]>([]);
-  const router = useRouter();
-  function stepBack() {
-    return router.back();
-  }
 
   const getWallets = async () => {
-    try {
-      const response = await requestAxios({
-        url: baseUrl + "/wallet/me",
+    await requestAxios({
+      url: baseUrl + "/wallet/me",
+      method: "GET",
+    })
+      .then((res) => {
+        setWallets(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        return FetchErrorAlert();
       });
-      setWallets(response.data);
-      ///think later
-    } catch (error) {}
   };
 
   useEffect(() => {

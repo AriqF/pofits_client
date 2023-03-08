@@ -12,7 +12,7 @@ export default function MyDashboard() {
 
           <a href="#">Penganggaran</a>
 
-          <a href="me/wallets">Dompet Saya</a>
+          <a href="me/settings/wallets">Dompet Saya</a>
         </div>
       </div>
     </UserLayout>

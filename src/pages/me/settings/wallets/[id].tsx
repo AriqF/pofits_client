@@ -4,7 +4,7 @@ import Alert from "@/components/tools/alerts/alert";
 import DefaultButton from "@/components/tools/button";
 import LinkButton from "@/components/tools/button/link-button";
 import { baseAlertStyle, deleteAlertStyle } from "@/utils/global/style";
-import { numFormatter } from "@/utils/helper";
+import { CustomAlert, numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -44,7 +44,10 @@ export default function AddWallet() {
       setValue("created_at", response.data.created_at);
       setValue("updated_at", response.data.updated_at);
     } catch (error) {
-      console.log(error);
+      return CustomAlert({
+        title: "Terjadi kesalahan dalam mengambil data",
+        linkToConfirm: "/me/settings/wallets",
+      });
     }
   };
 
@@ -67,7 +70,7 @@ export default function AddWallet() {
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/wallets");
+            if (res.isConfirmed) router.push("/me/settings/wallets");
           });
       })
       .catch((error) => {
