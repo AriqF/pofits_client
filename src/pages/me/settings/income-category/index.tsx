@@ -8,10 +8,7 @@ import { CustomAlert } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { IncomeCategory } from "@/utils/interfaces/server-props";
-import { error } from "console";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BiChevronDown } from "react-icons/bi";
 
 export default function UserIncomeCategory() {
   const [categories, setCategories] = useState<IncomeCategory[]>([]);
@@ -75,7 +72,7 @@ export default function UserIncomeCategory() {
               id={category.id}
               header={category.title}
               subHeader={"Pemasukan " + category.income_type}
-              shortDesc={category.description}
+              // shortDesc={category.description}
             />
           ))}
         </UserSettingContentBox>

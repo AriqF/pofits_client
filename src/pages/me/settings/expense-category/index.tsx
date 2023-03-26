@@ -59,7 +59,7 @@ export default function UserExpenseCategory() {
               baseUrl="expense-category"
               id={category.id}
               header={category.title}
-              shortDesc={category.description}
+              // shortDesc={category.description}
             />
           ))}
         </UserSettingContentBox>
