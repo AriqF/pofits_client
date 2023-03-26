@@ -3,7 +3,7 @@ import UserSettingsHeader from "@/components/layouts/user/settings/header-settin
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import DefaultButton from "@/components/tools/button";
-import { baseAlertStyle } from "@/utils/global/style";
+import { baseAlertStyle, baseFormStyle } from "@/utils/global/style";
 import { numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
@@ -41,6 +41,7 @@ export default function AddWallet() {
       method: "POST",
       data: {
         name: data.name,
+        category: data.category,
         description: data.description,
         amount: parseInt(data.amount.replace(/\./g, "")),
       },
@@ -74,52 +75,85 @@ export default function AddWallet() {
         <div className="bg-white border-gray-500 rounded-sm p-6 shadow-md min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="add-wallet-form" className="flex flex-col gap-y-5 w-full">
-              <div>
-                <label htmlFor="title" className="block mb-2 text-md font-medium text-gray-900">
-                  Nama Dompet
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  placeholder="Berikan nama yang singkat"
-                  className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue`}
-                  {...register("name", {
-                    required: "Nama dompet perlu diisi",
-                    maxLength: {
-                      value: 50,
-                      message: "Nama dompet maksimal terdiri dari 50 karakter",
-                    },
-                  })}
-                />
-                {errors.name && <FormHelper textColor="danger" text={errors.name?.message} />}
-              </div>
-              <div>
-                <label htmlFor="amount" className="block mb-2 text-md font-medium text-gray-900 ">
-                  Nominal awal
-                </label>
-                <div className="flex">
-                  <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md ">
-                    Rp
-                  </span>
+              <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-5 gap-y-5">
+                <div>
+                  <label
+                    htmlFor="category"
+                    className="block mb-2 text-md font-medium text-gray-900">
+                    Kategori Dompet
+                  </label>
+                  <select
+                    id="category"
+                    required
+                    {...register("category", { required: "Kategori dompet perlu diisi" })}
+                    // defaultValue="Pilih kategori dompet"
+                    className={
+                      baseFormStyle +
+                      (errors.category ? "border-errorRed focus:border-errorRed" : "")
+                    }>
+                    <option value="none" selected disabled hidden>
+                      Pilih kategori dompet
+                    </option>
+                    <option value={"Rekening Bank"}>Rekening Bank</option>
+                    <option value={"Tunai"}>Tunai</option>
+                    <option value={"E-Money"}>E-Money</option>
+                  </select>
+                  {errors.category && (
+                    <FormHelper textColor="danger" text={errors.category?.message} />
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="title" className="block mb-2 text-md font-medium text-gray-900">
+                    Nama Dompet
+                  </label>
                   <input
                     type="text"
-                    id="amount"
-                    className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 hover:border-blue block flex-1 min-w-0 w-full text-md border-gray-300 p-2.5  "
-                    placeholder="Nominal awal pada dompet"
-                    {...register("amount", {
-                      required: "Dompet memerlukan nilai awal",
-                      pattern: {
-                        value: /^\d+(\.\d+)*$/,
-                        message: "Input hanya diperbolehkan angka",
-                      },
-                      onChange: (e) => {
-                        e.target.value = e.target.value.replace(/\./g, "");
-                        setValue("amount", numFormatter(e.target.value));
+                    id="title"
+                    placeholder="Berikan nama yang singkat"
+                    className={
+                      baseFormStyle + (errors.name ? "border-errorRed focus:border-errorRed" : "")
+                    }
+                    {...register("name", {
+                      required: "Nama dompet perlu diisi",
+                      maxLength: {
+                        value: 50,
+                        message: "Nama dompet maksimal terdiri dari 50 karakter",
                       },
                     })}
                   />
+                  {errors.name && <FormHelper textColor="danger" text={errors.name?.message} />}
                 </div>
-                {errors.amount && <FormHelper textColor="danger" text={errors.amount?.message} />}
+                <div>
+                  <label htmlFor="amount" className="block mb-2 text-md font-medium text-gray-900 ">
+                    Nominal awal
+                  </label>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md ">
+                      Rp
+                    </span>
+                    <input
+                      type="text"
+                      id="amount"
+                      className={
+                        baseFormStyle +
+                        (errors.amount ? "border-errorRed focus:border-errorRed" : "")
+                      }
+                      placeholder="Nominal awal pada dompet"
+                      {...register("amount", {
+                        required: "Dompet memerlukan nilai awal",
+                        pattern: {
+                          value: /^\d+(\.\d+)*$/,
+                          message: "Input hanya diperbolehkan angka",
+                        },
+                        onChange: (e) => {
+                          e.target.value = e.target.value.replace(/\./g, "");
+                          setValue("amount", numFormatter(e.target.value));
+                        },
+                      })}
+                    />
+                  </div>
+                  {errors.amount && <FormHelper textColor="danger" text={errors.amount?.message} />}
+                </div>
               </div>
               <div>
                 <label
@@ -132,7 +166,10 @@ export default function AddWallet() {
                   id="description"
                   placeholder="Deskripsi dengan singkat"
                   maxLength={255}
-                  className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue`}
+                  className={
+                    baseFormStyle +
+                    (errors.description ? "border-errorRed focus:border-errorRed" : "")
+                  }
                   {...register("description", {
                     required: false,
                   })}

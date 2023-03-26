@@ -1,9 +1,8 @@
 import UserSettingsLayout from "@/components/layouts/user/settings";
 import UserSettingsHeader from "@/components/layouts/user/settings/header-settings";
-
 import WalletAddButton from "@/components/tools/button/wallet-add-button";
 import WalletListItem from "@/components/tools/card/wallet-list-card";
-import { FetchErrorAlert } from "@/utils/helper";
+import { CustomAlert, numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { WalletData } from "@/utils/interfaces/server-props";
@@ -12,6 +11,7 @@ import { BiChevronLeft, BiListPlus } from "react-icons/bi";
 
 export default function MyWallets() {
   const [wallets, setWallets] = useState<WalletData[]>([]);
+  const [totalAmounts, setTotalAmounts] = useState("");
 
   const getWallets = async () => {
     await requestAxios({
@@ -19,11 +19,20 @@ export default function MyWallets() {
       method: "GET",
     })
       .then((res) => {
-        setWallets(res.data);
+        const wallets: WalletData[] = res.data;
+        setWallets(wallets);
+        let total: number = 0;
+        wallets.map((wallet) => {
+          total += Number(wallet.amount);
+        });
+        setTotalAmounts(numFormatter(total));
       })
       .catch((error) => {
         console.log(error);
-        return FetchErrorAlert();
+        return CustomAlert({
+          title: "Terjadi kesalahan dalam mengambil data",
+          linkToConfirm: "/me/settings/",
+        });
       });
   };
 
@@ -41,11 +50,11 @@ export default function MyWallets() {
               <div>
                 <h5 className="text-lg font-normal flex flex-col gap-y-1">
                   Total saldo di semua dompet:{" "}
-                  <span className="text-xl text-palepurple font-semibold">Rp 4.000.000</span>
+                  <span className="text-xl text-palepurple font-semibold">Rp {totalAmounts}</span>
                 </h5>
               </div>
               <h3 className="text-blue hover:text-hovblue mt-2 font-semibold hover:underline">
-                <a href="wallets/move-funds">Pemindahan Dana</a>
+                <a href="/me/settings/wallets/transfer-funds">Pemindahan Dana</a>
               </h3>
               {/* <button
                 type="button"
@@ -56,13 +65,6 @@ export default function MyWallets() {
             </div>
           </div>
         </UserSettingsHeader>
-
-        {/* <div className="bg-white border-gray-500 rounded-sm p-6 shadow-md min-h-fit">
-          <h5 className="text-lg font-normal flex flex-col gap-y-1">
-            Total saldo di semua dompet:{" "}
-            <span className="text-xl text-palepurple font-semibold">Rp 4.000.000</span>
-          </h5>
-        </div> */}
         <div
           id="wallet-list"
           className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-5 m-auto max-[300px]:grid-cols-1 max-[300px]:gap-y-3">
