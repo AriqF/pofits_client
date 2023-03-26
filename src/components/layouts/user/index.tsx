@@ -9,7 +9,7 @@ export default function UserLayout(props: LayoutProps) {
   return (
     <>
       <UserNavbar />
-      <section id="user-body-content" className="min-h-screen p-5">
+      <section id="user-body-content" className="min-h-screen p-5 bg-whitegrey">
         {props.children}
       </section>
     </>
