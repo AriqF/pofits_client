@@ -1,7 +1,7 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
-import { serverDevURL } from "@/utils/interfaces/constants";
+import { baseUrl } from "@/utils/interfaces/constants";
 import { regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
@@ -43,7 +43,7 @@ export default function ResetPassword() {
   const onSubmit: SubmitHandler<FormState> = async (data: any) => {
     console.log(resetToken);
     setErrMessage("");
-    await axios(serverDevURL + "/auth/setup-password/" + resetToken, {
+    await axios(baseUrl + "/auth/setup-password/" + resetToken, {
       method: "PATCH",
       data: {
         password: data.password,

@@ -1,6 +1,6 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
-import { serverDevURL } from "@/utils/interfaces/constants";
+import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
@@ -37,7 +37,7 @@ export default function ForgotPassword() {
   const onSubmit: SubmitHandler<FormState> = async (data: any) => {
     setErrMessage("");
     setSuccessMessage("");
-    await axios(`${serverDevURL}/auth/forgot-password`, {
+    await axios(`${baseUrl}/auth/forgot-password`, {
       method: "POST",
       data: {
         email: data.email,
