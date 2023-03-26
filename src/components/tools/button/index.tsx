@@ -1,3 +1,4 @@
+import React from "react";
 import { IconType } from "react-icons";
 
 interface ButtonProps {
@@ -6,11 +7,13 @@ interface ButtonProps {
   className?: string;
   text: string;
   color: "default" | "warning" | "success" | "danger" | "info";
+  icon?: IconType;
 }
 
 export default function DefaultButton(props: ButtonProps) {
   let { text, type, ref, className, color } = props;
   let colorClass: string = "";
+
   switch (color) {
     case "default":
       colorClass = "text-white bg-palepurple hover:bg-hovpalepurple focus:ring-hovpalepurple";
@@ -38,8 +41,10 @@ export default function DefaultButton(props: ButtonProps) {
         colorClass +
         " " +
         className +
-        " text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md px-4 py-3 w-full m-auto "
+        " inline-flex text-center font-semibold focus:ring-1 focus:outline-none " +
+        "rounded-md text-md px-4 py-3 w-full m-auto "
       }>
+      {props.icon ? React.createElement(props?.icon, { className: "text-2xl mr-2" }) : ""}
       {text}
     </button>
   );
