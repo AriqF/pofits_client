@@ -29,6 +29,8 @@ module.exports = {
         hovblue: "#395cc6",
         palepurple: "#8c4dcb",
         hovpalepurple: "#7f39c6",
+        lighterpurple: "#b288dd",
+        hovlighterpurple: "#a674d8",
         darkpurple: "#8c4dcb",
         hovdarkpurple: "#7334b2",
         errorRed: "#cb1a52",
