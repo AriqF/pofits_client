@@ -14,12 +14,14 @@ interface Props {
   usedBudget: number;
   id: number | string;
   date: Date;
+  percentage: number;
+  remaining: number;
 }
 
 export default function BudgetCard(props: Props) {
-  const { icon, title, budget, usedBudget, id } = props;
-  let countPercent = (usedBudget / +budget) * 100;
-  let percentage = countPercent.toFixed(0);
+  const { icon, title, budget, id } = props;
+  // let countPercent = (usedBudget / +budget) * 100;
+  let percentStr = props.percentage.toFixed(0);
   let startDate = moment(props.date).startOf("month").format("D MMMM YYYY");
   let endDate = moment(props.date).endOf("month").format("D MMMM YYYY");
 
@@ -34,35 +36,40 @@ export default function BudgetCard(props: Props) {
     <LinkContainer
       className="drop-shadow-sm hover:drop-shadow-md transition-all duration-500 text-md border-2"
       linkTo={UserPath.BUDGET + id}>
-      <div className="flex flex-row gap-x-4">
-        <Image src={`/assets/icons/svg/${icon}.svg`} alt="icon-category" width={40} height={40} />
-        <h4 className="my-auto text-lg">{title}</h4>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-x-4">
+          <Image src={`/assets/icons/svg/${icon}.svg`} alt="icon-category" width={40} height={40} />
+          <div className="flex flex-col">
+            <h4 className="my-auto text-lg">{title}</h4>
+            <p className="text-mute text-sm my-auto">
+              {startDate} - {endDate}
+            </p>
+          </div>
+        </div>
         <MdChevronRight className="text-2xl my-auto " />
       </div>
-      <p className="text-mute text-sm">
-        {startDate} - {endDate}
-      </p>
-      <hr className="h-1 w-full text-mute" />
-      <div className="text-sm md:text-base font-medium text-center">
+
+      {/* <hr className="h-1 w-full text-mute" /> */}
+      {/* <div className="text-sm md:text-base font-medium text-center">
         <div className="flex justify-between mb-1">
           <div className="grid grid-rows-2 gap-y-2">
             <span>Anggaran</span>
             <span className=" text-blue">Rp{numFormatter(budget)}</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
-            <span className="row-start-2 ">{percentage}%</span>
+            <span className="row-start-2 ">{percentStr}%</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
             <span>Tersisa</span>
-            <span className="text-blue ">Rp{numFormatter(usedBudget)}</span>
+            <span className="text-blue ">Rp{numFormatter(props.remaining)}</span>
           </div>
         </div>
         <ProgressBar
-          bgColor={getProgressBarColor(countPercent)}
+          bgColor={getProgressBarColor(props.percentage)}
           textColor={"text-white"}
-          percentage={countPercent > 100 ? 100 : percentage}
+          percentage={props.percentage > 100 ? 100 : props.percentage}
         />
-      </div>
+      </div> */}
     </LinkContainer>
   );
 }
