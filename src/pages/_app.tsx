@@ -2,10 +2,11 @@ import "@/styles/globals.css";
 import "flowbite";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Script from "next/script";
-import { useEffect } from "react";
+import "moment/locale/id";
+import moment from "moment";
 
 export default function App({ Component, pageProps }: AppProps) {
+  moment.locale("id");
   return (
     <>
       <Head>
