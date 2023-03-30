@@ -56,10 +56,12 @@ export default function Login() {
         SetIsSuccess(res.data.message);
         const token: string = res.data.accessToken;
         const decoded: JWTServer = jwt_decode(token);
+
         cookies.set("accessToken", res.data.accessToken, {
-          expires: decoded.exp,
+          expires: new Date(decoded.exp * 1000),
+          path: "/",
+          secure: true,
         });
-        console.log(decoded.exp);
 
         res.data.role === "admin" ? router.push("/admin") : router.push("/me");
         // return NextResponse.next();
