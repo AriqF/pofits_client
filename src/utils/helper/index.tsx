@@ -17,6 +17,11 @@ type SelectInputOption = {
   label: string;
 };
 
+export const getMomentLocaleDate = (date: Date, locale: string, format: string) => {
+  const dateMoment = moment(date);
+  return dateMoment.locale(locale).format(format);
+};
+
 export const listOfMonth: SelectInputOption[] = [
   { value: 1, label: "Januari" },
   { value: 2, label: "Februari" },
