@@ -54,6 +54,20 @@ export interface BudgetData extends BaseServerData {
     category: JoinCategory
 }
 
+export interface ProBudgetData extends BudgetData {
+    amountUsed: number;
+    percentageUsed: number;
+    amountRemaining: number;
+}
+
+export interface BudgetMonthRecap {
+    borderBudget: number;
+    percentageUsed: number;
+    totalBudget: number;
+    totalRemaining: number;
+    totalUsed: number;
+}
+
 export interface AddBudgetData {
     amount: string;
     isRepeat: boolean;
