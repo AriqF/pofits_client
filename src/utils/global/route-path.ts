@@ -15,9 +15,12 @@ export enum UserPath {
     EXPENSE_CATEGORY_ADD = "/me/settings/expense-category/add/",
     EXPENSE_CATEGORY_EDIT = "/me/settings/expense-category/",
     BUDGET = "/me/budget/",
+    BUDGET_EDIT = "/me/budget/edit/",
     BUDGET_ADD = "/me/budget/add/",
+    BUDGET_HISTORY = "/me/budget/history/",
     ESTIMATION = "/me/income-estimation/",
     ESTIMATION_ADD = "/me/income-estimation/add",
-    FINANCE_GOAL = "/me/finance-goals/"
+    FINANCE_GOAL = "/me/finance-goals/",
+    TRANSACTION = "/me/transaction/"
 
 } 
