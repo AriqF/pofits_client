@@ -1,3 +1,4 @@
+import { UserPath } from "@/utils/global/route-path";
 import { numFormatter } from "@/utils/helper";
 
 interface CardProps {
@@ -13,7 +14,7 @@ export default function WalletListItem(props: CardProps) {
   return (
     <a
       className="block max-w-full px-6 py-7 bg-white hover:bg-hovwhite drop-shadow-lg rounded-md"
-      href={"/me/wallets/" + props.linkToId}>
+      href={UserPath.WALLETS + props.linkToId}>
       <div className="grid gap-x-4 lg:grid-cols-1 md:grid-cols-1 m-auto">
         <h5 className="text-xl font-bold tracking-tight text-dark text-center">
           {props.textHeader}

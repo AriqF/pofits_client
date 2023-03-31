@@ -1,6 +1,7 @@
-import MenuOptionItem from "./menu-option";
+import MenuOptionItem from "../../../tools/menu/menu-box/menu-option";
 import { BiExport, BiHelpCircle, BiImport, BiLogOut, BiUser, BiWallet } from "react-icons/bi";
 import { logoutHandler } from "@/utils/helper/axios-helper";
+import Container from "@/components/tools/container";
 
 interface Props {
   className?: string;
@@ -8,12 +9,7 @@ interface Props {
 
 export default function SettingMenuBox(props: Props) {
   return (
-    <div
-      id="settings-option"
-      className={
-        "bg-white rounded-md md:shadow-md p-6 grid grid-flow-row space-y-3 text-darktext" +
-        props.className
-      }>
+    <Container id="settings-option" className={props.className}>
       <MenuOptionItem linkTo="/me/settings/wallets">
         <BiWallet className="flex-inline my-auto text-2xl mr-2" />
         <h4>Dompet</h4>
@@ -38,6 +34,6 @@ export default function SettingMenuBox(props: Props) {
         <BiLogOut className="flex-inline my-auto text-2xl mr-2" />
         <h4>Keluar</h4>
       </MenuOptionItem>
-    </div>
+    </Container>
   );
 }

@@ -1,10 +1,19 @@
+import React from "react";
+import { IconType } from "react-icons";
 import { CgCheckO, CgDanger, CgInfo } from "react-icons/cg";
+import {
+  MdCheckCircleOutline,
+  MdInfoOutline,
+  MdOutlineDangerous,
+  MdOutlineWarningAmber,
+} from "react-icons/md";
 import { TiWarningOutline } from "react-icons/ti";
 
 interface AlertProps {
   text: string;
   type: "info" | "danger" | "success" | "warning";
   isCapitalize?: boolean;
+  className?: string;
 }
 
 export default function Alert(props: AlertProps) {
@@ -14,35 +23,40 @@ export default function Alert(props: AlertProps) {
   if (isCapitalize) textTransform = "capitalize";
 
   let bgColor: string;
+  let icon: IconType;
   // let icon: JSX.Element = <CgInfo />;
 
   switch (type) {
     case "info":
       bgColor = "bg-infoBlue";
-      // icon = <CgInfo size={20} />;
+      icon = MdInfoOutline;
       break;
     case "danger":
       bgColor = "bg-errorRed";
-      // icon = <CgDanger size={20} />;
+      icon = MdOutlineDangerous;
       break;
     case "warning":
       bgColor = "bg-warnYellow";
-      // icon = <TiWarningOutline />;
+      icon = MdOutlineWarningAmber;
       break;
     case "success":
       bgColor = "bg-successGreen";
-      // icon = <CgCheckO />;
+      icon = MdCheckCircleOutline;
       break;
     default:
       bgColor = "bg-infoBlue";
+      icon = MdCheckCircleOutline;
   }
 
   return (
     <div
-      className={`flex px-3 py-3 mb-4 text-sm text-whitegrey text-center rounded-lg ${bgColor}`}
+      className={
+        props.className +
+        ` flex py-2.5 mb-4 text-sm text-whitegrey text-center rounded-md ${bgColor}`
+      }
       role="alert">
       <p className={`font-medium ${textTransform} flex m-auto`}>
-        {/* <span className="flex-shrink-0 inline w-5 h-5 mr-2">{icon} </span> */}
+        {React.createElement(icon, { className: "text-2xl mr-2" })}
         {text}
       </p>
     </div>

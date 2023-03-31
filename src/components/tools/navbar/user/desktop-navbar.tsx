@@ -39,7 +39,7 @@ export default function UserDesktopNavbar() {
             <MenuOption text="Transaksi" linkTo="#" />
           </li>
           <li>
-            <MenuOption text="Penganggaran" linkTo="#" />
+            <MenuOption text="Anggaran" linkTo="/me/budget" />
           </li>
           <li>
             <MenuOption text="Tujuan Keuangan" linkTo="#" />

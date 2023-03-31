@@ -3,7 +3,12 @@ import Cookies from 'js-cookie'
 import jwt_decode from "jwt-decode";
 import Router from 'next/router'
 
-const client = axios.create({ baseURL: process.env.NEXT_PUBLIC_URL })
+const client = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_URL,
+    headers: {
+        "Content-type": "application/json",
+    }
+})
 
 export const requestAxios = (options: AxiosRequestConfig) => {
     client.defaults.headers.common.Authorization = `Bearer ${Cookies.get('accessToken')}`
@@ -14,7 +19,6 @@ export const requestAxios = (options: AxiosRequestConfig) => {
 
     return client(options)
 }
-
 
 export const logoutHandler = () => {
     Cookies.remove("accessToken");

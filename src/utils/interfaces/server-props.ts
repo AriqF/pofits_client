@@ -23,6 +23,7 @@ export interface CreatedBy {
 export interface WalletData extends BaseServerData {
     id: number;
     name: string;
+    category: string;
     description: string;
     amount: string;
 }
@@ -33,6 +34,7 @@ export interface IncomeCategory extends BaseServerData {
     description: string;
     isGlobal: boolean;
     income_type: "pasif" | "aktif";
+    icon: string;
 }
 
 export interface ExpenseCategory extends BaseServerData {
@@ -40,4 +42,46 @@ export interface ExpenseCategory extends BaseServerData {
     title: string;
     description: string;
     isGlobal: boolean;
+    icon: string;
+}
+
+export interface BudgetData extends BaseServerData {
+    id: number;
+    amount: string;
+    isRepeat: boolean;
+    start_date: Date;
+    end_date?: Date;
+    category: JoinCategory
+}
+
+export interface ProBudgetData extends BudgetData {
+    amountUsed: number;
+    percentageUsed: number;
+    amountRemaining: number;
+}
+
+export interface BudgetMonthRecap {
+    borderBudget: number;
+    percentageUsed: number;
+    totalBudget: number;
+    totalRemaining: number;
+    totalUsed: number;
+}
+
+export interface AddBudgetData {
+    amount: string;
+    isRepeat: boolean;
+    start_date: string;
+    end_date?: string;
+    category: {
+        label: string, value: string, icon: string;
+    }
+    // end_month?: number;
+    // end_year?: number;
+}
+
+interface JoinCategory {
+    id: number;
+    title: string;
+    icon: string;
 }

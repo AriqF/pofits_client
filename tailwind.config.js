@@ -4,11 +4,13 @@ module.exports = {
   content: [
     join(__dirname, './src/pages/**/*.{ts,tsx}'),
     join(__dirname, './src/components/**/*.{ts,tsx}'),
-    join(__dirname, './src/node_modules/flowbite-react/**/*.js'),
+    // join(__dirname, './node_modules/flowbite-react/**/*.js'),
     join(__dirname, './src/public/**/*.html'),
+    join(__dirname, "./node_modules/flowbite/**/*.js"),
+    "./node_modules/flowbite/**/*.js",
   ],
   plugins: [
-    require("flowbite/plugin")
+    require("flowbite/plugin"),
   ],
   theme: {
     extend: {
@@ -27,6 +29,8 @@ module.exports = {
         hovblue: "#395cc6",
         palepurple: "#8c4dcb",
         hovpalepurple: "#7f39c6",
+        lighterpurple: "#b288dd",
+        hovlighterpurple: "#a674d8",
         darkpurple: "#8c4dcb",
         hovdarkpurple: "#7334b2",
         errorRed: "#cb1a52",
@@ -37,8 +41,10 @@ module.exports = {
         hovSuccessGreen: "#26a673",
         infoBlue: "#4a7dcf",
         hovInfoBlue: "#366ec9",
+        moneySafe: "#66d46f",
+        moneyDanger: "#c74238",
+        moneyWarn: "#d7ed12"
       },
     },
   },
-  plugins: [],
 };
