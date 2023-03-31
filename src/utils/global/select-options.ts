@@ -1,0 +1,53 @@
+export const walletCategoriesOpt = [
+    { label: "Tunai", icon: "fees", value: "Tunai" },
+    { label: "Rekening Bank", icon: "bank", value: "Rekening Bank" },
+    { label: "E-Money", icon: "mobile", value: "E-Money" },
+]
+
+export const iconOpt = [
+    { value: "amusement" },
+    { value: "bank" },
+    { value: "bike" },
+    { value: "bus" },
+    { value: "car" },
+    { value: "cat" },
+    { value: "champagne" },
+    { value: "chart" },
+    { value: "clipboard" },
+    { value: "cloth" },
+    { value: "cooker" },
+    { value: "device" },
+    { value: "eiffel" },
+    { value: "fashion" },
+    { value: "fees" },
+    { value: "food" },
+    { value: "football" },
+    { value: "fuel" },
+    { value: "game" },
+    { value: "gift" },
+    { value: "gold" },
+    { value: "hacker" },
+    { value: "hotel" },
+    { value: "life-insurance" },
+    { value: "loan" },
+    { value: "luxury" },
+    { value: "man-discount" },
+    { value: "mobile" },
+    { value: "movie-roll" },
+    { value: "party" },
+    { value: "plug" },
+    { value: "router" },
+    { value: "savings" },
+    { value: "shopping-bag" },
+    { value: "shopping-cart" },
+    { value: "store" },
+    { value: "tv" },
+    { value: "wallet" },
+    { value: "wishlist" },
+
+];
+
+export const incomeTypeOpt = [
+    { label: "Aktif", value: "aktif" },
+    { label: "Pasif", value: "pasif" },
+];
