@@ -7,11 +7,12 @@ interface Props {
   id: string;
   errors?: string;
   children: ReactNode;
+  className?: string;
 }
 
 export default function InputForm(props: Props) {
   return (
-    <div>
+    <div className={props.className}>
       <label htmlFor={props.id} className="block mb-2 text-md font-medium text-gray-900">
         {props.label}
       </label>
