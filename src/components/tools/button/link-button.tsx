@@ -1,9 +1,13 @@
+import React from "react";
+import { IconType } from "react-icons";
+
 interface ButtonProps {
   type: "button" | "submit" | "reset" | undefined;
   className?: string;
   text: string;
   color: "default" | "warning" | "success" | "danger" | "info";
   linkTo: string;
+  icon?: IconType;
 }
 
 export default function LinkButton(props: ButtonProps) {
@@ -33,11 +37,13 @@ export default function LinkButton(props: ButtonProps) {
       href={linkTo}
       type={type}
       className={
-        "text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md px-4 py-3 w-full " +
-        colorClass +
+        className +
         " " +
-        className
+        "inline-flex gap-x-2 place-content-center text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md px-4 py-3 w-full " +
+        colorClass +
+        " "
       }>
+      {props.icon ? React.createElement(props.icon, { className: "text-xl my-auto" }) : ""}
       {text}
     </a>
   );

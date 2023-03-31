@@ -41,7 +41,7 @@ export default function DefaultButton(props: ButtonProps) {
         colorClass +
         " " +
         className +
-        " inline-flex text-center font-semibold focus:ring-1 focus:outline-none " +
+        " inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
         "rounded-md text-md px-4 py-3 w-full m-auto "
       }>
       {props.icon ? React.createElement(props?.icon, { className: "text-2xl mr-2" }) : ""}
