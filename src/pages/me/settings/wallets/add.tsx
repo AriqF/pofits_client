@@ -1,25 +1,36 @@
 import UserSettingsLayout from "@/components/layouts/user/settings";
-import UserSettingsHeader from "@/components/layouts/user/settings/header-settings";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import DefaultButton from "@/components/tools/button";
-import { baseAlertStyle, baseFormStyle } from "@/utils/global/style";
+import InputForm from "@/components/tools/form/input-form";
+import { UserPath } from "@/utils/global/route-path";
+import {
+  baseAlertStyle,
+  baseFormStyle,
+  currencyFormStyle,
+  formStyle,
+  selectFormStyle,
+} from "@/utils/global/style";
 import { numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
-import { WalletData } from "@/utils/interfaces/server-props";
+import { FormWalletData } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useRef, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
+import ReactSelect from "react-select";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Image from "next/image";
+import { walletCategoriesOpt } from "@/utils/global/select-options";
 
 export default function AddWallet() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isServerError, setIsServerError] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+  // const [categoriesOption, setCategoriesOption] = useState(temp);
 
   const router = useRouter();
   const walletId = router.query.id;
@@ -31,17 +42,18 @@ export default function AddWallet() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    control,
     setValue,
-  } = useForm<WalletData>();
+  } = useForm<FormWalletData>();
 
-  const onSubmit: SubmitHandler<WalletData> = async (data: WalletData) => {
+  const onSubmit: SubmitHandler<FormWalletData> = async (data: FormWalletData) => {
     setErrMessage("");
     await requestAxios({
       url: baseUrl + "/wallet",
       method: "POST",
       data: {
         name: data.name,
-        category: data.category,
+        category: data.category.value,
         description: data.description,
         amount: parseInt(data.amount.replace(/\./g, "")),
       },
@@ -55,7 +67,7 @@ export default function AddWallet() {
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/settings/wallets");
+            if (res.isConfirmed) router.push(UserPath.WALLETS);
           });
       })
       .catch((error) => {
@@ -67,45 +79,14 @@ export default function AddWallet() {
   };
 
   return (
-    <UserSettingsLayout>
-      <section id="wallet-add ">
-        <UserSettingsHeader backTo="/me/settings/wallets">
-          <h3 className="text-2xl font-bold">Tambah Dompet Manual</h3>
-        </UserSettingsHeader>
-        <div className="bg-white border-gray-500 rounded-sm p-6 shadow-md min-h-screen md:min-h-fit flex flex-col gap-y-5">
+    <UserSettingsLayout backTo={UserPath.WALLETS}>
+      <section id="wallet-add " className="flex flex-col gap-y-3 col-span-2">
+        <h3 className="text-2xl font-bold">Tambah Dompet Manual</h3>
+        <div className="bg-white border-gray-500 rounded-sm p-2 min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="add-wallet-form" className="flex flex-col gap-y-5 w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-5 gap-y-5">
-                <div>
-                  <label
-                    htmlFor="category"
-                    className="block mb-2 text-md font-medium text-gray-900">
-                    Kategori Dompet
-                  </label>
-                  <select
-                    id="category"
-                    required
-                    {...register("category", { required: "Kategori dompet perlu diisi" })}
-                    // defaultValue="Pilih kategori dompet"
-                    className={
-                      baseFormStyle +
-                      (errors.category ? "border-errorRed focus:border-errorRed" : "")
-                    }>
-                    <option value="none" selected disabled hidden>
-                      Pilih kategori dompet
-                    </option>
-                    <option value={"Rekening Bank"}>Rekening Bank</option>
-                    <option value={"Tunai"}>Tunai</option>
-                    <option value={"E-Money"}>E-Money</option>
-                  </select>
-                  {errors.category && (
-                    <FormHelper textColor="danger" text={errors.category?.message} />
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="title" className="block mb-2 text-md font-medium text-gray-900">
-                    Nama Dompet
-                  </label>
+                <InputForm label="Nama Dompet" id="wallet-name" errors={errors.name?.message}>
                   <input
                     type="text"
                     id="title"
@@ -121,12 +102,11 @@ export default function AddWallet() {
                       },
                     })}
                   />
-                  {errors.name && <FormHelper textColor="danger" text={errors.name?.message} />}
-                </div>
-                <div>
-                  <label htmlFor="amount" className="block mb-2 text-md font-medium text-gray-900 ">
-                    Nominal awal
-                  </label>
+                </InputForm>
+                <InputForm
+                  label="Nominal Saat Ini"
+                  id="wallet-name"
+                  errors={errors.amount?.message}>
                   <div className="flex">
                     <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md ">
                       Rp
@@ -135,10 +115,10 @@ export default function AddWallet() {
                       type="text"
                       id="amount"
                       className={
-                        baseFormStyle +
+                        currencyFormStyle +
                         (errors.amount ? "border-errorRed focus:border-errorRed" : "")
                       }
-                      placeholder="Nominal awal pada dompet"
+                      placeholder="Nominal pada dompet"
                       {...register("amount", {
                         required: "Dompet memerlukan nilai awal",
                         pattern: {
@@ -152,37 +132,82 @@ export default function AddWallet() {
                       })}
                     />
                   </div>
-                  {errors.amount && <FormHelper textColor="danger" text={errors.amount?.message} />}
-                </div>
+                </InputForm>
+                <InputForm
+                  label="Kategori"
+                  id="wallet-category-select"
+                  errors={errors.category?.message}>
+                  <Controller
+                    {...register("category", { required: "Kategori dompet perlu diisi" })}
+                    control={control}
+                    render={({ field }) => {
+                      return (
+                        <ReactSelect
+                          styles={{
+                            control: (baseStyles, state) => ({
+                              borderColor: errors.category
+                                ? "border-errorRed"
+                                : "focus:border-errorRed",
+                            }),
+                          }}
+                          classNames={{
+                            control: (state) =>
+                              selectFormStyle +
+                              (errors.category ? " border-errorRed focus:border-errorRed" : ""),
+                          }}
+                          placeholder="Pilih kategori"
+                          className={errors.category ? "border-errorRed focus:border-errorRed" : ""}
+                          value={field.value}
+                          options={walletCategoriesOpt}
+                          onChange={field.onChange}
+                          formatOptionLabel={(item) => (
+                            <div className="inline-flex space-x-3 my-auto">
+                              <Image
+                                src={`/assets/icons/svg/${item.icon}.svg`}
+                                alt="category-icon"
+                                width={25}
+                                height={25}
+                                className="my-auto"
+                              />
+                              <p className="my-auto">{item.label}</p>
+                            </div>
+                          )}
+                        />
+                      );
+                    }}></Controller>
+                </InputForm>
               </div>
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block mb-2 text-md font-medium text-gray-900">
-                  Deskripsi {"(Optional)"}
-                </label>
+              <InputForm
+                label="Deskripsi (optional)"
+                id="wallet-description"
+                errors={errors.amount?.message}>
                 <textarea
                   rows={2}
                   id="description"
-                  placeholder="Deskripsi dengan singkat"
+                  placeholder="Deskripsi singkat dompet"
                   maxLength={255}
                   className={
                     baseFormStyle +
                     (errors.description ? "border-errorRed focus:border-errorRed" : "")
                   }
                   {...register("description", {
-                    required: false,
+                    maxLength: {
+                      value: 255,
+                      message: "Deskripsi maksimal 255 karakter",
+                    },
                   })}
                 />
-                {errors.description && (
-                  <FormHelper textColor="danger" text={errors.description?.message} />
-                )}
-              </div>
+              </InputForm>
               <div id="add-wallet-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
                 <div id="auth-message">
                   {errMessage && <Alert text={errMessage} type="danger" />}
                 </div>
-                <DefaultButton text="Simpan" color="default" type="submit" />
+                <DefaultButton
+                  text="Simpan"
+                  color="default"
+                  type="submit"
+                  className="md:w-1/2 w-full"
+                />
               </div>
             </div>
           </form>
