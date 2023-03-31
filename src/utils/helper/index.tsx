@@ -51,7 +51,7 @@ export const CustomAlert = async (options?: AlertOptions) => {
   return swal
     .fire({
       title: options?.title ? options.title : "Terjadi kesalahan dalam proses data",
-      text: options?.text ? options.text : "",
+      text: options?.text ? options.text : "Harap dicoba kembali",
       icon: options?.icon ? options.icon : "error",
       confirmButtonColor: options?.reverseColor ? "#cb1a52" : "#8c4dcb",
       cancelButtonColor: options?.reverseColor ? "#8c4dcb" : "#cb1a52",
