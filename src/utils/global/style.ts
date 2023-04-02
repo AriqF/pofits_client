@@ -16,4 +16,5 @@ export const deleteButtonStyle: string = "col-span-1 col-start-4 col-end-4 ml-au
 
 export const formStyle: string = "bg-gray-50 border border-gray-300 text-gray-900 text-md lock w-full p-2.5 hover:border-blue "
 export const baseFormStyle: string = formStyle + " rounded-md "
-export const selectFormStyle: string = "p-1 " + formStyle + " inline-flex rounded-md"
+export const selectFormStyle: string = "p-1 " + formStyle + " inline-flex rounded-md";
+export const currencyFormStyle: string = formStyle + " rounded-r-md  ";

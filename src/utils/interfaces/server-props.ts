@@ -24,6 +24,18 @@ export interface WalletData extends BaseServerData {
     id: number;
     name: string;
     category: string;
+    icon: string;
+    description: string;
+    amount: string;
+}
+
+export interface FormWalletData {
+    id: number;
+    name: string;
+    category: {
+        label: string, value: string, icon: string;
+    }
+    icon: string;
     description: string;
     amount: string;
 }
@@ -37,12 +49,32 @@ export interface IncomeCategory extends BaseServerData {
     icon: string;
 }
 
+export interface FormIncomeCategory extends BaseServerData {
+    id: number;
+    title: string;
+    icon: {
+        value: string
+    };
+    description: string;
+    income_type: {
+        value: string, label: string,
+    }
+}
+
 export interface ExpenseCategory extends BaseServerData {
     id: number;
     title: string;
     description: string;
     isGlobal: boolean;
     icon: string;
+}
+
+export interface FormExpenseCategory extends BaseServerData {
+    id: number;
+    title: string;
+    description: string;
+    isGlobal: boolean;
+    icon: { value: string }
 }
 
 export interface BudgetData extends BaseServerData {
@@ -85,3 +117,4 @@ interface JoinCategory {
     title: string;
     icon: string;
 }
+

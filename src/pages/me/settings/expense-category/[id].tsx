@@ -1,27 +1,27 @@
 import UserSettingsLayout from "@/components/layouts/user/settings";
-import UserSettingsHeader from "@/components/layouts/user/settings/header-settings";
 import Alert from "@/components/tools/alerts/alert";
-import FormHelper from "@/components/tools/alerts/form-helper";
 import DefaultButton from "@/components/tools/button";
-import UserSettingContentBox from "@/components/tools/container/user-settings-content-box";
-import UserSettingsDeleteBox from "@/components/tools/container/user-settings-delete-box";
+import InputForm from "@/components/tools/form/input-form";
+import { UserPath } from "@/utils/global/route-path";
+import { iconOpt } from "@/utils/global/select-options";
 import {
   baseAlertStyle,
   baseFormStyle,
   deleteAlertStyle,
-  deleteButtonStyle,
+  selectFormStyle,
 } from "@/utils/global/style";
 import { CustomAlert } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
-import { ExpenseCategory } from "@/utils/interfaces/server-props";
+import { FormExpenseCategory } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import ReactSelect from "react-select";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { ref } from "yup";
+import Image from "next/image";
 
 export default function ExpenseCategoryDetail() {
   const [isGlobal, setIsGlobal] = useState(false);
@@ -37,8 +37,9 @@ export default function ExpenseCategoryDetail() {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isSubmitting },
-  } = useForm<ExpenseCategory>();
+  } = useForm<FormExpenseCategory>();
 
   const getCategoryDetail = async () => {
     await requestAxios({
@@ -51,6 +52,7 @@ export default function ExpenseCategoryDetail() {
         setValue("description", res.data.description);
         setValue("created_at", res.data.created_at);
         setValue("updated_at", res.data.updated_at);
+        setValue("icon", { value: res.data.icon });
         setIsGlobal(res.data.isGlobal);
       })
       .catch((err) => {
@@ -58,7 +60,7 @@ export default function ExpenseCategoryDetail() {
       });
   };
 
-  const onSubmit: SubmitHandler<ExpenseCategory> = async (data: ExpenseCategory) => {
+  const onSubmit: SubmitHandler<FormExpenseCategory> = async (data: FormExpenseCategory) => {
     setErrMessage("");
     await requestAxios({
       url: baseUrl + "/expense-category/update/" + dataId,
@@ -66,6 +68,7 @@ export default function ExpenseCategoryDetail() {
       data: {
         title: data.title,
         description: data.description,
+        icon: data.icon.value,
       },
     })
       .then((res) => {
@@ -131,23 +134,64 @@ export default function ExpenseCategoryDetail() {
   }, [router.isReady]);
 
   return (
-    <UserSettingsLayout>
-      <UserSettingsHeader backTo="/me/settings/expense-category">
+    <UserSettingsLayout backTo={UserPath.EXPENSE_CATEGORY}>
+      <section className="flex flex-col gap-y-4 col-span-2">
         <div className="grid grid-cols-6 max-[350px]:flex flex-col max-[350px]:gap-y-2 ">
           <h3 className="text-2xl font-bold col-span-4">Ubah kategori</h3>
         </div>
-      </UserSettingsHeader>
-      <UserSettingContentBox>
         <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
           <div id="add-inccat-form" className="flex flex-col gap-y-5 w-full">
-            <div>
-              <label htmlFor="title" className="block mb-2 text-md font-medium text-gray-900">
-                Nama Kategori
-              </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-5">
+              <InputForm
+                label={"Pilih ikon kategori"}
+                id={"income-icon-select"}
+                errors={errors.icon?.message}>
+                <Controller
+                  control={control}
+                  {...register("icon", {
+                    required: "Ikon pemasukan perlu dipilih",
+                  })}
+                  render={({ field }) => {
+                    return (
+                      <ReactSelect
+                        styles={{
+                          control: (baseStyles, state) => ({
+                            borderColor: errors.icon ? "border-errorRed" : "focus:border-errorRed",
+                          }),
+                        }}
+                        classNames={{
+                          control: (state) =>
+                            selectFormStyle +
+                            (errors.icon ? " border-errorRed focus:border-errorRed" : ""),
+                        }}
+                        placeholder="Pilih ikon"
+                        className={errors.icon ? "border-errorRed focus:border-errorRed" : ""}
+                        value={field.value}
+                        options={iconOpt}
+                        onChange={field.onChange}
+                        formatOptionLabel={(item) => (
+                          <div className="inline-flex space-x-3 my-auto place-content-center">
+                            <Image
+                              src={`/assets/icons/svg/${item.value}.svg`}
+                              alt={`icon-${item.value}`}
+                              width={25}
+                              height={25}
+                              className="my-auto"
+                            />
+                            <p className="my-auto capitalize">{item.value}</p>
+                          </div>
+                        )}
+                      />
+                    );
+                  }}
+                />
+              </InputForm>
+            </div>
+            <InputForm label={"Nama Kategori"} id={"category-name"} errors={errors.title?.message}>
               <input
-                disabled={isGlobal}
+                disabled={isGlobal ? true : false}
                 {...register("title", {
-                  required: "Nama kategori harus diisi",
+                  required: "Nama pemasukan harus diisi",
                   maxLength: {
                     value: 75,
                     message: "Nama kategori maksimal 75 karakter",
@@ -164,20 +208,14 @@ export default function ExpenseCategoryDetail() {
                   baseFormStyle + (errors.title ? "border-errorRed focus:border-errorRed" : "")
                 }
               />
-              {errors.title && <FormHelper textColor="danger" text={errors.title?.message} />}
-            </div>
-            <div>
-              <label htmlFor="description" className="block mb-2 text-md font-medium text-gray-900">
-                Deskripsi {"(Optional)"}
-              </label>
+            </InputForm>
+            <InputForm
+              label="Deskripsi (optional)"
+              errors={errors.description?.message}
+              id={"description"}>
               <textarea
-                disabled={isGlobal}
-                {...register("description", {
-                  maxLength: {
-                    value: 255,
-                    message: "Deskripsi maksimal 255 karakter",
-                  },
-                })}
+                disabled={isGlobal ? true : false}
+                {...register("description")}
                 rows={2}
                 id="description"
                 placeholder="Deskripsi singkat kategori"
@@ -187,25 +225,38 @@ export default function ExpenseCategoryDetail() {
                   (errors.description ? "border-errorRed focus:border-errorRed" : "")
                 }
               />
-              {errors.description && (
-                <FormHelper textColor="danger" text={errors.description?.message} />
-              )}
-            </div>
+            </InputForm>
             <div id="add-incomecat-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
               <div id="auth-message">{errMessage && <Alert text={errMessage} type="danger" />}</div>
-              <DefaultButton text="Simpan" color="default" type="submit" />
+              <DefaultButton
+                text="Simpan"
+                color="default"
+                type="submit"
+                className="md:w-1/2 w-full"
+              />
             </div>
           </div>
         </form>
-      </UserSettingContentBox>
-      <UserSettingsDeleteBox
-        headerText="Hapus kategori"
-        headerDesc="Kamu sudah tidak bisa menggunakan kategori ini untuk menambah kategori pada transaksi mu selanjutnya">
-        <button onClick={deleteCategory} title="Hapus data" className={deleteButtonStyle}>
-          {/* <BiTrash className="text-2xl m-auto" /> */}
-          Hapus Data
-        </button>
-      </UserSettingsDeleteBox>
+      </section>
+      {/* <section className="flex flex-col col-span-1">
+        <Container className="shadow-md border border-gray-300 gap-y-2 text-center p-3">
+          <div className="flex flex-col gap-y-2 ">
+            <h4 className="text-xl inline-flex gap-x-2 place-content-center">
+              <MdWarningAmber className="my-auto" /> Hapus Kategori
+            </h4>
+            <p className="text-base text-gray-500">
+              Kamu sudah tidak bisa menggunakan kategori ini untuk menambah kategori pada transaksi
+              mu selanjutnya
+            </p>
+          </div>
+          <button
+            onClick={deleteCategory}
+            title="Hapus data"
+            className={deleteButtonStyle + " m-auto"}>
+            Hapus
+          </button>
+        </Container>
+      </section> */}
     </UserSettingsLayout>
   );
 }
