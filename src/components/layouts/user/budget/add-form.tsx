@@ -168,7 +168,7 @@ export default function AddBudgetForm() {
               />
             </div>
           </InputForm>
-          <div className={"grid grid-cols-1 md:grid-cols-2 gap-x-5"} id="start-date-input">
+          <div className={"grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5"} id="start-date-input">
             <InputForm
               label={isRepeat ? "Dari bulan" : "Pilih bulan"}
               id="start_date"
