@@ -9,13 +9,14 @@ interface Props {
   icon: string;
   date: Date;
   amount: number;
+  dataId: number | string;
 }
 
 export default function BudgetTransactionCard(props: Props) {
   return (
     <a
-      className="flex flex-row justify-between p-1 border-b border-gray-300 pb-4 hover:shadow-lg transition-all duration-300"
-      href={UserPath.TRANSACTION}>
+      className="flex flex-row justify-between p-3 border-b border-gray-300 hover:shadow-lg transition-all duration-300"
+      href={UserPath.TRANSACTION_EXPENSE_DETAIL + props.dataId}>
       <div id="trans-left" className="flex flex-row gap-x-4">
         <div className="rounded-full p-2 bg-gray-300 my-auto">
           <Image
