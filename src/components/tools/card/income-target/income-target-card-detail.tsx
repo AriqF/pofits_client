@@ -4,34 +4,26 @@ import moment from "moment";
 import Image from "next/image";
 import { MouseEventHandler } from "react";
 import { MdChevronRight, MdDelete, MdEditNote } from "react-icons/md";
-import ProgressBar from "../bar/progress-bar";
-import Container from "../container";
-import LinkContainer from "../container/LinkContainer";
+import ProgressBar from "../../bar/progress-bar";
+import Container from "../../container";
+import LinkContainer from "../../container/LinkContainer";
 
 interface Props {
   title: string;
   icon: string;
-  budget: string;
-  usedBudget: number;
   id: number | string;
   date: Date;
   percentage: number;
-  remaining: number;
+  achieved: number;
+  unachived: number;
+  target: number;
   deleteFunc?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export default function BudgetCardDetail(props: Props) {
-  const { budget } = props;
+export default function IncomeTargetCardDetails(props: Props) {
   let percentStr = props.percentage.toFixed(0);
   let startDate = moment(props.date).startOf("month").format("D MMM YY");
   let endDate = moment(props.date).endOf("month").format("D MMM YY");
-
-  const getProgressBarColor = (percentage: number): string => {
-    if (percentage >= 80) {
-      return "bg-moneyDanger";
-    }
-    return "bg-blue";
-  };
 
   return (
     <Container className="p-4 shadow-xs hover:shadow-md transition-all duration-500 text-md border-2">
@@ -40,12 +32,12 @@ export default function BudgetCardDetail(props: Props) {
           {/* <p className="text-mute text-base">
           {startDate} - {endDate}
         </p> */}
-          <p className="text-sm">Anggaran</p>
-          <h5 className="text-lg text-blue">Rp{numFormatter(props.budget)}</h5>
+          <p className="text-sm">Target Pemasukan</p>
+          <h5 className="text-lg text-blue">Rp{numFormatter(props.target)}</h5>
         </div>
         <div className="inline-flex space-x-2 text-gray-600">
           <a
-            href={UserPath.BUDGET_EDIT + props.id}
+            href={UserPath.ESTIMATION_EDIT + props.id}
             className="rounded-full p-2 bg-gray-300 my-auto hover:bg-gray-200 transition-all duration-200">
             <MdEditNote className="text-lg my-auto" />
           </a>
@@ -60,22 +52,18 @@ export default function BudgetCardDetail(props: Props) {
       <div className="text-sm md:text-base font-medium text-center">
         <div className="flex justify-between mb-1">
           <div className="grid grid-rows-2 gap-y-2">
-            <span>Terpakai</span>
-            <span className=" text-blue">Rp{numFormatter(props.usedBudget)}</span>
+            <span>Tercapai</span>
+            <span className=" text-blue">Rp{numFormatter(props.achieved)}</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
             <span className="row-start-2 ">{percentStr}%</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
-            <span>Tersisa</span>
-            <span className="text-blue ">Rp{numFormatter(props.remaining)}</span>
+            <span>Target</span>
+            <span className="text-blue ">Rp{numFormatter(props.target)}</span>
           </div>
         </div>
-        <ProgressBar
-          bgColor={getProgressBarColor(props.percentage)}
-          textColor={"text-white"}
-          percentage={props.percentage}
-        />
+        <ProgressBar bgColor={"bg-blue"} textColor={"text-white"} percentage={props.percentage} />
       </div>
     </Container>
   );

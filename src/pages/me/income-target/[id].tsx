@@ -1,30 +1,35 @@
 import BudgetPageLayout from "@/components/layouts/user/budget/budget-layout";
-import Container from "@/components/tools/container";
 import { UserPath } from "@/utils/global/route-path";
-import { CustomAlert, numFormatter } from "@/utils/helper";
+import { CustomAlert } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
-import { BudgetData, ExpenseTransactions, ProBudgetData } from "@/utils/interfaces/server-props";
+import {
+  IncomeEstimationData,
+  IncomeTransactions,
+  Transactions,
+} from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import moment from "moment";
-import BudgetCardDetail from "@/components/tools/card/budget-card-detail";
-import BudgetTransactionCard from "@/components/tools/card/budget-transaction-card";
+import IncomeTargetCardDetails from "@/components/tools/card/income-target/income-target-card-detail";
+import { TextBadge } from "@/components/tools/badges/text-badge";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { baseAlertStyle, deleteAlertStyle } from "@/utils/global/style";
+import BudgetTransactionCard from "@/components/tools/card/budget-transaction-card";
+import IncomeTargetTransCard from "@/components/tools/card/income-target/income-target-transactions-card";
 import Alert from "@/components/tools/alerts/alert";
 import { MdAdd } from "react-icons/md";
 
-export default function BudgetDetail() {
-  const [budget, setBudgetData] = useState<ProBudgetData>({
-    amountRemaining: 0,
-    amountUsed: 0,
-    percentageUsed: 0,
+export default function TargetIncomeDetails() {
+  const [target, setTarget] = useState<IncomeEstimationData>({
+    amountAchieved: 0,
+    percentageAchieved: 0,
+    amountUnachieved: 0,
+    isAchieved: false,
     id: 0,
-    amount: "",
+    amount: 0,
     isRepeat: false,
     start_date: new Date(),
     end_date: new Date(),
@@ -41,74 +46,71 @@ export default function BudgetDetail() {
       email: "",
     },
   });
-  const [transactionList, setTransactionList] = useState<ExpenseTransactions[]>([]);
+  const [transactionList, setTransactionList] = useState<IncomeTransactions[]>([]);
   const router = useRouter();
   const dataId = router.query.id;
-  const ref = useRef<any>();
   const swal = withReactContent(Swal);
 
-  const getData = async () => {
+  const getTargetDetails = async () => {
     await requestAxios({
-      url: baseUrl + "/budget/" + dataId,
+      url: baseUrl + "/income-estimation/" + dataId,
       method: "GET",
     })
       .then((res) => {
-        setBudgetData({
-          ...res.data,
-        });
-        getTransactionData(res.data.category.id, res.data.start_date);
+        setTarget({ ...res.data });
+        getTransactions(res.data.category.id, res.data.start_date);
       })
-      .catch((err) => {
-        return CustomAlert({ linkToConfirm: UserPath.BUDGET });
+      .catch((error) => {
+        CustomAlert({ linkToConfirm: UserPath.ESTIMATION, text: error });
       });
   };
 
-  const getTransactionData = async (category: number, date: Date) => {
+  const getTransactions = async (category: number, date: Date) => {
     await requestAxios({
-      url: baseUrl + `/transaction/expense/monthly?date=${date}&category=${category}`,
+      url: baseUrl + `/transaction/income/monthly?date=${date}&category=${category}`,
       method: "GET",
     })
       .then((res) => {
         setTransactionList(res.data);
       })
       .catch((error) => {
-        return CustomAlert({ linkToConfirm: UserPath.BUDGET });
+        return CustomAlert({ linkToConfirm: UserPath.ESTIMATION, text: error });
       });
   };
 
-  const requestDeleteBudget = async () => {
+  const requestDeleteData = async () => {
     await requestAxios({
-      url: baseUrl + "/budget/soft-delete/" + dataId,
+      url: baseUrl + "/income-estimation/soft-delete/" + dataId,
       method: "DELETE",
     })
       .then((res) => {
         swal
           .fire({
-            title: "Anggaran berhasil dihapus",
+            title: "Target pemasukan berhasil dihapus",
             icon: "success",
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push(UserPath.BUDGET);
+            if (res.isConfirmed) router.push(UserPath.ESTIMATION);
           });
       })
       .catch((error) => {
         swal
           .fire({
-            title: "Anggaran gagal dihapus",
+            title: "Target pemasukan gagal dihapus",
             icon: "error",
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push(UserPath.BUDGET);
+            if (res.isConfirmed) router.push(UserPath.ESTIMATION);
           });
       });
   };
 
-  const deleteBudget = async () => {
+  const deleteData = () => {
     swal
       .fire({
-        title: "Hapus Anggaran?",
+        title: "Hapus Target Pemasukan?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Hapus",
@@ -117,26 +119,26 @@ export default function BudgetDetail() {
       })
       .then((res) => {
         if (res.isConfirmed) {
-          requestDeleteBudget();
+          requestDeleteData();
         }
       });
   };
 
   useEffect(() => {
     if (router.isReady) {
-      getData();
+      getTargetDetails();
     }
   }, [router.isReady]);
 
   return (
-    <BudgetPageLayout backTo={UserPath.BUDGET}>
+    <BudgetPageLayout backTo={UserPath.ESTIMATION}>
       <section className="flex flex-col col-span-2 w-full p-1 md:p-6 space-y-5 ">
         <div>
-          <div className="inline-flex gap-x-4" id="budget-details-header">
+          <div className="inline-flex gap-x-4" id="target-details-header">
             <div id="budget-head-left" className="inline-flex gap-x-4">
               <div className="rounded-full p-2 bg-gray-300">
                 <Image
-                  src={`/assets/icons/svg/${budget?.category.icon}.svg`}
+                  src={`/assets/icons/svg/${target?.category.icon}.svg`}
                   alt="category-icon"
                   width={50}
                   height={50}
@@ -144,24 +146,31 @@ export default function BudgetDetail() {
                 />
               </div>
               <div className="flex flex-col my-auto">
-                <h2 className="text-xl text-gray-800">{budget?.category.title}</h2>
+                <div className="inline-flex gap-3">
+                  <h2 className="text-xl text-gray-800 font-medium">{target.category.title}</h2>
+                  <TextBadge
+                    color={target.isAchieved ? "success" : "warning"}
+                    text={target.isAchieved ? "Tercapai" : "Belum tercapai"}
+                    className="text-xs"
+                  />
+                </div>
                 <p className="text-sm text-mute">
-                  {moment(budget?.start_date).format("MMMM YYYY")}
+                  {moment(target?.start_date).format("MMMM YYYY")}
                 </p>
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-4" id="budget-card-details">
-            <BudgetCardDetail
-              usedBudget={budget.amountUsed}
-              budget={budget.amount}
-              title={budget.category.title}
-              icon={budget.category.icon}
-              id={budget.id}
-              date={budget.start_date}
-              percentage={budget.percentageUsed}
-              remaining={budget.amountRemaining}
-              deleteFunc={deleteBudget}
+          <div className="flex flex-col mt-4" id="target-card-details">
+            <IncomeTargetCardDetails
+              title={target.category.title}
+              icon={target.category.icon}
+              id={target.id}
+              date={target.start_date}
+              percentage={target.percentageAchieved}
+              achieved={target.amountAchieved}
+              unachived={target.amountUnachieved}
+              target={target.amount}
+              deleteFunc={deleteData}
             />
           </div>
         </div>
@@ -172,7 +181,7 @@ export default function BudgetDetail() {
             <h3 className="text-gray-600 text-xl font-semibold my-auto">Riwayat Transaksi</h3>
             <a
               className="p-2 rounded-sm bg-gray-300 my-auto hover:bg-gray-200 cursor-pointer transition-all duration-200"
-              href={UserPath.TRANSACTION_EXPENSE_ADD}>
+              href={UserPath.TRANSACTION_INCOME_ADD}>
               <MdAdd className="text-base" />
             </a>
           </div>
@@ -180,13 +189,13 @@ export default function BudgetDetail() {
           <div className="flex flex-col gap-y-4">
             {transactionList.length > 0 ? (
               transactionList.map((data, index) => (
-                <BudgetTransactionCard
+                <IncomeTargetTransCard
+                  dataId={data.id}
                   title={data.title}
                   wallet={data.wallet.name}
-                  icon={budget.category.icon}
+                  icon={target.category.icon}
                   date={data.created_at}
                   amount={data.amount}
-                  dataId={data.id}
                   key={index}
                 />
               ))

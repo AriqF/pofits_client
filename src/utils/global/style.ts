@@ -18,3 +18,4 @@ export const formStyle: string = "bg-gray-50 border border-gray-300 text-gray-90
 export const baseFormStyle: string = formStyle + " rounded-md "
 export const selectFormStyle: string = "p-1 " + formStyle + " inline-flex rounded-md";
 export const currencyFormStyle: string = formStyle + " rounded-r-md  ";
+export const checkBoxStyle: string = "w-4 h-4 text-blue bg-gray-100 border-gray-500 rounded cursor-pointer";

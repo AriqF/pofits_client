@@ -14,17 +14,34 @@ interface AlertProps {
   type: "info" | "danger" | "success" | "warning";
   isCapitalize?: boolean;
   className?: string;
+  size?: "small" | "medium" | "large";
 }
 
 export default function Alert(props: AlertProps) {
   const { text, type, isCapitalize } = props;
-
+  let { size } = props;
+  let py: string = "py-3";
   let textTransform = "normal-case";
   if (isCapitalize) textTransform = "capitalize";
+  if (!size) {
+    size = "small";
+  }
 
   let bgColor: string;
   let icon: IconType;
   // let icon: JSX.Element = <CgInfo />;
+
+  switch (size) {
+    case "small":
+      py = "py-2.5";
+      break;
+    case "medium":
+      py = "py-3.5";
+    case "large":
+      py = "py-4.5";
+    default:
+      py = "py-3.5";
+  }
 
   switch (type) {
     case "info":
@@ -52,12 +69,12 @@ export default function Alert(props: AlertProps) {
     <div
       className={
         props.className +
-        ` flex py-2.5 mb-4 text-sm text-whitegrey text-center rounded-md ${bgColor}`
+        ` flex ${py} mb-4 text-sm text-whitegrey text-center rounded-md ${bgColor}`
       }
       role="alert">
-      <p className={`font-medium ${textTransform} flex m-auto`}>
-        {React.createElement(icon, { className: "text-2xl mr-2" })}
-        {text}
+      <p className={`font-medium ${textTransform} flex m-auto place-content-center`}>
+        {React.createElement(icon, { className: "text-2xl mr-2 my-auto" })}
+        <span className="my-auto">{text}</span>
       </p>
     </div>
   );

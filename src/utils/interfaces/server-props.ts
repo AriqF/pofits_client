@@ -112,6 +112,56 @@ export interface AddBudgetData {
     // end_year?: number;
 }
 
+export interface IncomeEstimationData extends BaseServerData {
+    id: number;
+    amount: number;
+    isRepeat: boolean;
+    start_date: Date;
+    end_date: Date;
+    category: JoinCategory;
+    amountAchieved: number;
+    percentageAchieved: number;
+    amountUnachieved: number;
+    isAchieved: boolean;
+}
+
+export interface IncomeEstimationRecap {
+    totalAchieved: number;
+    totalUnachieved: number;
+    totalTarget: number;
+    percentageAchieved: number;
+}
+
+export interface IncomeEstmationForm {
+    amount: string;
+    isRepeat: boolean;
+    start_date: string;
+    end_date?: string;
+    category: {
+        label: string, value: string, icon: string;
+    }
+}
+
+export interface Transactions extends BaseServerData {
+    id: number;
+    date: Date;
+    title: string;
+    amount: number;
+    description?: string;
+    category: JoinCategory;
+    wallet: JoinWallet;
+}
+
+export interface IncomeTransactions extends Transactions { }
+
+export interface ExpenseTransactions extends Transactions { }
+
+interface JoinWallet {
+    id: number;
+    name: string;
+    amount: string;
+}
+
 interface JoinCategory {
     id: number;
     title: string;

@@ -12,6 +12,7 @@ import {
   MdFlag,
   MdReceiptLong,
   MdRequestQuote,
+  MdFactCheck,
 } from "react-icons/md";
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
 import SidebarItem from "./sidebar-item";
@@ -26,6 +27,7 @@ export default function UserSideBar() {
         <ul className="space-y-3">
           <SidebarItem text={"Beranda"} linkTo={UserPath.HOME} icon={MdHome} />
           <SidebarItem text={"Anggaran"} linkTo={UserPath.BUDGET} icon={MdRequestQuote} />
+          <SidebarItem text={"Target Pemasukan"} linkTo={UserPath.ESTIMATION} icon={MdFactCheck} />
           <SidebarItem
             text={"Transaksi"}
             linkTo={UserPath.BUDGET}

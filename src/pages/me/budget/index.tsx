@@ -36,11 +36,12 @@ export default function BudgetPage() {
     totalUsed: 0,
   });
   const [monthFilter, setMonthFilter] = useState(new Date());
+  const [selectedMonth, setSelectedMonth] = useState(new Date());
   const router = useRouter();
 
   const getFiltered = async (e: any) => {
     e.preventDefault();
-    await getBudgets(monthFilter);
+    setSelectedMonth(monthFilter);
   };
 
   const getMonthRecapBudget = async (month: Date) => {
@@ -81,11 +82,14 @@ export default function BudgetPage() {
 
   useEffect(() => {
     setMonthFilter(new Date());
-    if (router.isReady) {
-      getBudgets(monthFilter);
-      getMonthRecapBudget(monthFilter);
-    }
-  }, [router.isReady]);
+    getBudgets(monthFilter);
+    getMonthRecapBudget(monthFilter);
+  }, []);
+
+  useEffect(() => {
+    getBudgets(selectedMonth);
+    getMonthRecapBudget(selectedMonth);
+  }, [selectedMonth]);
 
   return (
     <BudgetPageLayout backTo={UserPath.HOME}>
@@ -113,7 +117,7 @@ export default function BudgetPage() {
             </div>
             <div className="space-y-2 text-center">
               <h3 className="text-base">
-                Anggaran Pengeluaran {moment(monthFilter).format("MMMM YYYY")}
+                Anggaran Pengeluaran {moment(selectedMonth).format("MMMM YYYY")}
               </h3>
               <p className="text-sm text-mute">
                 <span
@@ -122,10 +126,10 @@ export default function BudgetPage() {
                       ? "text-moneyDanger "
                       : "text-moneySafe ") + ` font-bold`
                   }>
-                  Rp{numFormatter(monthRecap.totalRemaining)}
+                  Rp {numFormatter(monthRecap.totalRemaining)}
                 </span>{" "}
                 Tersisa dari{" "}
-                <span className="font-bold">Rp{numFormatter(monthRecap.totalBudget)}</span>
+                <span className="font-bold">Rp {numFormatter(monthRecap.totalBudget)}</span>
               </p>
             </div>
             <div className="w-full grid grid-cols-1 gap-y-2">
@@ -137,21 +141,23 @@ export default function BudgetPage() {
                 <MdLibraryAdd className="flex-inline my-auto text-xl mr-2" />
                 <h4>Tambah Anggaran</h4>
               </MenuOptionItem>
-              <MenuOptionItem
+              {/* <MenuOptionItem
                 linkTo={UserPath.BUDGET_HISTORY}
                 className={
                   "text-blue hover:text-white border border-blue hover:bg-blue font-medium rounded-md  text-center place-content-center md:place-content-center transition-colors duration-150 ease-in "
                 }>
                 <MdHistory className="flex-inline my-auto text-xl mr-2" />
                 <h4>Lihat Riwayat</h4>
-              </MenuOptionItem>
+              </MenuOptionItem> */}
             </div>
           </div>
         </Container>
       </section>
       <section id="budget-content" className={"md:col-span-2 w-full space-y-4 "}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
-          <h3 className="text-2xl text-gray-600">Anggaran Bulan Ini</h3>
+          <h3 className="text-2xl text-gray-600">
+            Anggaran Bulan {moment(selectedMonth).format("MMMM YYYY")}
+          </h3>
         </div>
         <form className="inline-flex w-full" onSubmit={getFiltered}>
           <input

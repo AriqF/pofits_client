@@ -18,9 +18,14 @@ export enum UserPath {
     BUDGET_EDIT = "/me/budget/edit/",
     BUDGET_ADD = "/me/budget/add/",
     BUDGET_HISTORY = "/me/budget/history/",
-    ESTIMATION = "/me/income-estimation/",
-    ESTIMATION_ADD = "/me/income-estimation/add",
+    ESTIMATION = "/me/income-target/",
+    ESTIMATION_ADD = "/me/income-target/add",
+    ESTIMATION_EDIT = "/me/income-target/edit/",
     FINANCE_GOAL = "/me/finance-goals/",
-    TRANSACTION = "/me/transaction/"
+    TRANSACTION = "/me/transaction/",
+    TRANSACTION_INCOME_DETAIL = "/me/transaction/income/detail/",
+    TRANSACTION_INCOME_ADD = "/me/transaction/income/add/",
+    TRANSACTION_EXPENSE_DETAIL = "/me/transaction/expense/detail/",
+    TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add/",
 
 } 
