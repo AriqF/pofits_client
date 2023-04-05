@@ -4,7 +4,7 @@ import { UserPath } from "@/utils/global/route-path";
 import { CustomAlert, numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
-import { BudgetData, ProBudgetData } from "@/utils/interfaces/server-props";
+import { BudgetData, ExpenseTransactions, ProBudgetData } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -15,6 +15,8 @@ import BudgetTransactionCard from "@/components/tools/card/budget-transaction-ca
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { baseAlertStyle, deleteAlertStyle } from "@/utils/global/style";
+import Alert from "@/components/tools/alerts/alert";
+import { MdAdd } from "react-icons/md";
 
 export default function BudgetDetail() {
   const [budget, setBudgetData] = useState<ProBudgetData>({
@@ -39,6 +41,7 @@ export default function BudgetDetail() {
       email: "",
     },
   });
+  const [transactionList, setTransactionList] = useState<ExpenseTransactions[]>([]);
   const router = useRouter();
   const dataId = router.query.id;
   const ref = useRef<any>();
@@ -53,8 +56,22 @@ export default function BudgetDetail() {
         setBudgetData({
           ...res.data,
         });
+        getTransactionData(res.data.category.id, res.data.start_date);
       })
       .catch((err) => {
+        return CustomAlert({ linkToConfirm: UserPath.BUDGET });
+      });
+  };
+
+  const getTransactionData = async (category: number, date: Date) => {
+    await requestAxios({
+      url: baseUrl + `/transaction/expense/monthly?date=${date}&category=${category}`,
+      method: "GET",
+    })
+      .then((res) => {
+        setTransactionList(res.data);
+      })
+      .catch((error) => {
         return CustomAlert({ linkToConfirm: UserPath.BUDGET });
       });
   };
@@ -92,7 +109,7 @@ export default function BudgetDetail() {
     swal
       .fire({
         title: "Hapus Anggaran?",
-        icon: "question",
+        icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Hapus",
         cancelButtonText: "Batal",
@@ -151,37 +168,31 @@ export default function BudgetDetail() {
       </section>
       <section>
         <div className="flex flex-col col-span-1" id="budget-transactions">
-          <h3 className="text-gray-600 text-xl font-semibold mb-4">Riwayat Transaksi</h3>
+          <div className="inline-flex justify-between mb-4">
+            <h3 className="text-gray-600 text-xl font-semibold my-auto">Riwayat Transaksi</h3>
+            <a
+              className="p-2 rounded-sm bg-gray-300 my-auto hover:bg-gray-200 cursor-pointer transition-all duration-200"
+              href={UserPath.TRANSACTION_EXPENSE_ADD}>
+              <MdAdd className="text-base" />
+            </a>
+          </div>
           {/* LIST TRANSAKSI */}
           <div className="flex flex-col gap-y-4">
-            <BudgetTransactionCard
-              title={"Nasi Padang"}
-              wallet={"Kas Tunai"}
-              icon={budget.category.icon}
-              date={new Date("2023-03-28")}
-              amount={27000}
-            />
-            <BudgetTransactionCard
-              title={"Penyetan"}
-              wallet={"Gopay"}
-              icon={budget.category.icon}
-              date={new Date("2023-03-29")}
-              amount={19000}
-            />
-            <BudgetTransactionCard
-              title={"Marugame"}
-              wallet={"BCA"}
-              icon={budget.category.icon}
-              date={new Date("2023-03-30")}
-              amount={87000}
-            />
-            <BudgetTransactionCard
-              title={"Nasi Padang"}
-              wallet={"BCA"}
-              icon={budget.category.icon}
-              date={new Date("2023-03-31")}
-              amount={18000}
-            />
+            {transactionList.length > 0 ? (
+              transactionList.map((data, index) => (
+                <BudgetTransactionCard
+                  title={data.title}
+                  wallet={data.wallet.name}
+                  icon={budget.category.icon}
+                  date={data.created_at}
+                  amount={data.amount}
+                  dataId={data.id}
+                  key={index}
+                />
+              ))
+            ) : (
+              <Alert text={"Belum ada transaksi"} type={"info"} size={"small"} />
+            )}
           </div>
         </div>
       </section>
