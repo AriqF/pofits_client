@@ -34,7 +34,7 @@ export default function BudgetCardDetail(props: Props) {
   };
 
   return (
-    <Container className="p-4 drop-shadow-sm hover:drop-shadow-md transition-all duration-500 text-md border-2">
+    <Container className="p-4 shadow-xs hover:shadow-md transition-all duration-500 text-md border-2">
       <div className="inline-flex justify-between">
         <div className="flex flex-col gap-x-4">
           {/* <p className="text-mute text-base">
