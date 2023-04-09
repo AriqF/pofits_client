@@ -31,7 +31,7 @@ export default function SidebarItemDropdown(props: Props) {
           }
         />
       </button>
-      <ul id="dropdown" className="hidden py-1 space-y-1 transition-all duration-500">
+      <ul id="dropdown" className="hidden py-1 transition-all duration-500">
         {props.children}
       </ul>
     </li>

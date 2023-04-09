@@ -13,6 +13,8 @@ import {
   MdReceiptLong,
   MdRequestQuote,
   MdFactCheck,
+  MdMoveToInbox,
+  MdOutbox,
 } from "react-icons/md";
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
 import SidebarItem from "./sidebar-item";
@@ -30,9 +32,9 @@ export default function UserSideBar() {
           <SidebarItem text={"Target Pemasukan"} linkTo={UserPath.ESTIMATION} icon={MdFactCheck} />
           <SidebarItem
             text={"Transaksi"}
-            linkTo={UserPath.BUDGET}
+            linkTo={UserPath.TRANSACTION}
             icon={MdReceiptLong}
-            badgeText="404"
+            badgeText="DEV"
           />
           <SidebarItem
             text={"Tujuan Keuangan"}
@@ -41,16 +43,23 @@ export default function UserSideBar() {
             badgeText="404"
           />
           <SidebarItemDropdown text={"Atur Data"} linkTo={UserPath.SETTINGS} icon={MdTune}>
-            <SidebarItem text={"Dompet"} linkTo={UserPath.WALLETS} dropdownItem={true} />
+            <SidebarItem
+              text={"Dompet"}
+              linkTo={UserPath.WALLETS}
+              dropdownItem={true}
+              // icon={MdAccountBalanceWallet}
+            />
             <SidebarItem
               text={"Kategori Pemasukan"}
               linkTo={UserPath.INCOME_CATEGORY}
               dropdownItem={true}
+              // icon={MdMoveToInbox}
             />
             <SidebarItem
               text={"Kategori Pengeluaran"}
               linkTo={UserPath.EXPENSE_CATEGORY}
               dropdownItem={true}
+              // icon={MdOutbox}
             />
           </SidebarItemDropdown>
         </ul>

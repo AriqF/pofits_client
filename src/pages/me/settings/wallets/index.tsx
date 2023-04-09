@@ -15,7 +15,13 @@ import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-import { Md11Mp, MdAddCircleOutline, MdSwapHoriz } from "react-icons/md";
+import {
+  Md11Mp,
+  MdAddCircleOutline,
+  MdSwapHoriz,
+  MdVisibility,
+  MdVisibilityOff,
+} from "react-icons/md";
 
 export default function MyWallets() {
   const [wallets, setWallets] = useState<WalletData[]>([]);
@@ -60,7 +66,11 @@ export default function MyWallets() {
                 Total saldo di semua dompet:{" "}
                 <div className="inline-flex gap-x-2">
                   <button onClick={() => setShowAmount(!showAmount)}>
-                    {showAmount ? <FiEye className="text-xl" /> : <FiEyeOff className="text-xl" />}
+                    {showAmount ? (
+                      <MdVisibility className="text-xl" />
+                    ) : (
+                      <MdVisibilityOff className="text-xl" />
+                    )}
                   </button>
                   <span className="text-xl font-semibold text-gray-800">
                     Rp {showAmount ? totalAmounts : "*********"}

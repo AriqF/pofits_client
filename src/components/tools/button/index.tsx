@@ -42,10 +42,10 @@ export default function DefaultButton(props: ButtonProps) {
         " " +
         className +
         " inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
-        "rounded-md text-md px-4 py-3 w-full m-auto "
+        "rounded-md text-md px-2 py-3 md:py-2.5 w-full m-auto "
       }>
       {props.icon ? React.createElement(props?.icon, { className: "text-2xl mr-2" }) : ""}
-      {text}
+      <span className="my-auto">{text}</span>
     </button>
   );
 }
