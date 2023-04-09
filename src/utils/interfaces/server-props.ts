@@ -154,6 +154,27 @@ export interface Transactions extends BaseServerData {
 
 export interface IncomeTransactions extends Transactions { }
 
+export interface BaseTransactionForm {
+    category: {
+        value: number;
+        label: string;
+        icon: string;
+    };
+    wallet?: {
+        value: number;
+        label: string;
+        icon: string;
+    };
+    amount: string;
+    date: Date;
+    title: string;
+    description?: string
+}
+
+export interface IncomeForm extends BaseTransactionForm { }
+
+export interface ExpenseForm extends BaseTransactionForm { }
+
 export interface ExpenseTransactions extends Transactions { }
 
 interface JoinWallet {
