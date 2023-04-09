@@ -127,7 +127,10 @@ export const numFormatter = (n: string | number | bigint, decimalSymbol?: string
     const splitNumber = String(Number(n) * -1).split(decimalSymbol || ".");
     if (splitNumber.length > 1)
       return "-" + splitNumber[0].replace(/(.)(?=(\d{3})+$)/g, "$1.") + `,${splitNumber[1]}`;
-    else return String(n).replace(/(.)(?=(\d{3})+$)/g, "$1.");
+    else
+      return String(n)
+        .replace("-", "")
+        .replace(/(.)(?=(\d{3})+$)/g, "$1.");
   }
 };
 
