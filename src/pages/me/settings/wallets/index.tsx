@@ -1,5 +1,7 @@
 import UserSettingsLayout from "@/components/layouts/user/settings";
 import UserSettingsHeader from "@/components/layouts/user/settings/header-settings";
+import Alert from "@/components/tools/alerts/alert";
+import NotFoundImage from "@/components/tools/alerts/notfound-image";
 import LinkButton from "@/components/tools/button/link-button";
 import WalletAddButton from "@/components/tools/button/wallet-add-button";
 import WalletListItem from "@/components/tools/list/page/wallet-list-card";
@@ -102,16 +104,20 @@ export default function MyWallets() {
         <div
           id="wallet-list"
           className="grid grid-cols-1 gap-x-4 m-auto max-[300px]:grid-cols-1 max-[300px]:gap-y-3">
-          {wallets.map((wallet, index) => (
-            <WalletListItem
-              icon={wallet.icon}
-              id={wallet.id}
-              key={index}
-              name={wallet.name}
-              category={wallet.category}
-              linkToId={wallet.id}
-            />
-          ))}
+          {wallets.length > 0 ? (
+            wallets.map((wallet, index) => (
+              <WalletListItem
+                icon={wallet.icon}
+                id={wallet.id}
+                key={index}
+                name={wallet.name}
+                category={wallet.category}
+                linkToId={wallet.id}
+              />
+            ))
+          ) : (
+            <NotFoundImage text="Belum ada dompet" imageWidth={200} imageHeight={200} />
+          )}
         </div>
       </section>
     </UserSettingsLayout>

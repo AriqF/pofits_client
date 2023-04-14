@@ -17,7 +17,9 @@ import { AllTransactions, TransactionsMonthRecap } from "@/utils/interfaces/serv
 import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
 import InputForm from "@/components/tools/form/input-form";
 import moment from "moment";
-import SearchAlert from "@/components/tools/alerts/search-alert";
+import NotFoundImage from "@/components/tools/alerts/notfound-image";
+import { AxiosError } from "axios";
+import Alert from "@/components/tools/alerts/alert";
 
 interface Props {
   children: ReactNode;
@@ -44,6 +46,7 @@ export default function TransactionIndex(props: Props) {
   const [endDateFilter, setEndDateFilter] = useState("");
   const [formDate, setFormDate] = useState("");
   const [hasFilter, setHasFilter] = useState(false);
+
   // const [dateRangeState, setDateRangeState] = useState<Range[]>([
   //   {
   //     startDate: new Date(),
@@ -114,7 +117,9 @@ export default function TransactionIndex(props: Props) {
         }
         return setTransactions(res.data);
       })
-      .catch((err) => CustomAlert({ linkToConfirm: UserPath.TRANSACTION, text: `err: ${err}` }));
+      .catch((error: AxiosError) => {
+        return CustomAlert({ linkToConfirm: UserPath.TRANSACTION, text: error.message });
+      });
   };
 
   useEffect(() => {
@@ -347,8 +352,16 @@ export default function TransactionIndex(props: Props) {
                       key={index}
                     />
                   ))
+                ) : transactions.length == 0 &&
+                  monthRecap.totalExpenses == 0 &&
+                  monthRecap.totalIncomes == 0 ? (
+                  <Alert
+                    text="Belum ada transaksi dibuat"
+                    type={"info"}
+                    className="md:w-[50%] m-auto"
+                  />
                 ) : (
-                  <SearchAlert />
+                  <NotFoundImage text="Pencarian tidak ditemukan" />
                 )}
               </div>
             </div>
