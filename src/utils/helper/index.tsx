@@ -10,6 +10,7 @@ type AlertOptions = {
   icon?: SweetAlertIcon;
   linkToConfirm?: string;
   reverseColor?: boolean;
+  confirmReload?: boolean;
 };
 
 type SelectInputOption = {
@@ -58,7 +59,9 @@ export const CustomAlert = async (options?: AlertOptions) => {
     })
     .then((res) => {
       if (res.isConfirmed) {
-        if (options?.linkToConfirm) {
+        if (options?.confirmReload) {
+          Router.reload();
+        } else if (options?.linkToConfirm) {
           Router.push(options.linkToConfirm);
           return;
         }
@@ -66,6 +69,14 @@ export const CustomAlert = async (options?: AlertOptions) => {
       }
     });
 };
+
+export function getDateStartMonth(date: Date): Date {
+  return new Date(moment(date).startOf("month").format());
+}
+
+export function getDateEndMonth(date: Date): Date {
+  return new Date(moment(date).endOf("month").format());
+}
 
 export const smoothScroll = (elementId: string, headerHeight: number) => {
   const scrollElement = document.getElementById(elementId)?.offsetTop || 0;
