@@ -25,7 +25,9 @@ export enum UserPath {
     TRANSACTION = "/me/transaction/",
     TRANSACTION_INCOME_DETAIL = "/me/transaction/income/detail/",
     TRANSACTION_INCOME_ADD = "/me/transaction/income/add/",
+    TRANSACTION_INCOME_EDIT = "/me/transaction/income/edit/",
     TRANSACTION_EXPENSE_DETAIL = "/me/transaction/expense/detail/",
     TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add/",
+    TRANSACTION_EXPENSE_EDIT = "/me/transaction/expense/edit/",
 
 } 
