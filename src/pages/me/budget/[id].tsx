@@ -182,7 +182,7 @@ export default function BudgetDetail() {
               transactionList.map((data, index) => (
                 <BudgetTransactionCard
                   title={data.title}
-                  wallet={data.wallet.name}
+                  wallet={data.wallet?.name ? data.wallet?.name : "-"}
                   icon={budget.category.icon}
                   date={data.created_at}
                   amount={data.amount}
