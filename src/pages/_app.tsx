@@ -6,6 +6,8 @@ import "moment/locale/id";
 import moment from "moment";
 import { useEffect } from "react";
 import Script from "next/script";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 export default function App({ Component, pageProps }: AppProps) {
   moment.locale("id");

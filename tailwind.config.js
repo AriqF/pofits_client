@@ -29,6 +29,7 @@ module.exports = {
         hovblue: "#395cc6",
         palepurple: "#8c4dcb",
         hovpalepurple: "#7f39c6",
+        hovoutpurple: "#f2ebfa",
         lighterpurple: "#b288dd",
         hovlighterpurple: "#a674d8",
         darkpurple: "#8c4dcb",
@@ -41,7 +42,7 @@ module.exports = {
         hovSuccessGreen: "#26a673",
         infoBlue: "#4a7dcf",
         hovInfoBlue: "#366ec9",
-        moneySafe: "#66d46f",
+        moneySafe: "#1ac1c7",
         moneyDanger: "#c74238",
         moneyWarn: "#d7ed12"
       },

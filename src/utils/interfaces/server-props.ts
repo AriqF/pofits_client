@@ -9,9 +9,9 @@ export interface JWTServer {
 
 interface BaseServerData {
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
     deleted_at?: Date;
-    created_by: CreatedBy;
+    created_by?: CreatedBy;
 }
 
 export interface CreatedBy {
@@ -149,17 +149,69 @@ export interface Transactions extends BaseServerData {
     amount: number;
     description?: string;
     category: JoinCategory;
-    wallet: JoinWallet;
+    wallet?: JoinWallet;
 }
 
 export interface IncomeTransactions extends Transactions { }
 
 export interface ExpenseTransactions extends Transactions { }
 
+export interface BaseTransactionForm {
+    category: {
+        value: number;
+        label: string;
+        icon: string;
+    };
+    wallet?: {
+        value: number;
+        label: string;
+        icon: string;
+    };
+    amount: string;
+    date: Date;
+    title: string;
+    description?: string
+}
+
+export interface IncomeForm extends BaseTransactionForm { }
+
+export interface ExpenseForm extends BaseTransactionForm { }
+
+export interface TransactionsMonthRecap {
+    totalExpenses: number,
+    totalIncomes: number,
+    amountDiff: number
+}
+
+export interface AllTransactions {
+    id: number;
+    category: {
+        id: number;
+        title: string;
+        icon: string;
+    };
+    wallet?: {
+        id: number;
+        name: string;
+        amount: number;
+    };
+    title: string;
+    description?: string;
+    amount: number;
+    type: "income" | "expense";
+    date: Date;
+    created_at: Date;
+    created_by: {
+        id: number;
+        email: string;
+    }
+}
+
 interface JoinWallet {
     id: number;
     name: string;
-    amount: string;
+    amount?: string;
+    icon?: string;
 }
 
 interface JoinCategory {
