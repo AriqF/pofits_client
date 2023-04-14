@@ -6,7 +6,7 @@ import { UserPath } from "@/utils/global/route-path";
 
 interface Props {
   title: string;
-  wallet: string;
+  wallet?: string;
   icon: string;
   date: Date;
   amount: number;
@@ -28,20 +28,23 @@ export default function TransactionListItem(props: Props) {
           <Image
             src={`/assets/icons/svg/${props.icon}.svg`}
             alt="icon-category"
-            width={35}
-            height={35}
+            width={30}
+            height={30}
           />
         </div>
         <div className="my-auto text-left">
-          <h4 className="my-auto text-base">{props.title}</h4>
-          <p className="text-sm text-mute ">{props.wallet}</p>
+          <h4 className="my-auto md:text-base text-sm font-semibold text-gray-700">
+            {props.title}
+          </h4>
+          <p className="md:text-sm text-xs text-mute ">{props.wallet ? props.wallet : "-"}</p>
         </div>
       </div>
       <div className="trans-right flex-col my-auto text-right">
-        <p className="text-sm text-mute ">{moment(props.date).format("DD MMM YYYY")}</p>
+        <p className="md:text-sm text-xs text-mute ">{moment(props.date).format("DD MMM YYYY")}</p>
         <p
           className={
-            (props.type == "income" ? "text-moneySafe" : "text-moneyDanger") + " text-base"
+            (props.type == "income" ? "text-moneySafe" : "text-moneyDanger") +
+            " md:text-base text-sm"
           }>
           {props.type == "income" ? "+" : "-"} Rp {numFormatter(props.amount)}
         </p>
