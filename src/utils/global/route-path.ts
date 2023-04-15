@@ -1,4 +1,10 @@
 
+export enum AuthPath {
+    LOGIN = "/auth/login/",
+    REGISTER = "/auth/register/",
+    FORGOT_PASS = "/auth/forgot-password/",
+    RESET_PASS = "/auth/reset-password/"
+}
 
 export enum UserPath {
     HOME = "/me/",

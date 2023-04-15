@@ -12,6 +12,9 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { JWTServer } from "@/utils/interfaces/server-props";
 import jwt_decode from "jwt-decode";
 import { NextResponse } from "next/server";
+import { AuthPath, UserPath } from "@/utils/global/route-path";
+import InputForm from "@/components/tools/form/input-form";
+import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
 interface FormState {
   email: string;
   password: string;
@@ -63,7 +66,7 @@ export default function Login() {
           secure: true,
         });
 
-        res.data.role === "admin" ? router.push("/admin") : router.push("/me");
+        res.data.role === "admin" ? router.push("/admin") : router.push(UserPath.HOME);
         // return NextResponse.next();
       })
       .catch((error) => {
@@ -80,15 +83,13 @@ export default function Login() {
     <AuthLayout headerText="Masuk">
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} ref={ref}>
         <div id="login-form" className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block mb-2 text-md font-medium text-gray-900">
-              Alamat email
-            </label>
+          <InputForm label={"Alamat email"} id={"email"} errors={errors.email?.message}>
             <input
               type="email"
               id="email"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.email ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Masukkan alamat email yang terdaftar"
               required
               {...register("email", {
@@ -102,18 +103,14 @@ export default function Login() {
                 },
               })}
             />
-            {errors.email && (
-              <span className="font-medium t-2 text-xs text-red-600">{errors.email?.message}</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="password" className="block mb-2 text-md font-medium text-gray-900">
-              Kata sandi
-            </label>
+          </InputForm>
+          <InputForm label={"Kata sandi"} id={"password"} errors={errors.password?.message}>
             <input
               type="password"
               id="password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue focus:border-blue focus:outline-blue"
+              className={
+                baseFormStyle + (errors.email ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Kata sandi"
               required
               {...register("password", {
@@ -123,14 +120,14 @@ export default function Login() {
                 },
               })}
             />
-          </div>
+          </InputForm>
           <div>
             <div className="flex items-center">
               <input
                 id="keepSigned"
                 type="checkbox"
                 {...register("isKeepSignedIn")}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                className={checkBoxStyle}
               />
               <label htmlFor="keepSigned" className="ml-2 text-sm font-medium text-gray-900">
                 Biarkan saya tetap masuk
@@ -150,12 +147,12 @@ export default function Login() {
         <div className="grid grid-cols-1 text-center text-md space-y-2">
           <a
             className="text-blue hover:text-hovblue font-bold w-fit m-auto"
-            href="/auth/forgot-password">
+            href={AuthPath.FORGOT_PASS}>
             Lupa kata sandi
           </a>
           <p>
             Belum punya akun?{" "}
-            <a className="text-blue hover:text-hovblue font-bold" href="/auth/register">
+            <a className="text-blue hover:text-hovblue font-bold" href={AuthPath.REGISTER}>
               Daftar
             </a>
           </p>

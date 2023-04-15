@@ -1,5 +1,8 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
+import InputForm from "@/components/tools/form/input-form";
+import { AuthPath, UserPath } from "@/utils/global/route-path";
+import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -34,7 +37,7 @@ export default function ForgotPassword() {
     formState: { errors, isSubmitting },
   } = useForm<FormState>();
 
-  const onSubmit: SubmitHandler<FormState> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormState> = async (data: FormState) => {
     setErrMessage("");
     setSuccessMessage("");
     await axios(`${baseUrl}/auth/forgot-password`, {
@@ -53,7 +56,7 @@ export default function ForgotPassword() {
             showConfirmButton: true,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("login");
+            if (res.isConfirmed) router.push(AuthPath.LOGIN);
           });
       })
       .catch((err) => {
@@ -73,15 +76,13 @@ export default function ForgotPassword() {
           </p>
         </div> */}
         <div id="login-form" className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block mb-2 text-md font-medium text-gray-900">
-              Alamat email
-            </label>
+          <InputForm label={"Alamat email"} id={"email"} errors={errors.email?.message}>
             <input
               type="email"
               id="email"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.email ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Masukkan alamat email yang terdaftar"
               required
               {...register("email", {
@@ -95,10 +96,7 @@ export default function ForgotPassword() {
                 },
               })}
             />
-            {errors.email && (
-              <span className="font-medium t-2 text-xs text-red-600">{errors.email?.message}</span>
-            )}
-          </div>
+          </InputForm>
         </div>
         <div id="forgot-button" className="md:w-full flex flex-col md:mx-auto space-y-2">
           <div id="auth-message" className="grid grid-cols-1">

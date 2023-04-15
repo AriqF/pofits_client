@@ -1,6 +1,9 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
+import InputForm from "@/components/tools/form/input-form";
+import { AuthPath, UserPath } from "@/utils/global/route-path";
+import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail, regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -44,7 +47,7 @@ export default function Register() {
     formState: { errors, isSubmitting },
   } = useForm<FormState>();
 
-  const onSubmit: SubmitHandler<FormState> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormState> = async (data: FormState) => {
     setErrMessage("");
     await axios(`${baseUrl}/auth/register`, {
       method: "POST",
@@ -64,7 +67,7 @@ export default function Register() {
             text: "Sekarang kamu sudah bisa menggunakan akunmu untuk masuk",
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/auth/login");
+            if (res.isConfirmed) router.push(AuthPath.LOGIN);
           });
       })
       .catch((error) => {
@@ -80,15 +83,12 @@ export default function Register() {
     <AuthLayout headerText={"Daftar"}>
       <form ref={ref} className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div id="register-form" className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block mb-2 text-md font-medium text-gray-900">
-              Username
-            </label>
+          <InputForm label={"Username"} id={"username"} errors={errors.username?.message}>
             <input
               type="text"
-              id="username"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.username ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Masukkan username"
               required
               {...register("username", {
@@ -106,21 +106,13 @@ export default function Register() {
                 },
               })}
             />
-            {errors.username && (
-              <span className="font-medium t-2 text-xs text-red-600">
-                {errors.username?.message}
-              </span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="email" className="block mb-2 text-md font-medium text-gray-900">
-              Alamat email
-            </label>
+          </InputForm>
+          <InputForm label={"Email"} id={"email"} errors={errors.email?.message}>
             <input
               type="email"
-              id="email"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.email ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Masukkan alamat email yang aktif"
               required
               {...register("email", {
@@ -134,19 +126,14 @@ export default function Register() {
                 },
               })}
             />
-            {errors.email && (
-              <span className="font-medium t-2 text-xs text-red-600">{errors.email?.message}</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="password" className="block mb-2 text-md font-medium text-gray-900">
-              Kata sandi
-            </label>
+          </InputForm>
+          <InputForm label={"Kata sandi"} id={"password"} errors={errors.password?.message}>
             <input
               type="password"
               id="password"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.password ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Kata sandi"
               required
               {...register("password", {
@@ -164,23 +151,18 @@ export default function Register() {
                 },
               })}
             />
-            {errors.password && (
-              <span className="font-medium t-2 text-xs text-red-600">
-                {errors.password?.message}
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block mb-2 text-md font-medium text-gray-900">
-              Konfirmasi Kata sandi
-            </label>
+          </InputForm>
+          <InputForm
+            label={"Konfirmasi Kata sandi"}
+            id={"confirm_password"}
+            errors={errors.confirmPassword?.message}>
             <input
               type="password"
               id="confirmPassword"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.email ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle +
+                (errors.confirmPassword ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Konfirmasi kata sandi"
               required
               {...register("confirmPassword", {
@@ -198,13 +180,7 @@ export default function Register() {
                 },
               })}
             />
-            {errors.confirmPassword && (
-              <FormHelper
-                textColor="danger"
-                text={String(errors.confirmPassword?.message)}></FormHelper>
-            )}
-          </div>
-          {/* end of form div */}
+          </InputForm>
         </div>
         <div id="register-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
           <div id="auth-message">{errMessage && <Alert text={errMessage} type="danger" />}</div>
@@ -218,7 +194,7 @@ export default function Register() {
         <div className="grid grid-cols-1 text-center text-md space-y-2">
           <p>
             Sudah punya akun?{" "}
-            <a className="text-blue hover:text-hovblue font-bold" href="/auth/login">
+            <a className="text-blue hover:text-hovblue font-bold" href={AuthPath.LOGIN}>
               Masuk
             </a>
           </p>
