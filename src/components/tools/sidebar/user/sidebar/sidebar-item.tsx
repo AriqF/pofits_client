@@ -23,7 +23,7 @@ export default function SidebarItem(props: Props) {
         className={
           baseItemStyle + (props.dropdownItem ? " w-full pl-9 group " : "flex items-center     ")
         }>
-        {props.icon ? React.createElement(props?.icon, { className: "text-2xl" }) : ""}
+        {props.icon ? React.createElement(props?.icon, { className: "text-2xl m-auto" }) : ""}
         <span className="flex-1 ml-3 whitespace-nowrap">{props.text}</span>
         {props.badgeText ? (
           <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium bg-[#4d6dcb] rounded-full group-hover:text-white ">

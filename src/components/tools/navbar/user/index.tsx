@@ -1,17 +1,8 @@
-import MenuOption from "./menu-option";
-import {
-  AiFillProfile,
-  AiOutlineFolderAdd,
-  AiOutlineFolderOpen,
-  AiOutlineHome,
-  AiOutlineMoneyCollect,
-  AiOutlineRedEnvelope,
-  AiOutlineUser,
-  AiOutlineWallet,
-} from "react-icons/ai";
+import "flowbite";
 import UserMobileNavbar from "./mobile-navbar";
 import UserDesktopNavbar from "./desktop-navbar";
 import BottomBar from "./bottom-bar";
+import { useEffect } from "react";
 
 export default function UserNavbar() {
   return (

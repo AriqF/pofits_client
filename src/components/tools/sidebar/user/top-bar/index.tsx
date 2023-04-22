@@ -2,8 +2,11 @@ import { MdMenu, MdNotes } from "react-icons/md";
 import TopDropdownOption from "./menu-option";
 import UserMenuTopBar from "./user-menu";
 import Avatar from "react-avatar";
+import { useState } from "react";
 
 export default function NavTopBar() {
+  const [showProfMenu, setShowProfMenu] = useState(false);
+
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-2 border-gray-200 shadow-md">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -34,9 +37,11 @@ export default function NavTopBar() {
               <div>
                 <button
                   type="button"
+                  onClick={() => setShowProfMenu(!showProfMenu)}
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
-                  aria-expanded="false"
-                  data-dropdown-toggle="dropdown-user">
+                  // aria-expanded="false"
+                  // data-dropdown-toggle="dropdown-user"
+                >
                   <span className="sr-only">Open menu</span>
                   <Avatar
                     name="Template Name"
@@ -47,7 +52,11 @@ export default function NavTopBar() {
                   />
                 </button>
               </div>
-              <UserMenuTopBar username="Template Name" email="template.temlate@mail.com" />
+              <UserMenuTopBar
+                username="Template Name"
+                email="template.temlate@mail.com"
+                show={showProfMenu}
+              />
             </div>
           </div>
         </div>

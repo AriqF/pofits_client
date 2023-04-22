@@ -44,22 +44,23 @@ export default function UserSideBar() {
           />
           <SidebarItemDropdown text={"Atur Data"} linkTo={UserPath.SETTINGS} icon={MdTune}>
             <SidebarItem
-              text={"Dompet"}
-              linkTo={UserPath.WALLETS}
-              dropdownItem={true}
-              // icon={MdAccountBalanceWallet}
-            />
-            <SidebarItem
               text={"Kategori Pemasukan"}
               linkTo={UserPath.INCOME_CATEGORY}
-              dropdownItem={true}
-              // icon={MdMoveToInbox}
+              // dropdownItem={true}
+              icon={MdMoveToInbox}
             />
+            <SidebarItem
+              text={"Dompet"}
+              linkTo={UserPath.WALLETS}
+              // dropdownItem={true}
+              icon={MdAccountBalanceWallet}
+            />
+
             <SidebarItem
               text={"Kategori Pengeluaran"}
               linkTo={UserPath.EXPENSE_CATEGORY}
-              dropdownItem={true}
-              // icon={MdOutbox}
+              // dropdownItem={true}
+              icon={MdOutbox}
             />
           </SidebarItemDropdown>
         </ul>
