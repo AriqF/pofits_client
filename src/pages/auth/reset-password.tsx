@@ -1,6 +1,9 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
+import InputForm from "@/components/tools/form/input-form";
+import { AuthPath } from "@/utils/global/route-path";
+import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -40,7 +43,7 @@ export default function ResetPassword() {
     formState: { errors, isSubmitting },
   } = useForm<FormState>();
 
-  const onSubmit: SubmitHandler<FormState> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormState> = async (data: FormState) => {
     console.log(resetToken);
     setErrMessage("");
     await axios(baseUrl + "/auth/setup-password/" + resetToken, {
@@ -59,7 +62,7 @@ export default function ResetPassword() {
             icon: "success",
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("login");
+            if (res.isConfirmed) router.push(AuthPath.LOGIN);
           });
       })
       .catch((err) => {
@@ -74,15 +77,13 @@ export default function ResetPassword() {
     <AuthLayout headerText="Atur ulang kata sandi">
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div id="reset-password" className="space-y-4">
-          <div>
-            <label htmlFor="password" className="block mb-2 text-md font-medium text-gray-900">
-              Kata sandi
-            </label>
+          <InputForm label={"Kata sandi baru"} id={"password"} errors={errors.password?.message}>
             <input
               type="password"
               id="password"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.password ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.password ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Kata sandi"
               required
               {...register("password", {
@@ -100,23 +101,17 @@ export default function ResetPassword() {
                 },
               })}
             />
-            {errors.password && (
-              <span className="font-medium t-2 text-xs text-red-600">
-                {errors.password?.message}
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block mb-2 text-md font-medium text-gray-900">
-              Konfirmasi Kata sandi
-            </label>
+          </InputForm>
+          <InputForm
+            label={"Konfirmasi kata sandi"}
+            id={"confirmPassword"}
+            errors={errors.confirmPassword?.message}>
             <input
               type="password"
               id="confirmPassword"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md block w-full p-2.5 hover:border-blue
-                ${errors.confirmPassword ? "focus:outline-errorRed" : "focus:outline-blue"}`}
+              className={
+                baseFormStyle + (errors.password ? "border-errorRed focus:border-errorRed" : "")
+              }
               placeholder="Konfirmasi kata sandi"
               required
               {...register("confirmPassword", {
@@ -134,12 +129,8 @@ export default function ResetPassword() {
                 },
               })}
             />
-            {errors.confirmPassword && (
-              <FormHelper
-                textColor="danger"
-                text={String(errors.confirmPassword?.message)}></FormHelper>
-            )}
-          </div>
+          </InputForm>
+
           {/* end of form div */}
         </div>
         <div id="forgot-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">

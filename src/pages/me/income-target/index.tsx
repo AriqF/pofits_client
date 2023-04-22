@@ -15,6 +15,7 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { IncomeEstimationData, IncomeEstimationRecap } from "@/utils/interfaces/server-props";
 import IncomeTargetList from "@/components/tools/list/income-target-list";
+import Alert from "@/components/tools/alerts/alert";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const chartOptions = {
@@ -154,16 +155,24 @@ export default function IncomeTargetIndex() {
             <span className="sr-only">Search</span>
           </button>
         </form>
-        {incomeTarget.map((data, index) => (
-          <IncomeTargetList
-            title={data.category.title}
-            icon={data.category.icon}
-            targetAmount={data.amount}
-            id={data.id}
-            date={data.start_date}
-            isAchieved={data.isAchieved}
+        {incomeTarget.length > 0 ? (
+          incomeTarget.map((data, index) => (
+            <IncomeTargetList
+              title={data.category.title}
+              icon={data.category.icon}
+              targetAmount={data.amount}
+              id={data.id}
+              date={data.start_date}
+              isAchieved={data.isAchieved}
+            />
+          ))
+        ) : (
+          <Alert
+            text={"Target pemasukan belum diatur"}
+            type={"warning"}
+            className="py-3.5 text-sm"
           />
-        ))}
+        )}
       </section>
     </BudgetPageLayout>
   );

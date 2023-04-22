@@ -5,13 +5,16 @@ import TopDropdownOption from "./menu-option";
 interface Props {
   username: string;
   email: string;
+  show: boolean;
 }
 
 export default function UserMenuTopBar(props: Props) {
   return (
     <div
-      className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
-      id="dropdown-user">
+      className={
+        (props.show ? "" : "hidden") +
+        " absolute top-10 right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+      }>
       <div className="px-4 py-3" role="none">
         <p className="text-sm text-gray-900 font-semibold " role="none">
           {props.username}

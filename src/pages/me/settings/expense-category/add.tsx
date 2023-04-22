@@ -57,7 +57,7 @@ export default function UserAddExpenseCategory() {
             icon: "success",
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/settings/expense-category");
+            if (res.isConfirmed) router.push(UserPath.EXPENSE_CATEGORY);
           });
       })
       .catch((error) => {
@@ -82,8 +82,8 @@ export default function UserAddExpenseCategory() {
                   {...register("title", {
                     required: "Nama pemasukan harus diisi",
                     maxLength: {
-                      value: 75,
-                      message: "Nama kategori maksimal 75 karakter",
+                      value: 35,
+                      message: "Nama kategori maksimal 35 karakter",
                     },
                     minLength: {
                       value: 3,
@@ -148,11 +148,16 @@ export default function UserAddExpenseCategory() {
               errors={errors.description?.message}
               id={"description"}>
               <textarea
-                {...register("description")}
+                {...register("description", {
+                  maxLength: {
+                    value: 100,
+                    message: "Deskripsi maksimal 100 karakter",
+                  },
+                })}
                 rows={2}
                 id="description"
                 placeholder="Deskripsi singkat kategori"
-                maxLength={255}
+                maxLength={100}
                 className={
                   baseFormStyle +
                   (errors.description ? "border-errorRed focus:border-errorRed" : "")

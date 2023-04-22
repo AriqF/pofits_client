@@ -64,7 +64,8 @@ export default function WalletListItem(props: CardProps) {
       dataPath={UserPath.WALLETS}
       icon={props.icon}
       title={props.name}
-      subtitle={props.category}>
+      subtitle={props.category}
+      dataId={props.id}>
       <a
         href={UserPath.WALLETS_EDIT + props.id}
         className="rounded-full p-2 bg-gray-500 my-auto  hover:bg-gray-400 transition-all duration-200">

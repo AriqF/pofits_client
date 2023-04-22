@@ -13,6 +13,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import BudgetPageLayout from "@/components/layouts/user/budget/budget-layout";
 import { CustomAlert, numFormatter } from "@/utils/helper";
 import moment from "moment";
+import Alert from "@/components/tools/alerts/alert";
 
 interface FilterProps {
   search?: string;
@@ -53,7 +54,7 @@ export default function BudgetPage() {
         setMonthRecap(res.data);
       })
       .catch((error) => {
-        return CustomAlert({ linkToConfirm: "/me/settings/expense-category" });
+        return CustomAlert({ linkToConfirm: UserPath.EXPENSE_CATEGORY });
       });
   };
 
@@ -65,7 +66,9 @@ export default function BudgetPage() {
       .then((res) => {
         setBudget(res.data);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        return CustomAlert({ linkToConfirm: UserPath.EXPENSE_CATEGORY });
+      });
   };
 
   ChartJS.register(ArcElement, Tooltip, Legend);
@@ -173,20 +176,25 @@ export default function BudgetPage() {
           </button>
         </form>
         {/* <hr className="border-b border-2 w-[50%] border-gray-500 hidden md:flex" /> */}
-        {budgets.map((budget, index) => (
-          //value used budget diganti dengan sisa budget (budget - jml transaksi)
-          <BudgetCard
-            usedBudget={budget.amountUsed}
-            budget={budget.amount}
-            title={budget.category.title}
-            icon={budget.category.icon}
-            id={budget.id}
-            key={index}
-            date={budget.start_date}
-            percentage={budget.percentageUsed}
-            remaining={budget.amountRemaining}
-          />
-        ))}
+        {budgets.length > 0 ? (
+          budgets.map((budget, index) => (
+            //value used budget diganti dengan sisa budget (budget - jml transaksi)
+
+            <BudgetCard
+              usedBudget={budget.amountUsed}
+              budget={budget.amount}
+              title={budget.category.title}
+              icon={budget.category.icon}
+              id={budget.id}
+              key={index}
+              date={budget.start_date}
+              percentage={budget.percentageUsed}
+              remaining={budget.amountRemaining}
+            />
+          ))
+        ) : (
+          <Alert text={"Belum ada anggaran"} type={"warning"} className="py-3.5 text-sm" />
+        )}
       </section>
     </BudgetPageLayout>
   );

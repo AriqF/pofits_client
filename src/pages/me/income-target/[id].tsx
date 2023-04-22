@@ -192,7 +192,7 @@ export default function TargetIncomeDetails() {
                 <IncomeTargetTransCard
                   dataId={data.id}
                   title={data.title}
-                  wallet={data.wallet.name}
+                  wallet={data.wallet?.name ? data.wallet?.name : "-"}
                   icon={target.category.icon}
                   date={data.created_at}
                   amount={data.amount}

@@ -53,7 +53,7 @@ export default function Alert(props: AlertProps) {
       icon = MdOutlineDangerous;
       break;
     case "warning":
-      bgColor = "bg-warnYellow";
+      bgColor = "bg-warnOrange";
       icon = MdOutlineWarningAmber;
       break;
     case "success":

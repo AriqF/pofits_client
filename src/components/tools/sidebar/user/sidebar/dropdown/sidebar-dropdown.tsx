@@ -13,13 +13,17 @@ interface Props {
 }
 
 export default function SidebarItemDropdown(props: Props) {
+  const [show, setShow] = useState(false);
+
   return (
-    <li>
+    <li className="space-y-0.5 origin-center hover:origin-top">
       <button
         type="button"
         className="peer group flex items-center w-full hover:bg-white hover:text-gray-900 text-base font-normal p-2 rounded-lg transition duration-100  "
-        aria-controls="dropdown"
-        data-collapse-toggle="dropdown">
+        onClick={() => setShow(!show)}
+        // aria-controls="dropdown"
+        // data-collapse-toggle="dropdown"
+      >
         {props.icon ? React.createElement(props?.icon, { className: "text-2xl" }) : ""}
         <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="true">
           {/* default => sidebar-toggle-item */}
@@ -31,7 +35,11 @@ export default function SidebarItemDropdown(props: Props) {
           }
         />
       </button>
-      <ul id="dropdown" className="hidden py-1 transition-all duration-500">
+      <ul
+        id="dropdown"
+        className={
+          (show ? " " : "hidden") + " py-1 transition-all duration-500 rounded-md ml-3 text-sm"
+        }>
         {props.children}
       </ul>
     </li>

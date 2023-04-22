@@ -94,7 +94,7 @@ export default function IncomeCategoryDetails() {
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/settings/income-category");
+            if (res.isConfirmed) router.push(UserPath.INCOME_CATEGORY);
           });
       })
       .catch((error) => {
@@ -204,7 +204,17 @@ export default function IncomeCategoryDetails() {
             <InputForm label={"Nama Kategori"} id={"category-name"} errors={errors.title?.message}>
               <input
                 disabled={isGlobal ? true : false}
-                {...register("title", { required: "Nama pemasukan harus diisi" })}
+                {...register("title", {
+                  required: "Nama pemasukan harus diisi",
+                  minLength: {
+                    value: 2,
+                    message: "Nama pemasukan minimal 2 karakter",
+                  },
+                  maxLength: {
+                    value: 35,
+                    message: "Nama pemasukan maksimal 35 karakter",
+                  },
+                })}
                 type="text"
                 id="title"
                 placeholder="Berikan nama yang singkat"
@@ -219,11 +229,16 @@ export default function IncomeCategoryDetails() {
               id={"description"}>
               <textarea
                 disabled={isGlobal ? true : false}
-                {...register("description")}
+                {...register("description", {
+                  maxLength: {
+                    value: 100,
+                    message: "Deskripsi maksimal 100 karakter",
+                  },
+                })}
                 rows={2}
                 id="description"
                 placeholder="Deskripsi singkat kategori"
-                maxLength={255}
+                maxLength={100}
                 className={
                   baseFormStyle +
                   (errors.description ? "border-errorRed focus:border-errorRed" : "")
