@@ -166,8 +166,8 @@ export default function AddExpensePage() {
                 </InputForm>
                 <InputForm label="Kategori" id="category-select>" errors={errors.category?.message}>
                   <Controller
-                    name="category"
                     control={control}
+                    {...register("category", { required: "Kategori perlu dipilih" })}
                     render={({ field }) => {
                       return (
                         <ReactSelect

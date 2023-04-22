@@ -97,8 +97,8 @@ export default function AddWallet() {
                     {...register("name", {
                       required: "Nama dompet perlu diisi",
                       maxLength: {
-                        value: 50,
-                        message: "Nama dompet maksimal terdiri dari 50 karakter",
+                        value: 20,
+                        message: "Nama dompet maksimal terdiri dari 20 karakter",
                       },
                     })}
                   />
@@ -185,15 +185,15 @@ export default function AddWallet() {
                   rows={2}
                   id="description"
                   placeholder="Deskripsi singkat dompet"
-                  maxLength={255}
+                  maxLength={100}
                   className={
                     baseFormStyle +
                     (errors.description ? "border-errorRed focus:border-errorRed" : "")
                   }
                   {...register("description", {
                     maxLength: {
-                      value: 255,
-                      message: "Deskripsi maksimal 255 karakter",
+                      value: 100,
+                      message: "Deskripsi maksimal 100 karakter",
                     },
                   })}
                 />
