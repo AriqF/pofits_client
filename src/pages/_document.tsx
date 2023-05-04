@@ -8,9 +8,9 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script
+        {/* <Script
           src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.js"
-          strategy="beforeInteractive"></Script>
+          strategy="beforeInteractive"></Script> */}
       </body>
     </Html>
   );

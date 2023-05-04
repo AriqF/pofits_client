@@ -13,7 +13,7 @@ export default function UserMenuTopBar(props: Props) {
     <div
       className={
         (props.show ? "" : "hidden") +
-        " absolute top-10 right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+        " absolute top-10 right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow min-w-[12%]"
       }>
       <div className="px-4 py-3" role="none">
         <p className="text-sm text-gray-900 font-semibold " role="none">

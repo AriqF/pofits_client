@@ -15,7 +15,7 @@ export default function UserSettingsLayout(props: USettingsProps) {
   return (
     <>
       <UserBaseLayout>
-        <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-5 md:mb-2">
+        <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-5 md:mb-2 no-select">
           <a
             href={props.backTo}
             className="text-blue hover:text-hovblue font-semibold inline-flex cursor-pointer">

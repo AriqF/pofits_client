@@ -20,10 +20,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Pofits - Personal Finance</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <Script
+        {/* <Script
           src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.js"
           strategy="beforeInteractive"
-        />
+        /> */}
       </Head>
       <Component {...pageProps} />
       {/* <Script src="https://kit.fontawesome.com/babb4f3fd7.js" crossOrigin="anonymous"></Script> */}
