@@ -32,6 +32,7 @@ export default function AddWallet() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isServerError, setIsServerError] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+  const [walletAmount, setWalletAmount] = useState(0);
 
   const router = useRouter();
   const walletId = router.query.id;
@@ -57,8 +58,8 @@ export default function AddWallet() {
         label: response.data.category,
         icon: response.data.icon,
       });
+      setWalletAmount(response.data.amount);
       setValue("description", response.data.description);
-      setValue("amount", numFormatter(response.data.amount));
     } catch (error) {
       return CustomAlert({
         title: "Terjadi kesalahan dalam mengambil data",
@@ -161,11 +162,17 @@ export default function AddWallet() {
             <BiTrash className="text-2xl m-auto" />
           </button>
         </div>
+        <div className="flex flex-col space-y-1">
+          <p className="text-base">Saldo saat ini:</p>
+          <span className="text-xl text-palepurple font-semibold">
+            Rp {numFormatter(walletAmount)}
+          </span>
+        </div>
 
         <div className="bg-white rounded-sm p-2 min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="edit-wallet-form" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-5 gap-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-5 gap-y-5">
                 <InputForm label="Nama Dompet" id="wallet-name" errors={errors.name?.message}>
                   <input
                     type="text"
@@ -183,7 +190,7 @@ export default function AddWallet() {
                     })}
                   />
                 </InputForm>
-                <InputForm
+                {/* <InputForm
                   label="Nominal Saat Ini"
                   id="wallet-name"
                   errors={errors.amount?.message}>
@@ -213,7 +220,7 @@ export default function AddWallet() {
                       })}
                     />
                   </div>
-                </InputForm>
+                </InputForm> */}
                 <InputForm
                   label="Kategori"
                   id="wallet-category-select"
