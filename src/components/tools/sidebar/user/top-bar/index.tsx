@@ -1,10 +1,19 @@
 import { MdMenu, MdNotes } from "react-icons/md";
 import TopDropdownOption from "./menu-option";
 import UserMenuTopBar from "./user-menu";
-import Avatar from "react-avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { requestAxios } from "@/utils/helper/axios-helper";
+import { baseUrl } from "@/utils/interfaces/constants";
+import Avatar from "@/components/tools/avatar";
+interface Props {
+  firstname: string;
+  lastname: string;
+  userEmail: string;
+}
 
-export default function NavTopBar() {
+export default function NavTopBar(props: Props) {
+  const { firstname, lastname, userEmail } = props;
+  const fullname = firstname + " " + lastname;
   const [showProfMenu, setShowProfMenu] = useState(false);
 
   return (
@@ -38,25 +47,20 @@ export default function NavTopBar() {
                 <button
                   type="button"
                   onClick={() => setShowProfMenu(!showProfMenu)}
-                  className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+                  className="flex text-sm bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-300"
                   // aria-expanded="false"
                   // data-dropdown-toggle="dropdown-user"
                 >
                   <span className="sr-only">Open menu</span>
                   <Avatar
-                    name="Template Name"
-                    round={true}
-                    size="35"
+                    name={"Ariq Fachry"}
+                    round={false}
                     className="m-auto"
-                    color="#8c4dcb"
+                    bgColor="bg-palepurple"
                   />
                 </button>
               </div>
-              <UserMenuTopBar
-                username="Template Name"
-                email="template.temlate@mail.com"
-                show={showProfMenu}
-              />
+              <UserMenuTopBar username={fullname} email={userEmail} show={showProfMenu} />
             </div>
           </div>
         </div>
