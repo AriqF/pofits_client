@@ -1,9 +1,11 @@
 import { UserPath } from "@/utils/global/route-path";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import UserBaseLayout from "../layouts";
 import UserSideBar from "@/components/tools/sidebar/user/sidebar";
 import NavTopBar from "@/components/tools/sidebar/user/top-bar";
+import { requestAxios } from "@/utils/helper/axios-helper";
+import { baseUrl } from "@/utils/interfaces/constants";
 
 interface Props {
   children: ReactNode;
@@ -11,9 +13,31 @@ interface Props {
 }
 
 export default function TransactionLayout(props: Props) {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const fetchProfile = async () => {
+    try {
+      const response = await requestAxios({
+        url: baseUrl + "/user/me",
+        method: "GET",
+      });
+
+      setFirstname(response.data.firstname);
+      setLastname(response.data.lastname);
+      setUserEmail(response.data.email);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <>
-      <NavTopBar />
+      <NavTopBar firstname={firstname} lastname={lastname} userEmail={userEmail} />
       <UserSideBar />
       <main className="p-4 sm:ml-64 md:bg-white bg-white max-h-fit">
         <div className="mt-20 md:mx-5">
