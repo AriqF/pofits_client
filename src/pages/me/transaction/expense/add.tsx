@@ -20,6 +20,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
+import moment from "moment";
 
 export default function AddExpensePage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -93,11 +94,23 @@ export default function AddExpensePage() {
     reset,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<ExpenseForm>();
+  } = useForm<ExpenseForm>({
+    defaultValues: {
+      date: moment(new Date()).format("YYYY-MM-DD"),
+    },
+  });
 
   useEffect(() => {
     getUserData();
   }, []);
+
+  useEffect(() => {
+    if (router.isReady) {
+      console.log({ ...router.query });
+      setValue("title", router.query.title as string);
+      setValue("amount", router.query.amount as string);
+    }
+  }, [router.isReady]);
 
   return (
     <TransactionLayout backTo={UserPath.TRANSACTION}>
