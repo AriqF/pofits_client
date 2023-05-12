@@ -12,6 +12,9 @@ export default function FormHelper(props: HelperProps) {
   }
   let color: string;
   switch (textColor) {
+    case "default":
+      color = "text-gray-800";
+      break;
     case "info":
       color = "text-infoBlue";
       break;
