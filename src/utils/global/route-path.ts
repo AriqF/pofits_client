@@ -28,12 +28,17 @@ export enum UserPath {
     ESTIMATION_ADD = "/me/income-target/add",
     ESTIMATION_EDIT = "/me/income-target/edit/",
     FINANCE_GOAL = "/me/finance-goals/",
+    FINANCE_GOAL_EDIT = "/me/finance-goals/edit/",
+    FINANCE_GOAL_ADD = "/me/finance-goals/add/",
+    FINANCE_GOAL_DETAIL = "/me/finance-goals/detail/",
+    FINANCE_GOAL_ADD_SAVING = "/me/finance-goals/add-saving/",
     TRANSACTION = "/me/transaction/",
     TRANSACTION_INCOME_DETAIL = "/me/transaction/income/detail/",
-    TRANSACTION_INCOME_ADD = "/me/transaction/income/add/",
+    TRANSACTION_INCOME_ADD = "/me/transaction/income/add",
     TRANSACTION_INCOME_EDIT = "/me/transaction/income/edit/",
     TRANSACTION_EXPENSE_DETAIL = "/me/transaction/expense/detail/",
-    TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add/",
+    TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add",
     TRANSACTION_EXPENSE_EDIT = "/me/transaction/expense/edit/",
+    MONTHLY_REPORT = "/me/report/monthly"
 
 } 
