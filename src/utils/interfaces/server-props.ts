@@ -168,7 +168,7 @@ export interface BaseTransactionForm {
         icon: string;
     };
     amount: string;
-    date: Date;
+    date: string;
     title: string;
     description?: string
 }
@@ -207,6 +207,65 @@ export interface AllTransactions {
     }
 }
 
+export interface FinanceGoal extends BaseServerData {
+    id: number,
+    title: string,
+    isFlexible: boolean,
+    amount_target: number,
+    amount_reached: number,
+    timebound: Date,
+    frequencies: number,
+    amount_per_frequency: number,
+    isAchieved: boolean,
+    priority: number,
+    wallet: JoinWallet,
+    percentage: number,
+    estimated_achieved: Date,
+    times_to_save_left: number,
+    amounts_to_save_left: number,
+    days_to_go: number,
+    // description?: string,
+}
+
+export interface FinanceGoalForm {
+    title: string,
+    isFlexible: boolean,
+    amount_target: string,
+    timebound: Date,
+    frequencies: {
+        value: number;
+        label: string;
+    },
+    amount_per_frequency: string,
+    priority: {
+        value: number;
+        label: string;
+    }
+    wallet: {
+        value: number;
+        label: string;
+        icon: string;
+    }
+}
+
+export interface GoalSavingHistory extends BaseServerData {
+    id: number,
+    title: string,
+    date: Date;
+    amount: number,
+}
+
+export interface AddSavingForm {
+    amount: string,
+    date: string,
+    title: string,
+    wallet?: {
+        icon: string,
+        label: string,
+        value: number,
+    }
+}
+
 interface JoinWallet {
     id: number;
     name: string;
@@ -219,4 +278,19 @@ interface JoinCategory {
     title: string;
     icon: string;
 }
+
+export interface TransactionAllocation {
+    cat_title: string,
+    cat_icon: string,
+    category: string,
+    total_spent: number,
+    percentage: number,
+}
+
+export interface AllocationChart {
+    data: number[],
+    labels: string[],
+}
+
+
 
