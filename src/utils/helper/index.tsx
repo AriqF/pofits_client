@@ -145,6 +145,14 @@ export const numFormatter = (n: string | number | bigint, decimalSymbol?: string
   }
 };
 
+export const currencyFormatter = (amount: number, currency?: string) => {
+  currency = currency || "Rp";
+  if (amount < 0) {
+    return `- ${currency} ${numFormatter(amount)}`;
+  }
+  return currency + " " + numFormatter(amount);
+};
+
 export const getNumOnlyFromStr = (num: string): number => {
   return parseInt(num.replace(/\./g, ""));
 };
@@ -228,6 +236,11 @@ export const convertDate = (dateInit: string) => {
   return "";
 };
 
+export const isInvalidDate = (date: Date): boolean => {
+  console.log(Object.prototype.toString.call(date) === "[object Date]");
+  return Object.prototype.toString.call(date) === "[object Date]";
+};
+
 export const textTrunc = (text: string, length: number) => {
   let tempText: string;
   if (text.length > length) {
@@ -235,4 +248,32 @@ export const textTrunc = (text: string, length: number) => {
     return tempText;
   }
   return text;
+};
+
+export const getGoalFrequenceStr = (frequence: number) => {
+  switch (frequence) {
+    case 1:
+      return "hari";
+    case 7:
+      return "minggu";
+    case 30:
+      return "bulan";
+    case 365:
+      return "tahun";
+    default:
+      return "hari";
+  }
+};
+
+export const getGoalSeverityStr = (severity: number): string => {
+  switch (severity) {
+    case 0:
+      return "Rendah";
+    case 1:
+      return "Sedang";
+    case 2:
+      return "Tinggi";
+    default:
+      return "Rendah";
+  }
 };
