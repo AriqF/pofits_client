@@ -15,6 +15,7 @@ import {
   MdFactCheck,
   MdMoveToInbox,
   MdOutbox,
+  MdAnalytics,
 } from "react-icons/md";
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
 import SidebarItem from "./sidebar-item";
@@ -30,18 +31,13 @@ export default function UserSideBar() {
           <SidebarItem text={"Beranda"} linkTo={UserPath.HOME} icon={MdHome} />
           <SidebarItem text={"Anggaran"} linkTo={UserPath.BUDGET} icon={MdRequestQuote} />
           <SidebarItem text={"Target Pemasukan"} linkTo={UserPath.ESTIMATION} icon={MdFactCheck} />
+          <SidebarItem text={"Transaksi"} linkTo={UserPath.TRANSACTION} icon={MdReceiptLong} />
           <SidebarItem
-            text={"Transaksi"}
-            linkTo={UserPath.TRANSACTION}
-            icon={MdReceiptLong}
-            badgeText="DEV"
+            text={"Laporan Keuangan"}
+            linkTo={UserPath.MONTHLY_REPORT}
+            icon={MdAnalytics}
           />
-          <SidebarItem
-            text={"Tujuan Keuangan"}
-            linkTo={UserPath.FINANCE_GOAL}
-            icon={MdFlag}
-            badgeText="404"
-          />
+          <SidebarItem text={"Tujuan Keuangan"} linkTo={UserPath.FINANCE_GOAL} icon={MdFlag} />
           <SidebarItemDropdown text={"Atur Data"} linkTo={UserPath.SETTINGS} icon={MdTune}>
             <SidebarItem
               text={"Kategori Pemasukan"}
