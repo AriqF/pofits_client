@@ -26,6 +26,7 @@ module.exports = {
         darkHover:"#333333",
         darktext: "#334155",
         blue: "#4d6dcb",
+        lightblue: "#b0d8ff",
         hovblue: "#395cc6",
         palepurple: "#8c4dcb",
         hovpalepurple: "#7f39c6",
@@ -44,7 +45,7 @@ module.exports = {
         hovInfoBlue: "#366ec9",
         moneySafe: "#1ac1c7",
         moneyDanger: "#c74238",
-        moneyWarn: "#d7ed12"
+        moneyWarn: "#e2be1d"
       },
     },
   },
