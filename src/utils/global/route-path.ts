@@ -40,6 +40,7 @@ export enum UserPath {
     TRANSACTION_EXPENSE_DETAIL = "/me/transaction/expense/detail/",
     TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add",
     TRANSACTION_EXPENSE_EDIT = "/me/transaction/expense/edit/",
-    MONTHLY_REPORT = "/me/report/monthly"
+    MONTHLY_REPORT = "/me/report/monthly",
+    INFORMATION = "/me/information/"
 
 } 

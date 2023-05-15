@@ -24,7 +24,8 @@ export default function UserMenuTopBar(props: Props) {
         </p>
       </div>
       <ul className="py-1" role="none">
-        <TopDropdownOption linkTo={UserPath.PROFILE} text="Profile" />
+        <TopDropdownOption linkTo={UserPath.PROFILE} text="Profil" />
+        <TopDropdownOption linkTo={UserPath.INFORMATION} text="Informasi" />
         <TopDropdownOption text="Keluar" onClick={logoutHandler} />
         {/* <TopDropdownOption linkTo="#" text="Settings" /> */}
       </ul>
