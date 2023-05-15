@@ -53,7 +53,7 @@ export default function NavTopBar(props: Props) {
                 >
                   <span className="sr-only">Open menu</span>
                   <Avatar
-                    name={"Ariq Fachry"}
+                    name={fullname}
                     round={false}
                     className="m-auto"
                     bgColor="bg-palepurple"
