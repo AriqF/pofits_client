@@ -6,7 +6,7 @@ import UserNavbar from "@/components/tools/navbar/user";
 import { UserPath } from "@/utils/global/route-path";
 import { ReactNode } from "react";
 import { MdChevronLeft } from "react-icons/md";
-import UserProfileSettings from "../profile";
+import UserProfileSettings from "./account";
 
 interface Props {
   backTo: string;
