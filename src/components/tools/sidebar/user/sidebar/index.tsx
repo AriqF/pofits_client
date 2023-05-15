@@ -16,6 +16,7 @@ import {
   MdMoveToInbox,
   MdOutbox,
   MdAnalytics,
+  MdStickyNote2,
 } from "react-icons/md";
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
 import SidebarItem from "./sidebar-item";
@@ -37,7 +38,11 @@ export default function UserSideBar() {
             linkTo={UserPath.MONTHLY_REPORT}
             icon={MdAnalytics}
           />
-          <SidebarItem text={"Tujuan Keuangan"} linkTo={UserPath.FINANCE_GOAL} icon={MdFlag} />
+          <SidebarItem
+            text={"Rencana Keuangan"}
+            linkTo={UserPath.FINANCE_GOAL}
+            icon={MdStickyNote2}
+          />
           <SidebarItemDropdown text={"Atur Data"} linkTo={UserPath.SETTINGS} icon={MdTune}>
             <SidebarItem
               text={"Kategori Pemasukan"}

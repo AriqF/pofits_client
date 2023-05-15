@@ -105,7 +105,7 @@ export default function AddGoalSavingPage() {
     if (val) {
       if (!goalData.wallet) {
         swal.fire({
-          title: "Dompet pada tujuan keuangan ini belum di atur",
+          title: "Dompet pada rencana keuangan ini belum di atur",
           text: "Harap melakukan atur ulang untuk mengatur dompet",
           icon: "warning",
           ...baseAlertStyle,
