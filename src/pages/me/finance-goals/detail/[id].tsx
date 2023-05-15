@@ -383,24 +383,24 @@ export default function FinanceGoalDetail() {
           <SavingBox />
           <MarkAsDoneBox />
         </div>
-        <div
-          className={`flex flex-col gap-2 overflow-auto ` + historyHeight}
-          id="goal-saving-history">
+        <div className={`flex flex-col gap-2`} id="goal-saving-history">
           <h3 className="text-lg font-semibold">Riwayat Menabung</h3>
-          {goalHistory.length ? (
-            goalHistory.map((history, index) => (
-              <HistoryBox
-                key={index}
-                id={history.id}
-                amount={history.amount}
-                title={history.title}
-                date={history.date}
-                created_at={history.created_at}
-              />
-            ))
-          ) : (
-            <Alert text={"Belum ada tabungan. Ayo menabung!"} type={"info"} />
-          )}
+          <div className="overflow-auto h-96 flex flex-col gap-2">
+            {goalHistory.length ? (
+              goalHistory.map((history, index) => (
+                <HistoryBox
+                  key={index}
+                  id={history.id}
+                  amount={history.amount}
+                  title={history.title}
+                  date={history.date}
+                  created_at={history.created_at}
+                />
+              ))
+            ) : (
+              <Alert text={"Belum ada tabungan. Ayo menabung!"} type={"info"} />
+            )}
+          </div>
         </div>
       </section>
       <section className="flex flex-col gap-4 select-none">
