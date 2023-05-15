@@ -9,7 +9,8 @@ export enum AuthPath {
 export enum UserPath {
     HOME = "/me/",
     SETTINGS = "/me/settings/",
-    PROFILE = "/me/settings/profile",
+    PROFILE = "/me/settings/account",
+    PROFILE_PRIVACY = "/me/settings/account/privacy",
     WALLETS = "/me/settings/wallets/",
     WALLETS_ADD = "/me/settings/wallets/add",
     WALLETS_EDIT = "/me/settings/wallets/",
