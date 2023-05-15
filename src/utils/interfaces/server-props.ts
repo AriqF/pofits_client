@@ -1,4 +1,26 @@
 
+export interface User extends BaseServerData {
+    id: number,
+    firstname: string,
+    lastname: string,
+    email: string,
+    status: number,
+    role: string,
+    last_iat: number,
+}
+
+export interface UpdateProfileForm {
+    firstname: string,
+    lastname: string,
+    email: string,
+}
+
+export interface ChangePasswordProfileForm {
+    old_password: string,
+    password: string,
+    password_confirmation: string,
+}
+
 export interface JWTServer {
     email: string;
     role: "user" | "admin";
@@ -180,7 +202,8 @@ export interface ExpenseForm extends BaseTransactionForm { }
 export interface TransactionsMonthRecap {
     totalExpenses: number,
     totalIncomes: number,
-    amountDiff: number
+    amountDiff: number,
+    totalBudget?: number,
 }
 
 export interface AllTransactions {
@@ -290,6 +313,17 @@ export interface TransactionAllocation {
 export interface AllocationChart {
     data: number[],
     labels: string[],
+}
+
+export interface AnnualChartDatasets {
+    data: number[],
+    backgroundColor: string,
+    label: string,
+}
+
+export interface AnnualTransaction {
+    total_amount: number,
+    month: string,
 }
 
 
