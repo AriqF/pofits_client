@@ -7,6 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
   children: ReactNode;
+  classname?: string;
 }
 export default function UserBaseLayout(props: Props) {
   const [firstname, setFirstname] = useState("");
@@ -20,7 +21,6 @@ export default function UserBaseLayout(props: Props) {
         url: baseUrl + "/user/me",
         method: "GET",
       });
-
       setFirstname(response.data.firstname);
       setLastname(response.data.lastname);
       setUserEmail(response.data.email);
@@ -39,8 +39,8 @@ export default function UserBaseLayout(props: Props) {
       <UserSideBar />
       {/* <Sidebar.Item></Sidebar> */}
 
-      <main className="p-4 sm:ml-64 md:bg-white bg-white max-h-fit">
-        <div className="mt-20 md:mx-5">{props.children}</div>
+      <main className={" p-4 sm:ml-64 md:bg-white bg-white max-h-fit"}>
+        <div className={props.classname + " flex flex-col mt-20 md:mx-5"}>{props.children}</div>
       </main>
     </>
   );
