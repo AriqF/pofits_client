@@ -443,7 +443,7 @@ export default function EditFinanceGoalPage() {
                   id="amount"
                   disabled={isTimebound}
                   className={
-                    (isTimebound ? " text-gray-300 bg-[#f2f2f2] " : "") +
+                    (isTimebound ? " text-gray-400 bg-[#f2f2f2] " : "") +
                     currencyFormStyle +
                     (errors.amount_target ? "border-errorRed focus:border-errorRed" : "")
                   }
