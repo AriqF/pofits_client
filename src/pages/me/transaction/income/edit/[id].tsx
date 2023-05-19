@@ -25,6 +25,7 @@ import {
   IncomeCategory,
   IncomeForm,
 } from "@/utils/interfaces/server-props";
+import moment from "moment";
 
 export default function EditIncomeDataPage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -35,7 +36,7 @@ export default function EditIncomeDataPage() {
 
   const setDefaultValue = async (data: IncomeTransactions) => {
     setValue("amount", numFormatter(data.amount));
-    setValue("date", data.date);
+    setValue("date", moment(data.date).format("YYYY-MM-DD"));
     setValue("title", data.title);
     setValue("description", data.description);
     setValue("category", {
@@ -130,13 +131,14 @@ export default function EditIncomeDataPage() {
           <h3 className="text-2xl font-semibold select-none">Edit Pemasukan</h3>
           <form onSubmit={handleSubmit(submitHandler)}>
             <div id="add-exp-transaction" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 <InputForm label="Nominal" id="amount" errors={errors.amount?.message}>
                   <div className="flex">
                     <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md ">
                       Rp
                     </span>
                     <input
+                      onFocus={(e) => e.target.select()}
                       type="text"
                       id="amount"
                       className={
@@ -286,7 +288,7 @@ export default function EditIncomeDataPage() {
                   "border bg-palepurple text-white hover:bg-hovpalepurple " +
                   "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
                   "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-                  "w-full md:w-[20%]"
+                  "w-full lg:w-[20%]"
                 }>
                 Simpan
               </button>

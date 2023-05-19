@@ -98,7 +98,7 @@ export default function AddBudgetForm() {
       <h3 className="text-2xl font-semibold mb-3">Tambah Anggaran</h3>
       <form onSubmit={handleSubmit(onSubmit)} ref={ref}>
         <div id="add-budget-form" className="flex flex-col gap-y-5 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <InputForm label="Kategori" id="category-select" errors={errors.category?.message}>
               <Controller
                 {...register("category", { required: "Kategori perlu diisi" })}
@@ -147,6 +147,7 @@ export default function AddBudgetForm() {
                   Rp
                 </span>
                 <input
+                  onFocus={(e) => e.target.select()}
                   type="text"
                   id="amount"
                   className={
@@ -171,7 +172,7 @@ export default function AddBudgetForm() {
             </InputForm>
           </div>
 
-          <div className={"grid grid-cols-1 md:grid-cols-2 gap-5"} id="start-date-input">
+          <div className={"grid grid-cols-1 lg:grid-cols-2 gap-5"} id="start-date-input">
             <InputForm
               label={isRepeat ? "Dari bulan" : "Pilih bulan"}
               id="start_date"
@@ -218,7 +219,7 @@ export default function AddBudgetForm() {
             text={"Tambah"}
             // icon={MdAdd}
             color={"default"}
-            className="text-center flex place-content-center md:w-[30%]"
+            className="text-center flex place-content-center lg:w-[30%]"
           />
         </div>
       </form>

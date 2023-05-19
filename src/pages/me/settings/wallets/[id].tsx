@@ -13,7 +13,7 @@ import {
   deleteAlertStyle,
   selectFormStyle,
 } from "@/utils/global/style";
-import { CustomAlert, numFormatter } from "@/utils/helper";
+import { CustomAlert, getNumOnlyFromStr, numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -59,6 +59,7 @@ export default function AddWallet() {
         icon: response.data.icon,
       });
       setWalletAmount(response.data.amount);
+      setValue("amount", numFormatter(response.data.amount));
       setValue("description", response.data.description);
     } catch (error) {
       return CustomAlert({
@@ -75,6 +76,7 @@ export default function AddWallet() {
       method: "PATCH",
       data: {
         name: data.name,
+        amount: getNumOnlyFromStr(data.amount),
         category: data.category.value,
         description: data.description,
       },
@@ -172,7 +174,7 @@ export default function AddWallet() {
         <div className="bg-white rounded-sm p-2 min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="edit-wallet-form" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-5 gap-y-5">
+              <div className="grid grid-cols-1 lg:grid-cols-3 md:gap-x-5 gap-y-5">
                 <InputForm label="Nama Dompet" id="wallet-name" errors={errors.name?.message}>
                   <input
                     type="text"
@@ -190,7 +192,7 @@ export default function AddWallet() {
                     })}
                   />
                 </InputForm>
-                {/* <InputForm
+                <InputForm
                   label="Nominal Saat Ini"
                   id="wallet-name"
                   errors={errors.amount?.message}>
@@ -199,16 +201,16 @@ export default function AddWallet() {
                       Rp
                     </span>
                     <input
-                      disabled
                       type="text"
                       id="amount"
+                      onFocus={(e) => e.target.select()}
                       className={
                         currencyFormStyle +
                         (errors.amount ? "border-errorRed focus:border-errorRed" : "")
                       }
-                      placeholder="Nominal awal pada dompet"
+                      placeholder="Nominal dompet"
                       {...register("amount", {
-                        required: "Dompet memerlukan nilai awal",
+                        required: "Dompet memerlukan nominal",
                         pattern: {
                           value: /^\d+(\.\d+)*$/,
                           message: "Input hanya diperbolehkan angka",
@@ -220,7 +222,7 @@ export default function AddWallet() {
                       })}
                     />
                   </div>
-                </InputForm> */}
+                </InputForm>
                 <InputForm
                   label="Kategori"
                   id="wallet-category-select"
@@ -286,7 +288,7 @@ export default function AddWallet() {
                   })}
                 />
               </InputForm>
-              <div id="register-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
+              <div id="register-button" className="lg:w-1/2 flex flex-col lg:mx-auto space-y-2">
                 <div id="auth-message">
                   {errMessage && <Alert text={errMessage} type="danger" />}
                 </div>
@@ -294,7 +296,7 @@ export default function AddWallet() {
                   text="Simpan"
                   color="default"
                   type="submit"
-                  className="md:w-1/2 w-full"
+                  className="lg:w-1/2 w-full"
                 />
               </div>
             </div>

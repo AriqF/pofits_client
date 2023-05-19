@@ -60,7 +60,7 @@ export default function MyWallets() {
   return (
     <UserSettingsLayout backTo={UserPath.SETTINGS}>
       <section id="wallets-index" className="space-y-4 col-span-3">
-        <div className="grid grid-col-3 grid-flow-col gap-2">
+        <div className="flex gap-2 w-full">
           <div className="space-y-4">
             <h3 className="text-2xl font-bold">Dompet Saya</h3>
             <div id="wallet-sub-header" className="mb-3">
@@ -80,13 +80,13 @@ export default function MyWallets() {
                 </div>
               </h5>
             </div>
-            <div className="flex flex-col md:flex-row gap-3" id="wallet-menu-buttons">
+            <div className="grid grid-cols-2 gap-3" id="wallet-menu-buttons">
               <LinkButton
                 linkTo={UserPath.WALLETS_ADD}
                 type={"button"}
                 text={"Tambah Dompet"}
                 color={"default"}
-                className="w-full md:w-1/5"
+                className="w-full"
                 icon={MdAddCircleOutline}
               />
               <LinkButton
@@ -94,7 +94,7 @@ export default function MyWallets() {
                 type={"button"}
                 text={"Pemindahan Dana"}
                 color={"info"}
-                className="w-full md:w-1/5"
+                className="w-full"
                 icon={MdSwapHoriz}
               />
             </div>

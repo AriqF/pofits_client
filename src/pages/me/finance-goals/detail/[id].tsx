@@ -81,7 +81,7 @@ export default function FinanceGoalDetail() {
     //confirmation modal
     swal
       .fire({
-        title: "Hapus tujuan keuangan?",
+        title: "Hapus renacana keuangan?",
         text: "Data akan terhapus secara permananen",
         icon: "warning",
         ...deleteAlertStyle,
@@ -112,7 +112,7 @@ export default function FinanceGoalDetail() {
   const confirmMarkAsDone = async () => {
     swal
       .fire({
-        title: "Tandai tujuan keuangan telah tercapai?",
+        title: "Tandai rencana keuangan telah tercapai?",
         icon: "question",
         showCancelButton: true,
         cancelButtonText: "Batal",
@@ -144,7 +144,7 @@ export default function FinanceGoalDetail() {
   const alertSuccesMarkAsDone = async () => {
     swal
       .fire({
-        title: "Tujuan keuangan berhasil diselesaikan",
+        title: "Rencana keuangan berhasil diselesaikan",
         text: "Tambahkan sebagai pengeluaran?",
         icon: "success",
         showCancelButton: true,
@@ -260,8 +260,8 @@ export default function FinanceGoalDetail() {
     return (
       <div className={boxStyle + "flex flex-col md:flex-row gap-3 justify-between p-3"}>
         <div className="flex flex-col my-auto">
-          <h5 className="text-base font-semibold text-gray-600">Ubah Tujuan Keuangan</h5>
-          <p className="text-gray-500 text-sm">Atur kembali tujuan keuangan</p>
+          <h5 className="text-base font-semibold text-gray-600">Ubah Rencana Keuangan</h5>
+          <p className="text-gray-500 text-sm">Atur kembali rencana keuangan</p>
         </div>
         <div className="flex min-w-[100px]">
           <a
@@ -286,9 +286,9 @@ export default function FinanceGoalDetail() {
     return (
       <div className={boxStyle + "flex flex-col md:flex-row gap-3 justify-between p-3"}>
         <div className="flex flex-col my-auto">
-          <h5 className="text-base font-semibold text-gray-600">Hapus Tujuan Keuangan</h5>
+          <h5 className="text-base font-semibold text-gray-600">Hapus Rencana Keuangan</h5>
           <p className="text-gray-500 text-sm">
-            Hapus secara permanen tujuan keuangan. Harap yakin
+            Hapus secara permanen rencana keuangan. Harap yakin
           </p>
         </div>
         <div className="flex min-w-[100px]">
@@ -309,10 +309,10 @@ export default function FinanceGoalDetail() {
       <div className={boxStyle + "flex flex-col md:flex-row gap-2 justify-between"}>
         <div className="flex flex-col">
           <h5 className="text-base text-gray-600 font-semibold my-auto">
-            Tandai tujuan sebagai tercapai
+            Tandai rencana sebagai tercapai
           </h5>
           <p className="text-gray-500 text-sm lg:max-w-[80%]">
-            Tujuan telah selesai dan masukkan kedalam pengeluaran
+            Rencana telah selesai dan masukkan kedalam pengeluaran
           </p>
         </div>
         <div className="flex my-auto">
@@ -359,7 +359,7 @@ export default function FinanceGoalDetail() {
           {goal.isAchieved ? (
             <p
               className={`text-xs text-white my-auto px-2 py-1 rounded-sm max-w-fit min-w-fit bg-successGreen`}>
-              Tujuan telah tercapai
+              Rencana telah tercapai
             </p>
           ) : (
             ""
@@ -377,30 +377,30 @@ export default function FinanceGoalDetail() {
         id="goal-detail-article"
         className="grid grid-cols-1 lg:grid-cols-2 gap-9 select-none ">
         <div className="flex flex-col gap-3" id="goal-info" ref={goalInfoRef}>
-          <h3 className="text-lg font-semibold">Informasi Tujuan Keuangan</h3>
+          <h3 className="text-lg font-semibold">Informasi Rencana Keuangan</h3>
           <ProgressBox />
           <EstimationBox />
           <SavingBox />
           <MarkAsDoneBox />
         </div>
-        <div
-          className={`flex flex-col gap-2 overflow-auto ` + historyHeight}
-          id="goal-saving-history">
+        <div className={`flex flex-col gap-2`} id="goal-saving-history">
           <h3 className="text-lg font-semibold">Riwayat Menabung</h3>
-          {goalHistory.length ? (
-            goalHistory.map((history, index) => (
-              <HistoryBox
-                key={index}
-                id={history.id}
-                amount={history.amount}
-                title={history.title}
-                date={history.date}
-                created_at={history.created_at}
-              />
-            ))
-          ) : (
-            <Alert text={"Belum ada tabungan. Ayo menabung!"} type={"info"} />
-          )}
+          <div className="overflow-auto h-96 flex flex-col gap-2">
+            {goalHistory.length ? (
+              goalHistory.map((history, index) => (
+                <HistoryBox
+                  key={index}
+                  id={history.id}
+                  amount={history.amount}
+                  title={history.title}
+                  date={history.date}
+                  created_at={history.created_at}
+                />
+              ))
+            ) : (
+              <Alert text={"Belum ada tabungan. Ayo menabung!"} type={"info"} />
+            )}
+          </div>
         </div>
       </section>
       <section className="flex flex-col gap-4 select-none">

@@ -53,7 +53,7 @@ export default function ExpenseDetail() {
       icon={transData.category.icon}
       title={transData.title}
       wallet={transData.wallet?.name ? transData.wallet?.name : "-"}
-      date={transData.created_at}
+      date={transData.date}
       category={transData.category.title}
       dataId={router.query.id as string}
     />

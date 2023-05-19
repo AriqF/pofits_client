@@ -40,16 +40,16 @@ export default function FinanceGoalIndex() {
     <GoalsLayout backTo={UserPath.HOME}>
       <section
         id="goal-header"
-        className="flex flex-col md:flex-row md:justify-between gap-y-3 mb-5 select-none">
-        <h2 className="text-2xl text-gray-600 my-auto">Tujuan Keuanganmu</h2>
-        <div className="flex md:ml-auto my-auto md:w-[15%]">
+        className="flex flex-col lg:flex-row md:justify-between gap-y-3 mb-5 select-none">
+        <h2 className="text-2xl text-gray-600 my-auto">Rencana Keuanganmu</h2>
+        <div className="flex my-auto lg:w-[15%]">
           <a
             href={UserPath.FINANCE_GOAL_ADD}
             className={
               "bg-palepurple hover:bg-hovpalepurple text-white text-base font-normal " +
               defaultButtonStyle
             }>
-            Tambah Tujuan
+            Tambah Rencana
           </a>
         </div>
       </section>

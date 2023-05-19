@@ -9,7 +9,8 @@ export enum AuthPath {
 export enum UserPath {
     HOME = "/me/",
     SETTINGS = "/me/settings/",
-    PROFILE = "/me/settings/profile",
+    PROFILE = "/me/settings/account",
+    PROFILE_PRIVACY = "/me/settings/account/privacy",
     WALLETS = "/me/settings/wallets/",
     WALLETS_ADD = "/me/settings/wallets/add",
     WALLETS_EDIT = "/me/settings/wallets/",
@@ -39,6 +40,7 @@ export enum UserPath {
     TRANSACTION_EXPENSE_DETAIL = "/me/transaction/expense/detail/",
     TRANSACTION_EXPENSE_ADD = "/me/transaction/expense/add",
     TRANSACTION_EXPENSE_EDIT = "/me/transaction/expense/edit/",
-    MONTHLY_REPORT = "/me/report/monthly"
+    MONTHLY_REPORT = "/me/report/monthly",
+    INFORMATION = "/me/information/"
 
 } 

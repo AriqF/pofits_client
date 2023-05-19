@@ -111,7 +111,7 @@ export default function AddIncomeTargetPage() {
           <h3 className="text-2xl font-semibold mb-3">Tambah Target Pemasukan</h3>
           <form onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="add-income-target" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 <InputForm
                   label="Kategori Pemasukan"
                   id="category-select>"
@@ -165,6 +165,7 @@ export default function AddIncomeTargetPage() {
                       Rp
                     </span>
                     <input
+                      onFocus={(e) => e.target.select()}
                       type="text"
                       id="amount"
                       className={
@@ -189,7 +190,7 @@ export default function AddIncomeTargetPage() {
               </div>
               <div
                 id="start-date-input"
-                className={"grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5"}>
+                className={"grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-5"}>
                 <InputForm
                   label={isRepeat ? "Dari bulan" : "Pilih bulan"}
                   id="start_date"
@@ -236,7 +237,7 @@ export default function AddIncomeTargetPage() {
                 type={"submit"}
                 text={"Tambah"}
                 color={"default"}
-                className="text-center flex place-content-center md:w-[30%]"
+                className="text-center flex place-content-center lg:w-[30%]"
               />
             </div>
           </form>

@@ -2,6 +2,7 @@ import ProgressBar from "@/components/tools/bar/progress-bar";
 import { UserPath } from "@/utils/global/route-path";
 import { currencyFormatter, getGoalSeverityStr, numFormatter } from "@/utils/helper";
 import moment from "moment";
+import { MdSchedule } from "react-icons/md";
 
 interface Props {
   dataId: number;
@@ -34,9 +35,12 @@ export default function GoalCard(props: Props) {
       href={UserPath.FINANCE_GOAL_DETAIL + props.dataId}>
       <div id="goal-card-header" className="space-y-1">
         <div className="flex justify-between">
-          <p className="text-sm text-gray-600 my-auto">
-            {props?.timebound ? moment(props.timebound).format("DD MMMM YYYY") : "Fleksibel"}
-          </p>
+          <div className="inline-flex gap-1">
+            <MdSchedule className="my-auto" />
+            <p className="text-sm text-gray-600 my-auto">
+              {props?.timebound ? moment(props.timebound).format("DD MMMM YYYY") : "Fleksibel"}
+            </p>
+          </div>
           {props.isAchieved ? (
             <p className={`text-xs text-white my-auto px-2 py-1 bg-successGreen rounded-sm`}>
               {"Tercapai"}
@@ -60,7 +64,7 @@ export default function GoalCard(props: Props) {
             <span className=" text-blue">{currencyFormatter(props.amountReached)}</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
-            <span className="row-start-2 ">{props.percentage}%</span>
+            <span className="row-start-2 ">{props.percentage.toFixed(0)}%</span>
           </div>
           <div className="grid grid-rows-2 gap-y-2">
             <span>Target</span>

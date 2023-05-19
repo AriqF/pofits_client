@@ -69,7 +69,7 @@ export default function Alert(props: AlertProps) {
     <div
       className={
         props.className +
-        ` flex ${py} mb-4 text-sm text-whitegrey text-center rounded-md ${bgColor}`
+        ` flex ${py} mb-4 px-2.5 text-sm text-whitegrey text-center rounded-md ${bgColor}`
       }
       role="alert">
       <p className={`font-medium ${textTransform} flex m-auto place-content-center`}>

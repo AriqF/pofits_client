@@ -12,7 +12,7 @@ export default function TopDropdownOption(props: Props) {
       <a
         onClick={props.onClick}
         href={props.linkTo}
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer "
+        className="block px-4 py-2 text-sm text-gray-700 font-normal hover:bg-gray-100 cursor-pointer "
         role="menuitem">
         {props.text}
       </a>

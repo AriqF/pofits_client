@@ -141,12 +141,12 @@ export default function TransferWallet() {
       <section id="wallets-index" className="flex flex-col gap-y-3 col-span-2">
         <div className="flex flex-col gap-y-1">
           <h3 className="text-2xl font-bold">Pemindahan Dana</h3>
-          <p className="text-base">Lorem ipsum lor sit amet.</p>
+          {/* <p className="text-base">Lorem ipsum lor sit amet.</p> */}
         </div>
         <div className="bg-white rounded-sm p-2 min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" ref={ref} onSubmit={handleSubmit(onSubmit)}>
             <div id="transfer-wallet-form" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-5 gap-y-5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-x-5 gap-y-5">
                 <InputForm label="Dari Dompet" id="fromWal" errors={errors.fromWalletId?.message}>
                   <Controller
                     {...register("fromWalletId", { required: "Dompet perlu dipilih" })}
@@ -223,6 +223,7 @@ export default function TransferWallet() {
                     Rp
                   </span>
                   <input
+                    onFocus={(e) => e.target.select()}
                     type="text"
                     id="amount"
                     className={
@@ -256,16 +257,16 @@ export default function TransferWallet() {
                   Tampilkan nominal dompet
                 </label>
               </div>
-              <div id="add-wallet-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
+              <div id="add-wallet-button" className="lg:w-1/2 flex flex-col lg:mx-auto space-y-2">
                 <div id="auth-message">
                   {errMessage && <Alert text={errMessage} type="danger" />}
                 </div>
-                <div className="md:max-w-xs flex">
+                <div className="flex">
                   <DefaultButton
                     text="Simpan"
                     color="default"
                     type="submit"
-                    className="w-full md:w-1/2"
+                    className="w-full lg:w-1/2"
                   />
                 </div>
               </div>

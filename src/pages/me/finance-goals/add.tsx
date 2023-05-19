@@ -167,7 +167,7 @@ export default function AddFinanceGoalPage() {
           return swal
             .fire({
               icon: "success",
-              title: "Tujuan keuangan berhasil ditambahkan",
+              title: "Rencana keuangan berhasil ditambahkan",
               ...baseAlertStyle,
             })
             .then((res) => {
@@ -215,7 +215,7 @@ export default function AddFinanceGoalPage() {
       <section
         id="goal-header-add"
         className="flex flex-col md:flex-row md:justify-between gap-y-3 mb-5 select-none">
-        <h2 className="text-2xl text-gray-600 my-auto">Tambah Tujuan Keuanganmu</h2>
+        <h2 className="text-2xl text-gray-600 my-auto">Tambah Rencana Keuanganmu</h2>
       </section>
       <section id="goal-add-form" className="flex flex-col">
         <form className="flex flex-col gap-4 gap-y-3" onSubmit={handleSubmit(submitHandler)}>
@@ -237,7 +237,7 @@ export default function AddFinanceGoalPage() {
             ) : (
               ""
             )}
-            <h4 className="text-lg">Kapan kamu ingin meraih tujuanmu?</h4>
+            <h4 className="text-lg">Pilih jenis tenggat waktu rencana keuangamu</h4>
             <div className="flex flex-row gap-3">
               <button
                 type="button"
@@ -254,16 +254,20 @@ export default function AddFinanceGoalPage() {
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <InputForm label="Tujuan Keuanganmu" id="form-title" errors={errors.title?.message}>
+            <InputForm label="Judul Rencana" id="form-title" errors={errors.title?.message}>
               <input
                 type="text"
                 id="title"
                 className={
                   baseFormStyle + (errors.title ? "border-errorRed focus:border-errorRed" : "")
                 }
-                placeholder="Deskripsi singkat"
+                placeholder="Deskripsi singkat rencana keuanganmu"
                 {...register("title", {
                   required: "Judul perlu diisi",
+                  maxLength: {
+                    value: 50,
+                    message: "Judul maksimal 50 karakter",
+                  },
                 })}
               />
             </InputForm>
@@ -312,7 +316,7 @@ export default function AddFinanceGoalPage() {
                         control: (state) => selectFormStyle,
                         // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
                       }}
-                      placeholder="Tingkat Prioritas Tujuan"
+                      placeholder="Tingkat Prioritas Rencana"
                       value={field.value}
                       options={prioritiesOpt}
                       onChange={field.onChange}
@@ -383,7 +387,7 @@ export default function AddFinanceGoalPage() {
                   id="amount"
                   disabled={isTimebound}
                   className={
-                    (isTimebound ? " text-gray-300 bg-[#f2f2f2] " : "") +
+                    (isTimebound ? " text-gray-400 bg-[#f2f2f2] " : "") +
                     currencyFormStyle +
                     (errors.amount_target ? "border-errorRed focus:border-errorRed" : "")
                   }

@@ -1,7 +1,7 @@
 import { currencyFormatter, numFormatter } from "@/utils/helper";
 import React from "react";
 import { IconType } from "react-icons";
-import { MdTrendingUp } from "react-icons/md";
+import { MdAdd, MdTrendingUp } from "react-icons/md";
 
 interface Props {
   icon: IconType;
@@ -9,6 +9,7 @@ interface Props {
   iconBgColor: string;
   title: string;
   amount: number;
+  linkButton?: string;
 }
 
 export default function ReportCard(props: Props) {
@@ -27,6 +28,19 @@ export default function ReportCard(props: Props) {
           {currencyFormatter(props.amount)}
         </h5>
       </div>
+      {props.linkButton ? (
+        <div className="flex flex-col ml-auto">
+          <a
+            href={props.linkButton}
+            className={
+              "rounded p-2 border my-auto transition-colors ease-in duration-150 bg-blue hover:bg-hovblue text-white"
+            }>
+            <MdAdd className="text-2xl" />
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

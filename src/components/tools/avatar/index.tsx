@@ -3,15 +3,19 @@ interface Props {
   round: boolean;
   className?: string;
   bgColor: string;
+  textClassName?: string;
 }
 
 export default function Avatar(props: Props) {
   return (
     <div
       className={
-        (props.round ? "rounded-full" : "rounded-lg") + ` ${props.bgColor} px-3 py-2.5 no-select`
+        (props.round ? "rounded-full" : "rounded-lg") +
+        ` ${props.bgColor} px-3 py-2.5 no-select ${props.className}`
       }>
-      <h1 className="text-sm text-white tracking-wide ">{getInitials(props.name)}</h1>
+      <h1 className={"text-sm text-white tracking-wide m-auto " + props.textClassName}>
+        {getInitials(props.name)}
+      </h1>
     </div>
   );
 }
