@@ -13,7 +13,7 @@ import {
 } from "@/utils/interfaces/server-props";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { MdAllInbox, MdTrendingDown, MdTrendingUp } from "react-icons/md";
+import { MdAllInbox, MdChevronLeft, MdTrendingDown, MdTrendingUp } from "react-icons/md";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -180,7 +180,7 @@ export default function MyDashboard() {
             Lihat lebih banyak
           </a>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {goals.map((goal, index) => (
             <GoalCard
               key={index}

@@ -73,7 +73,7 @@ export default function UserAddExpenseCategory() {
         <h3 className="text-2xl font-bold">Tambah Kategori Pengeluaran</h3>
         <form onSubmit={handleSubmit(onSubmit)} ref={ref}>
           <div id="add-form" className="flex flex-col gap-y-5 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-5">
               <InputForm
                 label={"Nama Kategori"}
                 id={"category-name"}
@@ -164,13 +164,13 @@ export default function UserAddExpenseCategory() {
                 }
               />
             </InputForm>
-            <div id="add-incomecat-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
+            <div id="add-incomecat-button" className="lg:w-1/2 flex flex-col lg:mx-auto space-y-2">
               <div id="auth-message">{errMessage && <Alert text={errMessage} type="danger" />}</div>
               <DefaultButton
                 text="Simpan"
                 color="default"
                 type="submit"
-                className="md:w-1/2 w-full"
+                className="lg:w-1/2 w-full"
               />
             </div>
           </div>

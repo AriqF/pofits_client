@@ -245,9 +245,9 @@ export default function IncomeCategoryDetails() {
                 }
               />
             </InputForm>
-            <div id="add-incomecat-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
+            <div id="add-incomecat-button" className="lg:w-1/2 flex flex-col lg:mx-auto space-y-2">
               <div id="auth-message">{errMessage && <Alert text={errMessage} type="danger" />}</div>
-              <DefaultButton text="Simpan" color="default" type="submit" className="md:w-1/2" />
+              <DefaultButton text="Simpan" color="default" type="submit" className="lg:w-1/2" />
             </div>
           </div>
         </form>

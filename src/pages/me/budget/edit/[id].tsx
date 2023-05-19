@@ -101,13 +101,14 @@ export default function EditBudgetAllocation() {
             </div>
           </div>
           <form id="edit-budget-form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-y-5 w-full md:w-[75%]">
+            <div className="flex flex-col gap-y-5 w-full lg:w-[75%]">
               <InputForm label="Berapa anggaran kamu" id="amount" errors={errors.amount?.message}>
                 <div className="flex">
                   <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md ">
                     Rp
                   </span>
                   <input
+                    onFocus={(e) => e.target.select()}
                     type="text"
                     id="amount"
                     className={
@@ -135,7 +136,7 @@ export default function EditBudgetAllocation() {
                 text={"Simpan"}
                 // icon={MdAdd}
                 color={"default"}
-                className="text-center flex place-content-center md:w-[30%]"
+                className="text-center flex place-content-center lg:w-[30%]"
               />
             </div>
           </form>

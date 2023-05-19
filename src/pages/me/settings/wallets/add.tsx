@@ -85,7 +85,7 @@ export default function AddWallet() {
         <div className="bg-white border-gray-500 rounded-sm p-2 min-h-screen md:min-h-fit flex flex-col gap-y-5">
           <form className="flex" onSubmit={handleSubmit(onSubmit)} ref={ref}>
             <div id="add-wallet-form" className="flex flex-col gap-y-5 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-5 gap-y-5">
+              <div className="grid grid-cols-1 lg:grid-cols-3 md:gap-x-5 gap-y-5">
                 <InputForm label="Nama Dompet" id="wallet-name" errors={errors.name?.message}>
                   <input
                     type="text"
@@ -198,7 +198,7 @@ export default function AddWallet() {
                   })}
                 />
               </InputForm>
-              <div id="add-wallet-button" className="md:w-1/2 flex flex-col md:mx-auto space-y-2">
+              <div id="add-wallet-button" className="lg:w-1/2 flex flex-col lg:mx-auto space-y-2">
                 <div id="auth-message">
                   {errMessage && <Alert text={errMessage} type="danger" />}
                 </div>
@@ -206,7 +206,7 @@ export default function AddWallet() {
                   text="Simpan"
                   color="default"
                   type="submit"
-                  className="md:w-1/2 w-full"
+                  className="lg:w-1/2 w-full"
                 />
               </div>
             </div>

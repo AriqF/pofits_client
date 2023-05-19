@@ -185,7 +185,7 @@ export default function AddGoalSavingPage() {
 
   const FormBox = () => {
     return (
-      <form className="grid grid-cols-1 gap-5" onSubmit={handleSubmit(submitHandler)}>
+      <form className="grid grid-cols-1 gap-5 order-last" onSubmit={handleSubmit(submitHandler)}>
         <InputForm label="Deskripsi singkat" id={"title"} errors={errors.title?.message}>
           <input
             type="text"
@@ -294,7 +294,7 @@ export default function AddGoalSavingPage() {
             "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
             "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
             "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-            "w-full md:w-[20%]"
+            "w-full lg:w-[20%]"
           }>
           Tambah
         </button>
@@ -362,9 +362,9 @@ export default function AddGoalSavingPage() {
       </section>
       <section
         id="goal-add-saving"
-        className="grid grid-cols-1 md:grid-cols-2 justify-between gap-8">
+        className="grid grid-cols-1 lg:grid-cols-2 justify-between gap-8">
         <FormBox />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:order-last">
           <InfoBox />
           <AmountInfoBox />
         </div>

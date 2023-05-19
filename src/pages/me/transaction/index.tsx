@@ -136,50 +136,62 @@ export default function TransactionIndex(props: Props) {
     fetchRecapData();
   }, [monthFilter]);
 
+  const IncExpBox = () => {
+    return (
+      <div
+        id="ie-info-box"
+        className="border shadow-md rounded-md grid grid-cols-2 px-3 py-2.5 gap-5 w-full lg:w-fit">
+        <div className="flex flex-col gap-1 text-center">
+          <div className="inline-flex m-auto gap-1">
+            <MdArrowCircleDown className="my-auto text-moneySafe" />
+            <h5 className="text-sm">Pemasukan</h5>
+          </div>
+          <p className="text-base text-moneySafe font-semibold">
+            Rp {numFormatter(monthRecap.totalIncomes)}
+          </p>
+        </div>
+        <div className="flex flex-col gap-1 text-center">
+          <div className="inline-flex m-auto gap-1">
+            <MdArrowCircleUp className="my-auto text-moneyDanger" />
+            <h5 className="text-sm">Pengeluaran</h5>
+          </div>
+          <p className="text-base text-moneyDanger font-semibold">
+            Rp {numFormatter(monthRecap.totalExpenses)}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  const MoneyLeft = () => {
+    return (
+      <div className="gap-1 flex flex-col my-auto">
+        <p className="text-sm capitalize">
+          Sisa uang kamu bulan {moment(monthFilter).format("MMMM")}
+        </p>
+        <h4
+          className={
+            `text-2xl font-semibold ` +
+            (monthRecap.amountDiff >= 0 ? "text-moneySafe" : "text-moneyDanger")
+          }>
+          Rp {(monthRecap.amountDiff >= 0 ? "" : "-") + numFormatter(monthRecap.amountDiff)}
+        </h4>
+      </div>
+    );
+  };
+
   return (
-    <TransactionLayout>
+    <TransactionLayout backTo={UserPath.HOME}>
       <section className="col-span-4 gap-10 flex flex-col h-max-fit">
         <div id="transactions-recap" className="flex flex-col gap-5">
           <div className="flex flex-row justify-between">
             <h2 className="text-2xl text-gray-800 font-semibold col-span-4">Transaksi</h2>
           </div>
           <div
-            className="flex flex-col md:flex-row md:justify-between text-center md:text-left gap-4 col-span-4"
+            className="flex flex-col lg:flex-row lg:justify-between text-center md:text-left gap-4 col-span-4"
             id="ie-info">
-            <div className="gap-1 flex flex-col my-auto">
-              <p className="text-sm capitalize">
-                Sisa uang kamu bulan {moment(monthFilter).format("MMMM")}
-              </p>
-              <h4
-                className={
-                  `text-2xl font-semibold ` +
-                  (monthRecap.amountDiff >= 0 ? "text-moneySafe" : "text-moneyDanger")
-                }>
-                Rp {(monthRecap.amountDiff >= 0 ? "" : "-") + numFormatter(monthRecap.amountDiff)}
-              </h4>
-            </div>
-            <div
-              id="ie-info-box"
-              className="border shadow-md rounded-md grid grid-cols-2 py-2.5 w-full md:w-4/12 ">
-              <div className="flex flex-col gap-1 text-center">
-                <div className="inline-flex m-auto gap-1">
-                  <MdArrowCircleDown className="my-auto text-moneySafe" />
-                  <h5 className="text-sm">Pemasukan</h5>
-                </div>
-                <p className="text-base text-moneySafe font-semibold">
-                  Rp {numFormatter(monthRecap.totalIncomes)}
-                </p>
-              </div>
-              <div className="flex flex-col gap-1 text-center">
-                <div className="inline-flex m-auto gap-1">
-                  <MdArrowCircleUp className="my-auto text-moneyDanger" />
-                  <h5 className="text-sm">Pengeluaran</h5>
-                </div>
-                <p className="text-base text-moneyDanger font-semibold">
-                  Rp {numFormatter(monthRecap.totalExpenses)}
-                </p>
-              </div>
-            </div>
+            <MoneyLeft />
+            <IncExpBox />
           </div>
         </div>
         <div id="transactions-history" className="flex flex-col gap-5">

@@ -39,7 +39,7 @@ export default function LinkButton(props: ButtonProps) {
       className={
         className +
         " " +
-        " px-2 py-3 md:py-2.5 my-auto inline-flex gap-x-2 place-content-center text-center font-semibold focus:ring-1 focus:outline-none rounded-md text-md  w-full " +
+        " px-2 py-3 md:py-2.5 my-auto inline-flex gap-x-2 place-content-center text-center font-normal focus:ring-1 focus:outline-none rounded-md text-md  w-full " +
         colorClass +
         " "
       }>

@@ -85,7 +85,9 @@ export default function TransactionDetails(props: Props) {
             textRight={props.type === "income" ? "Pemasukan" : "Pengeluaran"}
           />
         </div>
-        <div id="detail-interact" className="flex flex-row md:flex-row md:ml-auto md:w-[30%] gap-2">
+        <div
+          id="detail-interact"
+          className="flex flex-row md:flex-row md:ml-auto w-full lg:w-[30%] gap-2">
           <LinkButton
             type={"button"}
             text={"Edit"}
