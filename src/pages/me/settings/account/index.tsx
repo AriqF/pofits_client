@@ -186,7 +186,7 @@ export default function UserProfileSettings() {
               "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
               "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
               "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-              "w-full md:w-[20%]"
+              "w-full lg:w-[20%]"
             }>
             Simpan
           </button>
