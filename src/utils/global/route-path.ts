@@ -43,4 +43,14 @@ export enum UserPath {
     MONTHLY_REPORT = "/me/report/monthly",
     INFORMATION = "/me/information/"
 
-} 
+}
+
+export enum AdminPath {
+    HOME = "/admin",
+    USERS = "/admin/users",
+    USER_DETAIL = "/admin/users/detail/",
+    ADMIN_LOG = "/admin/logs",
+    PROFILE = "/admin/settings/account/",
+    PROFILE_PRIVACY = "/admin/settings/account/privacy",
+
+}

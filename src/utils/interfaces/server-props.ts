@@ -38,7 +38,8 @@ interface BaseServerData {
 
 export interface CreatedBy {
     id: number;
-    username: string;
+    firstname: string;
+    lastname: string;
     email: string;
 }
 
@@ -289,6 +290,15 @@ export interface AddSavingForm {
     }
 }
 
+export interface Weblogs extends BaseServerData {
+    id: number,
+    log: string,
+    module: string,
+    type: "info" | "failure",
+    ip_address: string,
+    created_by: CreatedBy
+}
+
 interface JoinWallet {
     id: number;
     name: string;
@@ -326,5 +336,13 @@ export interface AnnualTransaction {
     month: string,
 }
 
+export interface CountLogs {
+    total: number,
+    info_logs: number,
+    failure_logs: number,
+}
 
-
+export interface CountUsers {
+    actives: number,
+    inactives: number,
+}
