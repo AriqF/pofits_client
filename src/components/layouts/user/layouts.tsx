@@ -2,6 +2,8 @@ import UserSideBar from "@/components/tools/sidebar/user/sidebar";
 import NavTopBar from "@/components/tools/sidebar/user/top-bar";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
+import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -16,17 +18,18 @@ export default function UserBaseLayout(props: Props) {
   const router = useRouter();
 
   const fetchProfile = async () => {
-    try {
-      const response = await requestAxios({
-        url: baseUrl + "/user/me",
-        method: "GET",
+    const response = await requestAxios({
+      url: baseUrl + "/user/me",
+      method: "GET",
+    })
+      .then((response) => {
+        setFirstname(response.data.firstname);
+        setLastname(response.data.lastname);
+        setUserEmail(response.data.email);
+      })
+      .catch((error: AxiosError) => {
+        alert(error);
       });
-      setFirstname(response.data.firstname);
-      setLastname(response.data.lastname);
-      setUserEmail(response.data.email);
-    } catch (error) {
-      alert(error);
-    }
   };
 
   useEffect(() => {
