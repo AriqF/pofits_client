@@ -15,6 +15,7 @@ import { ServerMessage } from "@/utils/interfaces/response-message";
 import Image from "next/image";
 import ReactSelect from "react-select";
 import { UserPath } from "@/utils/global/route-path";
+import moment from "moment";
 
 export default function AddBudgetForm() {
   const [errMessage, setErrMessage] = useState("");
@@ -87,7 +88,11 @@ export default function AddBudgetForm() {
     reset,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<AddBudgetData>();
+  } = useForm<AddBudgetData>({
+    defaultValues: {
+      start_date: moment(new Date()).format("YYYY-MM"),
+    },
+  });
 
   useEffect(() => {
     getUserCategory();
