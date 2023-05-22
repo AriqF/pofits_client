@@ -22,6 +22,7 @@ import {
 import Image from "next/image";
 import DefaultButton from "@/components/tools/button";
 import { ServerMessage } from "@/utils/interfaces/response-message";
+import moment from "moment";
 
 export default function AddIncomeTargetPage() {
   const [errMessage, setErrMessage] = useState("");
@@ -99,7 +100,11 @@ export default function AddIncomeTargetPage() {
     reset,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<IncomeEstmationForm>();
+  } = useForm<IncomeEstmationForm>({
+    defaultValues: {
+      start_date: moment(new Date()).format("YYYY-MM"),
+    },
+  });
 
   useEffect(() => {
     getUserCategory();
