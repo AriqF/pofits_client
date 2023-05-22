@@ -296,7 +296,8 @@ export interface Weblogs extends BaseServerData {
     module: string,
     type: "info" | "failure",
     ip_address: string,
-    created_by: CreatedBy
+    created_by: CreatedBy;
+    user_email: string,
 }
 
 interface JoinWallet {

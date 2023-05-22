@@ -101,9 +101,9 @@ export default function AdminLog() {
               <th scope="col" className="px-6 py-3">
                 User Email
               </th>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 User Full Name
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 Activity
               </th>
@@ -129,12 +129,12 @@ export default function AdminLog() {
                     "border-b " + (log.type === "failure" ? "bg-errorRed text-white" : "")
                   }>
                   <th scope="row" className="px-6 py-4 whitespace-nowrap ">
-                    {log.created_by?.email ? log.created_by.email : "-"}
+                    {log.user_email ? log.user_email : "-"}
                   </th>
-                  <td className="px-6 py-4">
+                  {/* <td className="px-6 py-4">
                     {log.created_by?.firstname} {log.created_by?.lastname}{" "}
-                  </td>
-                  <td className="px-6 py-4">{log.log}</td>
+                  </td> */}
+                  <td className="px-6 py-4 text-ellipsis overflow-hidden">{log.log}</td>
                   <td className="px-6 py-4 capitalize">
                     {moment(log.created_at).format("DD MMMM YYYY hh:mm:ss")}
                   </td>
