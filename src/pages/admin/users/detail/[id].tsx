@@ -69,7 +69,11 @@ export default function UserDetail() {
           })
             .then((res) => {
               if (res.status === 200) {
-                swal.fire({ title: "Berhasil dihapus", icon: "success" });
+                swal
+                  .fire({ title: "Berhasil dihapus", icon: "success", ...baseAlertStyle })
+                  .then((res) => {
+                    if (res.isConfirmed) router.push(AdminPath.USERS);
+                  });
               }
             })
             .catch((error) => {
