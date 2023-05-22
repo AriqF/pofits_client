@@ -37,7 +37,8 @@ export default function BudgetDetail() {
     updated_at: new Date(),
     created_by: {
       id: 0,
-      username: "",
+      firstname: "",
+      lastname: "",
       email: "",
     },
   });
