@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { CustomAlert } from "@/utils/helper";
+import { AxiosError } from "axios";
 
 export default function PrivacySettings() {
   const router = useRouter();
@@ -21,8 +22,11 @@ export default function PrivacySettings() {
     handleSubmit,
     setValue,
     control,
+    getValues,
     formState: { errors, isSubmitting },
-  } = useForm<ChangePasswordProfileForm>();
+  } = useForm<ChangePasswordProfileForm>({
+    reValidateMode: "onSubmit",
+  });
 
   const submitHandler: SubmitHandler<ChangePasswordProfileForm> = async (
     data: ChangePasswordProfileForm
@@ -51,7 +55,11 @@ export default function PrivacySettings() {
           });
       })
       .catch((error) => {
-        return CustomAlert({ linkToConfirm: UserPath.PROFILE_PRIVACY });
+        console.log(error);
+        return CustomAlert({
+          linkToConfirm: UserPath.PROFILE_PRIVACY,
+          text: error.response?.data?.message,
+        });
       });
   };
 
@@ -59,8 +67,8 @@ export default function PrivacySettings() {
     return (
       <section id="profile-info" className="flex flex-col gap-y-4">
         <h5 className="text-lg font-semibold text-gray-800">Ubah Kata Sandi</h5>
-        <form className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <form className="flex flex-col gap-4 lg:w-[40%]" onSubmit={handleSubmit(submitHandler)}>
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 ">
             <InputForm
               label={"Konfirmasi kata sandi lama"}
               id={"old_password"}
@@ -112,7 +120,7 @@ export default function PrivacySettings() {
               errors={errors.password_confirmation?.message}>
               <input
                 type="password"
-                id="password"
+                id="password_confirmation"
                 placeholder="Konfirmasi kata sandi baru"
                 className={
                   baseFormStyle +
@@ -132,6 +140,10 @@ export default function PrivacySettings() {
                     message:
                       "Kata sandi harus terdapat minimal 1 huruf kecil dan angka atau simbol",
                   },
+                  validate: (value) => {
+                    const { password } = getValues();
+                    return password === value || "Kata sandi tidak sama";
+                  },
                 })}
               />
             </InputForm>
@@ -142,7 +154,7 @@ export default function PrivacySettings() {
               "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
               "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
               "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-              "w-full md:w-[20%]"
+              "w-full lg:w-[20%]"
             }>
             Simpan
           </button>
