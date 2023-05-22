@@ -111,7 +111,7 @@ export default function AddIncomePage() {
     formState: { errors, isSubmitting },
   } = useForm<IncomeForm>({
     defaultValues: {
-      date: moment(new Date()).format("YYYY MM DD"),
+      date: moment(new Date()).format("YYYY-MM-DD"),
     },
   });
 
