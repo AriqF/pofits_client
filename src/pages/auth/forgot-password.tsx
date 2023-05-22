@@ -1,6 +1,7 @@
 import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import InputForm from "@/components/tools/form/input-form";
+import Spinner from "@/components/tools/spinner";
 import { AuthPath, UserPath } from "@/utils/global/route-path";
 import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
@@ -107,6 +108,7 @@ export default function ForgotPassword() {
             type="submit"
             ref={ref}
             className="text-white text-center font-semibold bg-palepurple hover:bg-hovpalepurple focus:ring-1 focus:outline-none focus:ring-hovpalepurple rounded-md text-md px-4 py-3 w-full">
+            {isSubmitting ? <Spinner /> : ""}
             Kirim Permintaan
           </button>
         </div>

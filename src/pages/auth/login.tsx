@@ -15,6 +15,7 @@ import { NextResponse } from "next/server";
 import { AuthPath, UserPath } from "@/utils/global/route-path";
 import InputForm from "@/components/tools/form/input-form";
 import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
+import Spinner from "@/components/tools/spinner";
 interface FormState {
   email: string;
   password: string;
@@ -141,6 +142,7 @@ export default function Login() {
             type="submit"
             ref={ref}
             className="text-white text-center font-semibold bg-palepurple hover:bg-hovpalepurple focus:ring-1 focus:outline-none focus:ring-hovpalepurple rounded-md text-md px-4 py-3 w-full">
+            {isSubmitting ? <Spinner /> : ""}
             Masuk
           </button>
         </div>

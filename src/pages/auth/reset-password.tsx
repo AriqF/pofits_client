@@ -2,6 +2,7 @@ import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import InputForm from "@/components/tools/form/input-form";
+import Spinner from "@/components/tools/spinner";
 import { AuthPath } from "@/utils/global/route-path";
 import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
@@ -138,6 +139,7 @@ export default function ResetPassword() {
           <button
             type="submit"
             className="text-white text-center font-semibold bg-palepurple hover:bg-hovpalepurple focus:ring-1 focus:outline-none focus:ring-hovpalepurple rounded-md text-md px-4 py-3 w-full">
+            {isSubmitting ? <Spinner /> : ""}
             Simpan
           </button>
         </div>
