@@ -2,12 +2,14 @@ import AuthLayout from "@/components/layouts/auth";
 import Alert from "@/components/tools/alerts/alert";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import InputForm from "@/components/tools/form/input-form";
+import Spinner from "@/components/tools/spinner";
 import { AuthPath, UserPath } from "@/utils/global/route-path";
 import { baseFormStyle } from "@/utils/global/style";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail, regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,7 +19,8 @@ import withReactContent from "sweetalert2-react-content";
 // import { yupResolver } from "@hookform/resolvers/yup";
 
 interface FormState {
-  username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -28,7 +31,8 @@ export default function Register() {
   const [isServerError, setIsServerError] = useState(false);
   const [errMessage, setErrMessage] = useState("");
   const [values, setValues] = React.useState<FormState>({
-    username: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -52,7 +56,8 @@ export default function Register() {
     await axios(`${baseUrl}/auth/register`, {
       method: "POST",
       data: {
-        username: data.username,
+        firstname: data.firstname,
+        lastname: data.lastname,
         email: data.email,
         password: data.password,
         password_confirmation: data.confirmPassword,
@@ -83,30 +88,56 @@ export default function Register() {
     <AuthLayout headerText={"Daftar"}>
       <form ref={ref} className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div id="register-form" className="space-y-4">
-          <InputForm label={"Username"} id={"username"} errors={errors.username?.message}>
-            <input
-              type="text"
-              className={
-                baseFormStyle + (errors.username ? "border-errorRed focus:border-errorRed" : "")
-              }
-              placeholder="Masukkan username"
-              required
-              {...register("username", {
-                required: {
-                  value: true,
-                  message: "Masukkan username",
-                },
-                minLength: {
-                  value: 5,
-                  message: "username minimal 5 karakter",
-                },
-                maxLength: {
-                  value: 25,
-                  message: "username maksimal 25 karakter",
-                },
-              })}
-            />
-          </InputForm>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <InputForm label={"Nama awal"} id={"firstname"} errors={errors.firstname?.message}>
+              <input
+                type="text"
+                className={
+                  baseFormStyle + (errors.firstname ? "border-errorRed focus:border-errorRed" : "")
+                }
+                placeholder="Masukkan nama awal"
+                required
+                {...register("firstname", {
+                  required: {
+                    value: true,
+                    message: "Masukkan nama awal",
+                  },
+                  minLength: {
+                    value: 2,
+                    message: "nama awal minimal 2 karakter",
+                  },
+                  maxLength: {
+                    value: 256,
+                    message: "nama akhir maksimal 256 karakter",
+                  },
+                })}
+              />
+            </InputForm>
+            <InputForm label={"Nama akhir"} id={"lastname"} errors={errors.lastname?.message}>
+              <input
+                type="text"
+                className={
+                  baseFormStyle + (errors.firstname ? "border-errorRed focus:border-errorRed" : "")
+                }
+                placeholder="Masukkan nama akhir"
+                required
+                {...register("lastname", {
+                  required: {
+                    value: true,
+                    message: "Masukkan nama awal",
+                  },
+                  minLength: {
+                    value: 2,
+                    message: "nama akhir minimal 2 karakter",
+                  },
+                  maxLength: {
+                    value: 128,
+                    message: "nama akhir maksimal 128 karakter",
+                  },
+                })}
+              />
+            </InputForm>
+          </div>
           <InputForm label={"Email"} id={"email"} errors={errors.email?.message}>
             <input
               type="email"
@@ -188,15 +219,16 @@ export default function Register() {
             type="submit"
             ref={ref}
             className="text-white text-center font-semibold bg-palepurple hover:bg-hovpalepurple focus:ring-1 focus:outline-none focus:ring-hovpalepurple rounded-md text-md px-4 py-3 w-full">
+            {isSubmitting ? <Spinner /> : ""}
             Daftar
           </button>
         </div>
         <div className="grid grid-cols-1 text-center text-md space-y-2">
           <p>
             Sudah punya akun?{" "}
-            <a className="text-blue hover:text-hovblue font-bold" href={AuthPath.LOGIN}>
+            <Link className="text-blue hover:text-hovblue font-bold" href={AuthPath.LOGIN}>
               Masuk
-            </a>
+            </Link>
           </p>
         </div>
       </form>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import Avatar from "@/components/tools/avatar";
+import Image from "next/image";
 interface Props {
   firstname: string;
   lastname: string;
@@ -30,13 +31,15 @@ export default function NavTopBar(props: Props) {
               <span className="sr-only">Open sidebar</span>
               <MdMenu className="text-2xl" />
             </button>
-            <a href="https://flowbite.com" className="flex ml-2 md:mr-24">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 mr-3"
-                alt="FlowBite Logo"
+            <a href="#" className="flex ml-2 md:mr-24">
+              <Image
+                src="/pofitsApp.png"
+                height={30}
+                width={30}
+                className="mr-3 w-auto h-auto"
+                alt="Pofits Logo"
               />
-              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">
+              <span className="self-center text-lg my-auto font-semibold sm:text-2xl whitespace-nowrap">
                 Pofits
               </span>
             </a>

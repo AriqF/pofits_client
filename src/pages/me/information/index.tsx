@@ -1,6 +1,7 @@
 import UserBaseLayout from "@/components/layouts/user/layouts";
 import { UserPath } from "@/utils/global/route-path";
 import { defaultButtonStyle } from "@/utils/global/style";
+import Link from "next/link";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { FaTelegramPlane } from "react-icons/fa";
 import {
@@ -47,6 +48,7 @@ export default function InformationPage() {
             <a
               href="#"
               target="_blank"
+              rel="noreferrer"
               className="text-blue font-semibold hover:text-hovblue hover:underline">
               Survei Kepuasan Pengguna
             </a>
@@ -61,6 +63,7 @@ export default function InformationPage() {
             <a
               href={mailUrl}
               target="_blank"
+              rel="noreferrer"
               className={
                 defaultButtonStyle + " flex flex-row gap-1 bg-blue hover:bg-hovblue text-white"
               }>
@@ -82,18 +85,19 @@ export default function InformationPage() {
               menghubungi saya melalui kontak dibawah yaa!
             </p>
             <div className="flex flex-row gap-2">
-              <a href={"https://www.linkedin.com/in/ariqfachry/"} target="_blank">
+              <a href={"https://www.linkedin.com/in/ariqfachry/"} target="_blank" rel="noreferrer">
                 <AiFillLinkedin className="my-auto text-3xl text-gray-600 hover:text-hovblue transition-colors duration-200 " />
               </a>
-              <a href={"https://github.com/AriqF"} target="_blank">
+              <a href={"https://github.com/AriqF"} target="_blank" rel="noreferrer">
                 <AiFillGithub className="my-auto text-3xl text-gray-600 hover:text-blue transition-colors duration-200" />
               </a>
               <a
                 href={"https://mail.google.com/mail/?view=cm&fs=1&to=ariqfachry2611@gmail.com"}
-                target="_blank">
+                target="_blank"
+                rel="noreferrer">
                 <MdEmail className="my-auto text-3xl text-gray-600 hover:text-blue transition-colors duration-200" />
               </a>
-              <a href={"https://t.me/ariqfachry"} target="_blank">
+              <a href={"https://t.me/ariqfachry"} target="_blank" rel="noreferrer">
                 <FaTelegramPlane className="my-auto text-3xl text-gray-600 hover:text-blue transition-colors duration-200" />
               </a>
             </div>

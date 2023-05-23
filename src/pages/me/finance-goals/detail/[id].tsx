@@ -14,6 +14,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { FinanceGoal, GoalSavingHistory } from "@/utils/interfaces/server-props";
 import { error } from "console";
 import moment from "moment";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { MdAdd, MdCheck } from "react-icons/md";
@@ -236,7 +237,7 @@ export default function FinanceGoalDetail() {
           </p>
         </div>
         <div className="flex my-auto">
-          <a
+          <Link
             type="button"
             href={
               goal.isAchieved ? "javascript:void(0)" : UserPath.FINANCE_GOAL_ADD_SAVING + dataId
@@ -250,7 +251,7 @@ export default function FinanceGoalDetail() {
             }>
             <MdAdd className="text-xl my-auto" />
             Tambah Tabungan
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -264,13 +265,13 @@ export default function FinanceGoalDetail() {
           <p className="text-gray-500 text-sm">Atur kembali rencana keuangan</p>
         </div>
         <div className="flex min-w-[100px]">
-          <a
+          <Link
             href={UserPath.FINANCE_GOAL_EDIT + dataId}
             className={
               " bg-palepurple hover:bg-hovpalepurple text-white text-sm " + defaultButtonStyle
             }>
             Ubah
-          </a>
+          </Link>
           {/* <button
             className={
               " bg-errorRed hover:bg-hovErrorRed text-white text-sm " + defaultButtonStyle

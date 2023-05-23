@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ReactNode } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 
@@ -12,8 +13,17 @@ export default function AuthLayout(props: LayoutProps) {
 
   return (
     <section id="auth" className="min-h-screen flex flex-col border bg-whitegrey">
-      <header className="flex bg-white p-4 drop-shadow-md">
-        <h1 className="text-2xl text-center m-auto font-bold"> PofitsApp</h1>
+      <header className="flex gap-1 bg-white p-4 shadow-md">
+        <div className="m-auto flex flex-row gap-1">
+          <Image
+            src={"/pofitsApp.png"}
+            alt={"PofitsApp-Logo"}
+            className="my-auto"
+            width={35}
+            height={30}
+          />
+          <h1 className="text-2xl font-bold my-auto">PofitsApp</h1>
+        </div>
       </header>
       <div className="container max-w-2xl md:h-fit h-screen p-6 border md:rounded-lg shadow-lg m-auto bg-white space-y-5">
         <div id="login-header" className="space-y-3">

@@ -1,9 +1,7 @@
-import UserNavbar from "@/components/tools/navbar/user";
 import { ReactNode } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import UserBaseLayout from "../layouts";
-import SettingMenuBox from "./menu-box";
-import SettingProfileBox from "./profile-box";
+import Link from "next/link";
 
 interface USettingsProps {
   children: ReactNode;
@@ -16,11 +14,11 @@ export default function UserSettingsLayout(props: USettingsProps) {
     <>
       <UserBaseLayout>
         <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-5 md:mb-2 no-select">
-          <a
+          <Link
             href={props.backTo}
             className="text-blue hover:text-hovblue font-semibold inline-flex cursor-pointer">
             <MdChevronLeft className="my-auto text-2xl" /> <p>Kembali</p>
-          </a>
+          </Link>
         </header>
         <section
           className={

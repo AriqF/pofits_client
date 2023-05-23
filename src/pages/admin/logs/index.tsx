@@ -7,6 +7,7 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { Weblogs } from "@/utils/interfaces/server-props";
 import moment from "moment";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -123,25 +124,32 @@ export default function AdminLog() {
           </thead>
           <tbody>
             {logs.length > 0 ? (
-              logs.map((log) => (
+              logs.map((log, index) => (
                 <tr
+                  key={index}
                   className={
                     "border-b " + (log.type === "failure" ? "bg-errorRed text-white" : "")
                   }>
-                  <th scope="row" className="px-6 py-4 whitespace-nowrap ">
+                  <th key={index} scope="row" className="px-6 py-4 whitespace-nowrap ">
                     {log.user_email ? log.user_email : "-"}
                   </th>
                   {/* <td className="px-6 py-4">
                     {log.created_by?.firstname} {log.created_by?.lastname}{" "}
                   </td> */}
-                  <td className="px-6 py-4 text-ellipsis overflow-hidden">{log.log}</td>
-                  <td className="px-6 py-4 capitalize">
+                  <td key={index} className="px-6 py-4 text-ellipsis overflow-hidden">
+                    {log.log}
+                  </td>
+                  <td key={index} className="px-6 py-4 capitalize">
                     {moment(log.created_at).format("DD MMMM YYYY hh:mm:ss")}
                   </td>
-                  <td className="px-6 py-4 capitalize">{log.module}</td>
+                  <td key={index} className="px-6 py-4 capitalize">
+                    {log.module}
+                  </td>
 
-                  <td className="px-6 py-4">{log.ip_address}</td>
-                  <td className={"px-6 py-4 capitalize"}>
+                  <td key={index} className="px-6 py-4">
+                    {log.ip_address}
+                  </td>
+                  <td key={index} className={"px-6 py-4 capitalize"}>
                     {/* <span
                       className={
                         (log.type === "info"
@@ -214,11 +222,11 @@ export default function AdminLog() {
             </a>
           </li> */}
           <li>
-            <a
+            <Link
               href="#"
               className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">
               ...
-            </a>
+            </Link>
           </li>
           <li>
             <button

@@ -11,6 +11,7 @@ import { CustomAlert } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ExpenseCategory, IncomeCategory } from "@/utils/interfaces/server-props";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { MdDelete, MdEditNote } from "react-icons/md";
@@ -109,17 +110,17 @@ export default function UserExpenseCategory() {
                 icon={category.icon}
                 title={category.title}
                 dataId={category.id}>
-                <a
+                <Link
                   href={UserPath.EXPENSE_CATEGORY_EDIT + category.id}
                   className="rounded-full p-2 bg-gray-500 my-auto  hover:bg-gray-400 transition-all duration-200">
                   <MdEditNote className="text-lg my-auto" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   onClick={() => deleteCategory(category.id)}
                   className="cursor-pointer rounded-full p-2 bg-gray-500 hover:bg-gray-400 my-auto  transition-all duration-200">
                   <MdDelete className="text-lg my-auto" />
-                </a>
+                </Link>
               </DataList>
             ))
           ) : (

@@ -21,6 +21,7 @@ import BudgetTransactionCard from "@/components/tools/card/budget-transaction-ca
 import IncomeTargetTransCard from "@/components/tools/card/income-target/income-target-transactions-card";
 import Alert from "@/components/tools/alerts/alert";
 import { MdAdd } from "react-icons/md";
+import Link from "next/link";
 
 export default function TargetIncomeDetails() {
   const [target, setTarget] = useState<IncomeEstimationData>({
@@ -42,7 +43,8 @@ export default function TargetIncomeDetails() {
     updated_at: new Date(),
     created_by: {
       id: 0,
-      username: "",
+      firstname: "",
+      lastname: "",
       email: "",
     },
   });
@@ -179,11 +181,11 @@ export default function TargetIncomeDetails() {
         <div className="flex flex-col col-span-1" id="budget-transactions">
           <div className="inline-flex justify-between mb-4">
             <h3 className="text-gray-600 text-xl font-semibold my-auto">Riwayat Transaksi</h3>
-            <a
+            <Link
               className="p-2 rounded-sm bg-gray-300 my-auto hover:bg-gray-200 cursor-pointer transition-all duration-200"
               href={UserPath.TRANSACTION_INCOME_ADD}>
               <MdAdd className="text-base" />
-            </a>
+            </Link>
           </div>
           {/* LIST TRANSAKSI */}
           <div className="flex flex-col gap-y-4">
