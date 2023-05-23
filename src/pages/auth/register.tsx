@@ -9,6 +9,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail, regPassword } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -225,9 +226,9 @@ export default function Register() {
         <div className="grid grid-cols-1 text-center text-md space-y-2">
           <p>
             Sudah punya akun?{" "}
-            <a className="text-blue hover:text-hovblue font-bold" href={AuthPath.LOGIN}>
+            <Link className="text-blue hover:text-hovblue font-bold" href={AuthPath.LOGIN}>
               Masuk
-            </a>
+            </Link>
           </p>
         </div>
       </form>

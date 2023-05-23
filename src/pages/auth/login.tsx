@@ -16,6 +16,7 @@ import { AuthPath, UserPath } from "@/utils/global/route-path";
 import InputForm from "@/components/tools/form/input-form";
 import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
 import Spinner from "@/components/tools/spinner";
+import Link from "next/link";
 interface FormState {
   email: string;
   password: string;
@@ -147,16 +148,16 @@ export default function Login() {
           </button>
         </div>
         <div className="grid grid-cols-1 text-center text-md space-y-2">
-          <a
+          <Link
             className="text-blue hover:text-hovblue font-bold w-fit m-auto"
             href={AuthPath.FORGOT_PASS}>
             Lupa kata sandi
-          </a>
+          </Link>
           <p>
             Belum punya akun?{" "}
-            <a className="text-blue hover:text-hovblue font-bold" href={AuthPath.REGISTER}>
+            <Link className="text-blue hover:text-hovblue font-bold" href={AuthPath.REGISTER}>
               Daftar
-            </a>
+            </Link>
           </p>
         </div>
       </form>

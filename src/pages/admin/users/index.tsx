@@ -93,8 +93,8 @@ export default function UserListPage() {
           </thead>
           <tbody>
             {users.length > 0 ? (
-              users.map((user) => (
-                <tr className="bg-white border-b ">
+              users.map((user, index) => (
+                <tr key={index} className="bg-white border-b ">
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">

@@ -158,6 +158,7 @@ export default function IncomeTargetIndex() {
         {incomeTarget.length > 0 ? (
           incomeTarget.map((data, index) => (
             <IncomeTargetList
+              key={index}
               title={data.category.title}
               icon={data.category.icon}
               targetAmount={data.amount}

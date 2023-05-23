@@ -10,6 +10,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { UpdateProfileForm, User } from "@/utils/interfaces/server-props";
 import moment from "moment";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -206,11 +207,11 @@ export default function UserProfileSettings() {
           </p>
         </div>
         <div className="my-auto">
-          <a
+          <Link
             href={AdminPath.PROFILE_PRIVACY}
             className={"bg-blue hover:bg-hovblue text-white" + defaultButtonStyle}>
             Ubah kata sandi
-          </a>
+          </Link>
         </div>
       </section>
     );

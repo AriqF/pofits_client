@@ -9,6 +9,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { UpdateProfileForm, User } from "@/utils/interfaces/server-props";
 import moment from "moment";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -205,11 +206,11 @@ export default function UserProfileSettings() {
           </p>
         </div>
         <div className="my-auto">
-          <a
+          <Link
             href={UserPath.PROFILE_PRIVACY}
             className={"bg-blue hover:bg-hovblue text-white" + defaultButtonStyle}>
             Ubah kata sandi
-          </a>
+          </Link>
         </div>
       </section>
     );
@@ -233,11 +234,11 @@ export const ProfileLayout = (props: Props) => {
   return (
     <UserBaseLayout>
       <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-4 md:mb-2">
-        <a
+        <Link
           href={props.backTo}
           className="text-blue hover:text-hovblue font-semibold inline-flex cursor-pointer">
           <MdChevronLeft className="my-auto text-2xl" /> <p>Kembali</p>
-        </a>
+        </Link>
       </header>
       <section className={"min-h-screen lg:mb-0 space-y-6"}>{props.children}</section>
     </UserBaseLayout>

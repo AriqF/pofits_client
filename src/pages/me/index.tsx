@@ -1,4 +1,3 @@
-import UserLayout from "@/components/layouts/user";
 import GoalCard from "@/components/layouts/user/finance-goals/goals-card";
 import UserBaseLayout from "@/components/layouts/user/layouts";
 import ReportCard from "@/components/layouts/user/report/report-card";
@@ -27,6 +26,7 @@ import {
 } from "chart.js";
 import { Bar, Line } from "react-chartjs-2";
 import Alert from "@/components/tools/alerts/alert";
+import Link from "next/link";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -174,11 +174,11 @@ export default function MyDashboard() {
           <h5 className="text-base font-semibold capitalize my-auto">
             Jangan lupa rencana keuanganmu
           </h5>
-          <a
+          <Link
             href={UserPath.FINANCE_GOAL}
             className="text-sm my-auto text-blue hover:text-hovblue hover:underline">
             Lihat lebih banyak
-          </a>
+          </Link>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {goals.map((goal, index) => (

@@ -8,6 +8,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { useState } from "react";
@@ -114,9 +115,9 @@ export default function ForgotPassword() {
         </div>
         <div className="grid grid-cols-1 text-center text-md space-y-2">
           <p>
-            <a className="text-blue hover:text-hovblue font-bold" href="/auth/login">
+            <Link className="text-blue hover:text-hovblue font-bold" href="/auth/login">
               Kembali ke halaman masuk
-            </a>
+            </Link>
           </p>
         </div>
       </form>
