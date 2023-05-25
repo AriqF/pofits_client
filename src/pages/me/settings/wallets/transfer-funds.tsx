@@ -263,11 +263,12 @@ export default function TransferWallet() {
                 </div>
                 <div className="flex">
                   <DefaultButton
-                    text="Simpan"
-                    color="default"
-                    type="submit"
-                    className="w-full lg:w-1/2"
-                  />
+                    isSubmitting={isSubmitting}
+                    type={"submit"}
+                    color={"default"}
+                    className="text-center flex place-content-center lg:w-[30%] mt-3">
+                    Simpan
+                  </DefaultButton>
                 </div>
               </div>
             </div>

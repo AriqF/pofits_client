@@ -23,6 +23,7 @@ import { IncomeTransactions } from "@/utils/interfaces/server-props";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import moment from "moment";
+import DefaultButton from "@/components/tools/button";
 
 export default function EditExpenseDataPage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -278,17 +279,13 @@ export default function EditExpenseDataPage() {
                   })}
                 />
               </InputForm>
-              <button
-                type="submit"
-                className={
-                  "col-span-2 " +
-                  "border bg-palepurple text-white hover:bg-hovpalepurple " +
-                  "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
-                  "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-                  "w-full lg:w-[20%]"
-                }>
+              <DefaultButton
+                isSubmitting={isSubmitting}
+                type={"submit"}
+                color={"default"}
+                className="text-center flex place-content-center lg:w-[15%] mt-3">
                 Simpan
-              </button>
+              </DefaultButton>
             </div>
           </form>
         </Container>

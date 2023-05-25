@@ -97,7 +97,7 @@ export default function UserExpenseCategory() {
             text={"Tambah"}
             color={"default"}
             linkTo={"expense-category/add"}
-            className="w-full lg:w-1/6"
+            className="w-full lg:w-[10%]"
           />
         </div>
 
