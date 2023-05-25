@@ -12,7 +12,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import { JWTServer } from "@/utils/interfaces/server-props";
 import jwt_decode from "jwt-decode";
 import { NextResponse } from "next/server";
-import { AuthPath, UserPath } from "@/utils/global/route-path";
+import { AdminPath, AuthPath, UserPath } from "@/utils/global/route-path";
 import InputForm from "@/components/tools/form/input-form";
 import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
 import Spinner from "@/components/tools/spinner";
@@ -68,7 +68,8 @@ export default function Login() {
           secure: true,
         });
 
-        res.data.role === "admin" ? router.push("/admin") : router.push(UserPath.HOME);
+        router.reload();
+        res.data.role === "admin" ? router.push(AdminPath.HOME) : router.push(UserPath.HOME);
         // return NextResponse.next();
       })
       .catch((error) => {
