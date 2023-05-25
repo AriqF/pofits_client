@@ -20,6 +20,8 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
 import { iconOpt, incomeTypeOpt } from "@/utils/global/select-options";
+import { CustomAlert } from "@/utils/helper";
+import { AxiosError } from "axios";
 
 export default function UserAddIncomeCategory() {
   const [errMessage, setErrMessage] = useState("");
@@ -62,11 +64,11 @@ export default function UserAddIncomeCategory() {
             if (res.isConfirmed) router.push(UserPath.INCOME_CATEGORY);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.INCOME_CATEGORY_ADD,
+          text: error.response?.data?.message,
+        });
       });
   };
 

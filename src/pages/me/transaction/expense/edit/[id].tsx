@@ -24,6 +24,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import moment from "moment";
 import DefaultButton from "@/components/tools/button";
+import { AxiosError } from "axios";
 
 export default function EditExpenseDataPage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -92,19 +93,26 @@ export default function EditExpenseDataPage() {
         wallet: data.wallet?.value,
         description: data.description,
       },
-    }).then((res) => {
-      if (res.status === 200 || res.status === 201) {
-        return swal
-          .fire({
-            icon: "success",
-            title: "Perubahan berhasil disimpan",
-            ...baseAlertStyle,
-          })
-          .then((res) => {
-            if (res.isConfirmed) return router.push(UserPath.TRANSACTION);
-          });
-      }
-    });
+    })
+      .then((res) => {
+        if (res.status === 200 || res.status === 201) {
+          return swal
+            .fire({
+              icon: "success",
+              title: "Perubahan berhasil disimpan",
+              ...baseAlertStyle,
+            })
+            .then((res) => {
+              if (res.isConfirmed) return router.push(UserPath.TRANSACTION);
+            });
+        }
+      })
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.TRANSACTION_EXPENSE_EDIT + dataId,
+          text: error.response?.data?.message,
+        });
+      });
   };
 
   const {

@@ -21,6 +21,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import DefaultButton from "@/components/tools/button";
+import { AxiosError } from "axios";
 
 interface OptionsObject {
   label: string;
@@ -176,21 +177,17 @@ export default function AddFinanceGoalPage() {
             });
         }
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.FINANCE_GOAL_ADD,
+          text: error.response?.data?.message,
+        });
       });
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchUserWallet();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  });
+    fetchUserWallet();
+  }, []);
 
   // useEffect(() => {
   //   console.log(getValues("frequencies"));

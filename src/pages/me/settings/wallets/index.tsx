@@ -55,10 +55,10 @@ export default function MyWallets() {
 
   useEffect(() => {
     getWallets();
-  });
+  }, []);
 
   return (
-    <UserSettingsLayout backTo={UserPath.SETTINGS}>
+    <UserSettingsLayout backTo={UserPath.HOME}>
       <section id="wallets-index" className="space-y-4 col-span-3">
         <div className="flex gap-2 w-full">
           <div className="space-y-4">

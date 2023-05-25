@@ -55,8 +55,7 @@ export default function PrivacySettings() {
             }
           });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((error: AxiosError<any>) => {
         return CustomAlert({
           linkToConfirm: UserPath.PROFILE_PRIVACY,
           text: error.response?.data?.message,

@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import moment from "moment";
+import { AxiosError } from "axios";
 
 export default function AddExpensePage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -67,24 +68,31 @@ export default function AddExpensePage() {
         wallet: data.wallet?.value,
         description: data.description,
       },
-    }).then((res) => {
-      if (res.status === 201) {
-        return swal
-          .fire({
-            icon: "success",
-            title: "Transaksi berhasil ditambahkan",
-            text: "Tambahkan transaksi lain?",
-            ...baseAlertStyle,
-            showCancelButton: true,
-            cancelButtonText: "Tidak",
-            confirmButtonText: "Tambah lagi",
-          })
-          .then((res) => {
-            if (res.isConfirmed) router.reload();
-            return router.push(UserPath.TRANSACTION);
-          });
-      }
-    });
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          return swal
+            .fire({
+              icon: "success",
+              title: "Transaksi berhasil ditambahkan",
+              text: "Tambahkan transaksi lain?",
+              ...baseAlertStyle,
+              showCancelButton: true,
+              cancelButtonText: "Tidak",
+              confirmButtonText: "Tambah lagi",
+            })
+            .then((res) => {
+              if (res.isConfirmed) router.reload();
+              return router.push(UserPath.TRANSACTION);
+            });
+        }
+      })
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.TRANSACTION_EXPENSE_ADD,
+          text: error.response?.data?.message,
+        });
+      });
   };
 
   const {

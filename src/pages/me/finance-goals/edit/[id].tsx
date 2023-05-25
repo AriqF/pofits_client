@@ -28,6 +28,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import DefaultButton from "@/components/tools/button";
+import { AxiosError } from "axios";
 
 interface OptionsObject {
   label: string;
@@ -182,11 +183,11 @@ export default function EditFinanceGoalPage() {
             if (res.isConfirmed) router.push(UserPath.FINANCE_GOAL_DETAIL + dataId);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.FINANCE_GOAL_EDIT,
+          text: error.response?.data?.message,
+        });
       });
   };
 
@@ -245,10 +246,8 @@ export default function EditFinanceGoalPage() {
       console.log({ wAmountTarget, wFrequency, wTargetDate, wAmountPerFrequence });
 
       if (isFlexible) {
-        console.log("CED");
         countEstimatedDate();
       } else {
-        console.log("CAPF");
         countAmountPerFrequency();
       }
     }, 1);

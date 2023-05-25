@@ -74,17 +74,9 @@ export default function AddBudgetForm() {
           });
       })
       .catch((error: AxiosError<any>) => {
-        if (error.status === 409) {
-          return CustomAlert({
-            linkToConfirm: UserPath.BUDGET_ADD,
-            text: error.response?.data?.message,
-          });
-        } else {
-          return CustomAlert({
-            linkToConfirm: UserPath.BUDGET,
-            text: error.response?.data?.message,
-          });
-        }
+        return CustomAlert({
+          text: error.response?.data?.message,
+        });
       });
   };
 

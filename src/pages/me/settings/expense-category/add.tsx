@@ -19,6 +19,7 @@ import ReactSelect from "react-select";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
+import { CustomAlert } from "@/utils/helper";
 
 export default function UserAddExpenseCategory() {
   const [errMessage, setErrMessage] = useState("");
@@ -61,10 +62,10 @@ export default function UserAddExpenseCategory() {
           });
       })
       .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+        return CustomAlert({
+          linkToConfirm: UserPath.EXPENSE_CATEGORY_ADD,
+          text: error.response?.data?.message,
+        });
       });
   };
   return (

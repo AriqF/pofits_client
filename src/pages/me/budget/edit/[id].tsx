@@ -17,6 +17,7 @@ import Alert from "@/components/tools/alerts/alert";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export default function EditBudgetAllocation() {
   const [budgetDate, setBudgetDate] = useState(new Date());
@@ -42,17 +43,23 @@ export default function EditBudgetAllocation() {
       data: {
         amount: parseInt(data.amount.replace(/\./g, "")),
       },
-    }).then((res) => {
-      swal
-        .fire({
-          title: `Anggaran ${category} berhasil dirubah`,
-          icon: "success",
-          ...baseAlertStyle,
-        })
-        .then((res) => {
-          if (res.isConfirmed) router.push(UserPath.BUDGET);
+    })
+      .then((res) => {
+        swal
+          .fire({
+            title: `Anggaran ${category} berhasil dirubah`,
+            icon: "success",
+            ...baseAlertStyle,
+          })
+          .then((res) => {
+            if (res.isConfirmed) router.push(UserPath.BUDGET);
+          });
+      })
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          text: error.response?.data?.message,
         });
-    });
+      });
   };
 
   const getData = async () => {

@@ -116,14 +116,17 @@ export default function MonthlyReportIndex() {
         console.log(error);
       });
   };
-  //?fetch every 500ms?
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchMonthlyReport();
-    }, 500);
+  // //?fetch every 500ms?
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     fetchMonthlyReport();
+  //   }, 500);
 
-    return () => clearTimeout(timer);
-  });
+  //   return () => clearTimeout(timer);
+  // });
+  useEffect(() => {
+    fetchMonthlyReport();
+  }, []);
 
   return (
     <ReportLayout backTo={UserPath.HOME}>

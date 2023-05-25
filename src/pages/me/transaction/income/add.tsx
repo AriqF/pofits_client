@@ -21,6 +21,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { AxiosError } from "axios";
 
 export default function AddIncomePage() {
   const [categoriesOpt, setCategoriesOpt] = useState([]);
@@ -82,24 +83,31 @@ export default function AddIncomePage() {
         title: data.title,
         description: data.description,
       },
-    }).then((res) => {
-      if (res.status === 201) {
-        return swal
-          .fire({
-            icon: "success",
-            title: "Transaksi berhasil ditambahkan",
-            text: "Tambahkan transaksi lain?",
-            ...baseAlertStyle,
-            showCancelButton: true,
-            cancelButtonText: "Tidak",
-            confirmButtonText: "Tambah lagi",
-          })
-          .then((res) => {
-            if (res.isConfirmed) router.reload();
-            return router.push(UserPath.TRANSACTION);
-          });
-      }
-    });
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          return swal
+            .fire({
+              icon: "success",
+              title: "Transaksi berhasil ditambahkan",
+              text: "Tambahkan transaksi lain?",
+              ...baseAlertStyle,
+              showCancelButton: true,
+              cancelButtonText: "Tidak",
+              confirmButtonText: "Tambah lagi",
+            })
+            .then((res) => {
+              if (res.isConfirmed) router.reload();
+              return router.push(UserPath.TRANSACTION);
+            });
+        }
+      })
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.TRANSACTION_INCOME_ADD,
+          text: error.response?.data?.message,
+        });
+      });
   };
 
   const {

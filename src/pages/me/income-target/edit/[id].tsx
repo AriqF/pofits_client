@@ -17,6 +17,7 @@ import ReactSelect from "react-select";
 import Image from "next/image";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export default function EditTargetAmount() {
   const [targetDate, setTargetDate] = useState(new Date());
@@ -42,17 +43,23 @@ export default function EditTargetAmount() {
       data: {
         amount: parseInt(data.amount.replace(/\./g, "")),
       },
-    }).then((res) => {
-      swal
-        .fire({
-          title: `Target ${category} berhasil dirubah`,
-          icon: "success",
-          ...baseAlertStyle,
-        })
-        .then((res) => {
-          if (res.isConfirmed) router.push(UserPath.ESTIMATION);
+    })
+      .then((res) => {
+        swal
+          .fire({
+            title: `Target ${category} berhasil dirubah`,
+            icon: "success",
+            ...baseAlertStyle,
+          })
+          .then((res) => {
+            if (res.isConfirmed) router.push(UserPath.ESTIMATION);
+          });
+      })
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          text: error.response?.data?.message,
         });
-    });
+      });
   };
 
   const getData = async () => {

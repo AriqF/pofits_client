@@ -23,6 +23,7 @@ import Image from "next/image";
 import DefaultButton from "@/components/tools/button";
 import { ServerMessage } from "@/utils/interfaces/response-message";
 import moment from "moment";
+import { AxiosError } from "axios";
 
 export default function AddIncomeTargetPage() {
   const [errMessage, setErrMessage] = useState("");
@@ -85,11 +86,10 @@ export default function AddIncomeTargetPage() {
             if (res.isConfirmed) router.push(UserPath.ESTIMATION);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          text: error.response?.data?.message,
+        });
       });
   };
 

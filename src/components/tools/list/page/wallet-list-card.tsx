@@ -37,17 +37,18 @@ export default function WalletListItem(props: CardProps) {
         if (res.isConfirmed) {
           await requestDeleteWallet(walletId)
             .then((res) => {
-              swal.fire({
-                title: "Dompet berhasil dihapus",
-                icon: "success",
-                ...baseAlertStyle,
-              });
-              // .then((res) => {
-              //   if (res.isConfirmed) router.reload();
-              // });
+              swal
+                .fire({
+                  title: "Dompet berhasil dihapus",
+                  icon: "success",
+                  ...baseAlertStyle,
+                })
+                .then((res) => {
+                  if (res.isConfirmed) router.reload();
+                });
             })
             .catch((err) => {
-              return CustomAlert({ linkToConfirm: UserPath.SETTINGS });
+              return CustomAlert({ linkToConfirm: UserPath.WALLETS });
             });
         }
       });
