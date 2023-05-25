@@ -87,7 +87,6 @@ export default function AdminLog() {
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchLog();
-      console.log(logs);
     }, 4500);
 
     return () => clearTimeout(timer);
