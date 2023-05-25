@@ -71,11 +71,8 @@ export default function AdminDashboard() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchWebData();
-    }, 500);
-    return () => clearTimeout(timer);
-  });
+    fetchWebData();
+  }, []);
 
   // COMPONENTS
   const CountUsersBox = (props: CountBoxProps) => {
