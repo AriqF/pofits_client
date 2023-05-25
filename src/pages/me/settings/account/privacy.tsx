@@ -13,6 +13,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { CustomAlert } from "@/utils/helper";
 import { AxiosError } from "axios";
+import DefaultButton from "@/components/tools/button";
 
 export default function PrivacySettings() {
   const router = useRouter();
@@ -148,16 +149,13 @@ export default function PrivacySettings() {
               />
             </InputForm>
           </div>
-          <button
-            type="submit"
-            className={
-              "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
-              "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
-              "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-              "w-full lg:w-[20%]"
-            }>
+          <DefaultButton
+            isSubmitting={isSubmitting}
+            type={"submit"}
+            color={"default"}
+            className="text-center flex place-content-center lg:w-[25%] mt-3">
             Simpan
-          </button>
+          </DefaultButton>
         </form>
       </section>
     );

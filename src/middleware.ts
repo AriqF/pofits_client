@@ -4,6 +4,7 @@ import { JWTServer } from "./utils/interfaces/server-props";
 
 export function middleware(request: NextRequest) {
     const pathName = request.nextUrl.pathname;
+
     let accessToken = request.cookies.get('accessToken')?.value
 
     //index middleware
@@ -29,6 +30,11 @@ export function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith("/me") || request.nextUrl.pathname.startsWith("/admin")) {
         if (accessToken) {
             const decoded: JWTServer = jwt_decode(accessToken);
+            if (decoded.exp * 1000 <= new Date().getTime()) {
+                const response = NextResponse.redirect(new URL("/auth/login", request.url))
+                response.cookies.delete("accessToken")
+                return response
+            }
             if (request.nextUrl.pathname.startsWith("/admin") && decoded.role !== "admin") {
                 return NextResponse.redirect(new URL("/me", request.url))
             }

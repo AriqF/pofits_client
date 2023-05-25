@@ -27,6 +27,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
 import FormHelper from "@/components/tools/alerts/form-helper";
+import DefaultButton from "@/components/tools/button";
 
 const getGoalSeverityBg = (severity: number): string => {
   switch (severity) {
@@ -288,16 +289,13 @@ export default function AddGoalSavingPage() {
             Tabung dana dari dompet lain
           </label>
         </div>
-        <button
-          type="submit"
-          className={
-            "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
-            "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
-            "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-            "w-full lg:w-[20%]"
-          }>
-          Tambah
-        </button>
+        <DefaultButton
+          isSubmitting={isSubmitting}
+          type={"submit"}
+          color={"default"}
+          className="text-center flex place-content-center lg:w-[20%] mt-3">
+          Simpan
+        </DefaultButton>
       </form>
     );
   };

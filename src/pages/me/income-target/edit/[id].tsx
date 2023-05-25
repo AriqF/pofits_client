@@ -132,12 +132,12 @@ export default function EditTargetAmount() {
               </InputForm>
 
               <DefaultButton
+                isSubmitting={isSubmitting}
                 type={"submit"}
-                text={"Simpan"}
-                // icon={MdAdd}
                 color={"default"}
-                className="text-center flex place-content-center lg:w-[30%]"
-              />
+                className="text-center flex place-content-center lg:w-[30%]">
+                Simpan
+              </DefaultButton>
             </div>
           </form>
         </Container>

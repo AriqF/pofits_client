@@ -203,11 +203,12 @@ export default function AddWallet() {
                   {errMessage && <Alert text={errMessage} type="danger" />}
                 </div>
                 <DefaultButton
-                  text="Simpan"
-                  color="default"
-                  type="submit"
-                  className="lg:w-1/2 w-full"
-                />
+                  isSubmitting={isSubmitting}
+                  type={"submit"}
+                  color={"default"}
+                  className="text-center flex place-content-center lg:w-[30%] mt-3">
+                  Simpan
+                </DefaultButton>
               </div>
             </div>
           </form>

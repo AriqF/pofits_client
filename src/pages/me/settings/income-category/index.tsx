@@ -93,7 +93,7 @@ export default function UserIncomeCategory() {
             text={"Tambah"}
             color={"default"}
             linkTo={"income-category/add"}
-            className="w-full lg:w-1/6"
+            className="w-full lg:w-[10%]"
           />
         </div>
         <div className="flex flex-col">

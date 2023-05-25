@@ -5,7 +5,7 @@ import { baseAlertStyle, baseFormStyle, formStyle, selectFormStyle } from "@/uti
 import { CustomAlert, numFormatter } from "@/utils/helper";
 import { AddBudgetData, ExpenseCategory } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -16,6 +16,7 @@ import Image from "next/image";
 import ReactSelect from "react-select";
 import { UserPath } from "@/utils/global/route-path";
 import moment from "moment";
+import { AxiosError } from "axios";
 
 export default function AddBudgetForm() {
   const [errMessage, setErrMessage] = useState("");
@@ -25,7 +26,6 @@ export default function AddBudgetForm() {
   const [isRepeat, setIsRepeat] = useState(false);
   const router = useRouter();
   const swal = withReactContent(Swal);
-  const ref = useRef<any>();
 
   const getUserCategory = async () => {
     await requestAxios({
@@ -73,11 +73,18 @@ export default function AddBudgetForm() {
             if (res.isConfirmed) router.push(UserPath.BUDGET);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        if (error.status === 409) {
+          return CustomAlert({
+            linkToConfirm: UserPath.BUDGET_ADD,
+            text: error.response?.data?.message,
+          });
+        } else {
+          return CustomAlert({
+            linkToConfirm: UserPath.BUDGET,
+            text: error.response?.data?.message,
+          });
+        }
       });
   };
 
@@ -101,7 +108,7 @@ export default function AddBudgetForm() {
   return (
     <Container className="w-full p-1 md:p-6">
       <h3 className="text-2xl font-semibold mb-3">Tambah Anggaran</h3>
-      <form onSubmit={handleSubmit(onSubmit)} ref={ref}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div id="add-budget-form" className="flex flex-col gap-y-5 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <InputForm label="Kategori" id="category-select" errors={errors.category?.message}>
@@ -220,12 +227,12 @@ export default function AddBudgetForm() {
             </label>
           </div>
           <DefaultButton
+            isSubmitting={isSubmitting}
             type={"submit"}
-            text={"Tambah"}
-            // icon={MdAdd}
             color={"default"}
-            className="text-center flex place-content-center lg:w-[30%]"
-          />
+            className="text-center flex place-content-center lg:w-[30%]">
+            Tambah
+          </DefaultButton>
         </div>
       </form>
     </Container>
