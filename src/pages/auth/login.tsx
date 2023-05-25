@@ -67,9 +67,8 @@ export default function Login() {
           path: "/",
           secure: true,
         });
-
-        res.data.role === "admin" ? router.push(AdminPath.HOME) : router.push(UserPath.HOME);
         router.reload();
+        res.data.role === "admin" ? router.replace(AdminPath.HOME) : router.replace(UserPath.HOME);
         // return NextResponse.next();
       })
       .catch((error) => {
