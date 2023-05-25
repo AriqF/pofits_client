@@ -43,7 +43,6 @@ export default function UserBaseLayout(props: Props) {
   return (
     <>
       <NavTopBar firstname={firstname} lastname={lastname} userEmail={userEmail} />
-      <UserSideBar />
       {/* <Sidebar.Item></Sidebar> */}
 
       <main className={" p-4 sm:ml-64 md:bg-white bg-white max-h-fit"}>
