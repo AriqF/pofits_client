@@ -1,4 +1,5 @@
 import AdminLayout from "@/components/layouts/admin/admin-layout";
+import DefaultButton from "@/components/tools/button";
 import { AdminPath } from "@/utils/global/route-path";
 import { baseAlertStyle, defaultButtonStyle, deleteAlertStyle } from "@/utils/global/style";
 import { CustomAlert } from "@/utils/helper";
@@ -133,6 +134,9 @@ export default function UserDetail() {
         <article>
           <ul className="list-none list-outside leading-8">
             <li className="capitalize">
+              <span className="font-semibold">User ID: </span> {user.id}
+            </li>
+            <li className="capitalize">
               <span className="font-semibold">Fullname: </span> {user.firstname} {user.lastname}
             </li>
             <li>
@@ -157,17 +161,13 @@ export default function UserDetail() {
             </li>
           </ul>
         </article>
-        <section className="flex flex-col lg:flex-row gap-3 lg:w-[40%]">
-          <button
-            onClick={() => handleDeleteAcc()}
-            className={defaultButtonStyle + "bg-errorRed hover:bg-hovErrorRed text-white"}>
-            Soft Delete Account
-          </button>
-          <button
-            onClick={() => handleResetPassword()}
-            className={defaultButtonStyle + "bg-blue hover:bg-hovblue text-white"}>
+        <section className="flex flex-col lg:flex-row gap-3 lg:w-[35%]">
+          <DefaultButton type={"button"} color={"danger"} onClick={() => handleDeleteAcc()}>
+            Soft Delete
+          </DefaultButton>
+          <DefaultButton type="button" color="info" onClick={() => handleResetPassword()}>
             Reset Password
-          </button>
+          </DefaultButton>
         </section>
       </main>
     </AdminLayout>

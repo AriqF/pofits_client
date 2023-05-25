@@ -69,6 +69,9 @@ export default function UserListPage() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-200  ">
             <tr>
               <th scope="col" className="px-6 py-3">
+                User ID
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Email
               </th>
               <th scope="col" className="px-6 py-3">
@@ -95,6 +98,7 @@ export default function UserListPage() {
             {users.length > 0 ? (
               users.map((user, index) => (
                 <tr key={index} className="bg-white border-b ">
+                  <td className="px-6 py-4">{user.id}</td>
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
