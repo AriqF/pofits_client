@@ -239,11 +239,12 @@ export default function AddIncomeTargetPage() {
                 </label>
               </div>
               <DefaultButton
+                isSubmitting={isSubmitting}
                 type={"submit"}
-                text={"Tambah"}
                 color={"default"}
-                className="text-center flex place-content-center lg:w-[30%]"
-              />
+                className="text-center flex place-content-center lg:w-[20%] mt-3">
+                Simpan
+              </DefaultButton>
             </div>
           </form>
         </Container>
