@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 2095",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 2095",
     "lint": "next lint"
   },
   "dependencies": {
@@ -21,8 +21,8 @@
     "date-fns": "^2.29.3",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
-    "flowbite": "^1.6.4",
-    "flowbite-react": "^0.4.2",
+    "flowbite": "^1.6.5",
+    "flowbite-react": "^0.4.4",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",

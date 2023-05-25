@@ -25,7 +25,7 @@ export default function UserSideBar() {
   return (
     <aside
       id="sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-gradient-to-b from-palepurple to-blue sm:translate-x-0 "
+      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0 bg-gradient-to-b from-palepurple to-blue  "
       aria-label="sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-palepurple to-blue text-white ">
         <ul className="space-y-3">
