@@ -69,7 +69,9 @@ export default function UserExpenseCategory() {
             ...baseAlertStyle,
           })
           .then((res) => {
-            if (res.isConfirmed) router.push("/me/settings/expense-category");
+            if (res.isConfirmed) {
+              router.reload();
+            }
           });
       })
       .catch(() => {
@@ -116,7 +118,7 @@ export default function UserExpenseCategory() {
                   <MdEditNote className="text-lg my-auto" />
                 </Link>
                 <Link
-                  href="#"
+                  href={"#"}
                   onClick={() => deleteCategory(category.id)}
                   className="cursor-pointer rounded-full p-2 bg-gray-500 hover:bg-gray-400 my-auto  transition-all duration-200">
                   <MdDelete className="text-lg my-auto" />

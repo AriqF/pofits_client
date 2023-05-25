@@ -14,6 +14,7 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { IncomeCategory } from "@/utils/interfaces/server-props";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MdDelete, MdEditNote } from "react-icons/md";
 import Swal from "sweetalert2";
@@ -22,6 +23,7 @@ import withReactContent from "sweetalert2-react-content";
 export default function UserIncomeCategory() {
   const [categories, setCategories] = useState<IncomeCategory[]>([]);
   const swal = withReactContent(Swal);
+  const router = useRouter();
 
   const getCategories = async () => {
     await requestAxios({
@@ -53,12 +55,16 @@ export default function UserIncomeCategory() {
             method: "DELETE",
           })
             .then(() => {
-              return swal.fire({
-                title: "Kategori berhasil dihapus",
-                icon: "success",
-                showConfirmButton: true,
-                ...baseAlertStyle,
-              });
+              return swal
+                .fire({
+                  title: "Kategori berhasil dihapus",
+                  icon: "success",
+                  showConfirmButton: true,
+                  ...baseAlertStyle,
+                })
+                .then((res) => {
+                  if (res.isConfirmed) router.reload();
+                });
             })
             .catch((err) => {
               return swal.fire({
