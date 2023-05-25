@@ -22,6 +22,7 @@ import ReactSelect from "react-select";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
+import { AxiosError } from "axios";
 
 export default function ExpenseCategoryDetail() {
   const [isGlobal, setIsGlobal] = useState(false);
@@ -83,11 +84,11 @@ export default function ExpenseCategoryDetail() {
             if (res.isConfirmed) router.push(UserPath.EXPENSE_CATEGORY);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.EXPENSE_CATEGORY_EDIT + dataId,
+          text: error.response?.data?.message,
+        });
       });
   };
 

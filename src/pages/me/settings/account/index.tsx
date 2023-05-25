@@ -9,6 +9,7 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { regEmail } from "@/utils/interfaces/regex";
 import { UpdateProfileForm, User } from "@/utils/interfaces/server-props";
+import { AxiosError } from "axios";
 import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -75,8 +76,8 @@ export default function UserProfileSettings() {
             }
           });
       })
-      .catch((error) => {
-        return CustomAlert({ linkToConfirm: UserPath.PROFILE });
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({ linkToConfirm: UserPath.PROFILE, text: error.response?.data.message });
       });
   };
 

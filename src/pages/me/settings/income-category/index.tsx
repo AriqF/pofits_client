@@ -75,10 +75,10 @@ export default function UserIncomeCategory() {
 
   useEffect(() => {
     getCategories();
-  });
+  }, []);
 
   return (
-    <UserSettingsLayout backTo={UserPath.SETTINGS}>
+    <UserSettingsLayout backTo={UserPath.HOME}>
       <section id="user-income-cat-index" className="flex flex-col gap-y-3 col-span-3 ">
         <div className="space-y-3">
           <div className="space-y-1">

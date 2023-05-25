@@ -28,6 +28,7 @@ import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
 import FormHelper from "@/components/tools/alerts/form-helper";
 import DefaultButton from "@/components/tools/button";
+import { AxiosError } from "axios";
 
 const getGoalSeverityBg = (severity: number): string => {
   switch (severity) {
@@ -164,7 +165,7 @@ export default function AddGoalSavingPage() {
         },
       });
     } catch (error) {
-      return CustomAlert({ linkToConfirm: UserPath.FINANCE_GOAL + dataId });
+      return CustomAlert({ linkToConfirm: UserPath.FINANCE_GOAL + dataId, text: String(error) });
     } finally {
       swal
         .fire({

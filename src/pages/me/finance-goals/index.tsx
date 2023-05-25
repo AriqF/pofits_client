@@ -29,12 +29,8 @@ export default function FinanceGoalIndex() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchGoals();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  });
+    fetchGoals();
+  }, []);
 
   return (
     <GoalsLayout backTo={UserPath.HOME}>

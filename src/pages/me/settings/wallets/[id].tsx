@@ -27,6 +27,7 @@ import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
 import ReactSelect from "react-select";
 import { walletCategoriesOpt } from "@/utils/global/select-options";
+import { AxiosError } from "axios";
 
 export default function AddWallet() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -93,11 +94,11 @@ export default function AddWallet() {
             if (res.isConfirmed) router.push(UserPath.WALLETS);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.WALLETS_EDIT + walletId,
+          text: error.response?.data?.message,
+        });
       });
   };
 
@@ -126,11 +127,11 @@ export default function AddWallet() {
                   if (res.isConfirmed) router.push("/me/wallets");
                 });
             })
-            .catch((err) => {
-              setIsServerError(true);
-              err.response?.data?.message
-                ? setErrMessage(err.response.data.message)
-                : setErrMessage(ServerMessage.RequestError);
+            .catch((error: AxiosError<any>) => {
+              return CustomAlert({
+                linkToConfirm: UserPath.WALLETS_EDIT + walletId,
+                text: error.response?.data?.message,
+              });
             });
         }
       });

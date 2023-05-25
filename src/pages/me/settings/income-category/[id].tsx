@@ -98,10 +98,10 @@ export default function IncomeCategoryDetails() {
           });
       })
       .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+        return CustomAlert({
+          linkToConfirm: UserPath.TRANSACTION_INCOME_EDIT + dataId,
+          text: error.response?.data?.message,
+        });
       });
   };
 

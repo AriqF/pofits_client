@@ -79,10 +79,10 @@ export default function UserExpenseCategory() {
 
   useEffect(() => {
     getCategories();
-  });
+  }, []);
 
   return (
-    <UserSettingsLayout backTo={UserPath.SETTINGS}>
+    <UserSettingsLayout backTo={UserPath.HOME}>
       <section id="user-expense-cat-index" className="space-y-4 col-span-3">
         <div className="space-y-3">
           <div className="space-y-1">

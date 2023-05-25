@@ -11,7 +11,7 @@ import {
   formStyle,
   selectFormStyle,
 } from "@/utils/global/style";
-import { numFormatter } from "@/utils/helper";
+import { CustomAlert, numFormatter } from "@/utils/helper";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { ServerMessage } from "@/utils/interfaces/response-message";
@@ -25,6 +25,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Image from "next/image";
 import { walletCategoriesOpt } from "@/utils/global/select-options";
+import { AxiosError } from "axios";
 
 export default function AddWallet() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -70,11 +71,11 @@ export default function AddWallet() {
             if (res.isConfirmed) router.push(UserPath.WALLETS);
           });
       })
-      .catch((error) => {
-        setIsServerError(true);
-        error.response?.data?.message
-          ? setErrMessage(error.response.data.message)
-          : setErrMessage(ServerMessage.RequestError);
+      .catch((error: AxiosError<any>) => {
+        return CustomAlert({
+          linkToConfirm: UserPath.WALLETS_ADD,
+          text: error.response?.data?.message,
+        });
       });
   };
 
