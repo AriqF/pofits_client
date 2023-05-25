@@ -1,10 +1,12 @@
 import UserSideBar from "@/components/tools/sidebar/user/sidebar";
 import NavTopBar from "@/components/tools/sidebar/user/top-bar";
+import { AuthPath } from "@/utils/global/route-path";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { NextResponse } from "next/server";
 import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
@@ -29,6 +31,8 @@ export default function UserBaseLayout(props: Props) {
       })
       .catch((error: AxiosError) => {
         alert(error);
+        router.push(AuthPath.LOGIN);
+        Cookies.remove("accessToken");
       });
   };
 
