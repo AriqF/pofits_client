@@ -7,6 +7,10 @@ module.exports = {
     // join(__dirname, './node_modules/flowbite-react/**/*.js'),
     join(__dirname, './src/public/**/*.html'),
     join(__dirname, "./node_modules/flowbite/**/*.js"),
+    "./node_modules/flowbite-react/**/*.js",
+    "./components/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./public/**/*.html",
     "./node_modules/flowbite/**/*.js",
   ],
   plugins: [
