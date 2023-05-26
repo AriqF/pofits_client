@@ -30,7 +30,7 @@ export default function UserSideBar(props: SidebarProps) {
     <aside
       className={
         "fixed top-0 left-0 z-40 h-screen pt-20 transition-transform bg-gradient-to-b from-palepurple to-blue " +
-        "w-fit transition-transform fixed top-0 left-0 z-40 h-screen " +
+        "w-64 transition-transform fixed top-0 left-0 z-40 h-screen " +
         (props.show ? " transform-none" : "-translate-x-full md:translate-x-0 ")
       }
       role="dialog"
