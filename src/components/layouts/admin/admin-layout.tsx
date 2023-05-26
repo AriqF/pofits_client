@@ -1,5 +1,4 @@
-import AdminNavbar from "@/components/tools/sidebar/admin/admin-navbar";
-import AdminSideBar from "@/components/tools/sidebar/admin/admin-sidebar";
+import AdminNavigation from "@/components/tools/navigations/admin";
 import { ReactNode } from "react";
 import { MdChevronLeft } from "react-icons/md";
 
@@ -13,8 +12,7 @@ interface Props {
 export default function AdminLayout(props: Props) {
   return (
     <>
-      <AdminNavbar />
-      <AdminSideBar />
+      <AdminNavigation />
       <div className={" p-4 sm:ml-64 md:bg-white bg-white max-h-fit"}>
         <div className={props.classname + " flex flex-col mt-20 md:mx-5"}>
           {props.backTo ? (

@@ -1,23 +1,18 @@
-import { MdMenu, MdNotes } from "react-icons/md";
-import TopDropdownOption from "./menu-option";
-import UserMenuTopBar from "./user-menu";
 import { useEffect, useState } from "react";
-import { requestAxios } from "@/utils/helper/axios-helper";
-import { baseUrl } from "@/utils/interfaces/constants";
-import Avatar from "@/components/tools/avatar";
+import { MdLogout, MdMenu } from "react-icons/md";
+import Avatar from "../../avatar";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+import { baseAlertStyle, deleteAlertStyle } from "@/utils/global/style";
+import { logoutHandler } from "@/utils/helper/axios-helper";
 import Image from "next/image";
-import UserSideBar from "../sidebar";
-import SidebarRC from "../sidebar/sidebar-rc";
-interface Props {
-  firstname: string;
-  lastname: string;
-  userEmail: string;
-}
+import AdminSideBar from "./sidebar";
 
-export default function NavTopBar(props: Props) {
-  const { firstname, lastname, userEmail } = props;
-  const fullname = firstname + " " + lastname;
-  const [showProfMenu, setShowProfMenu] = useState(false);
+export default function AdminNavigation() {
+  //   const [showProfMenu, setShowProfMenu] = useState(false);
+  const swal = withReactContent(Swal);
+  const router = useRouter();
   const [showSidebar, setShowSidebar] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -26,21 +21,36 @@ export default function NavTopBar(props: Props) {
   };
 
   useEffect(() => {
-    document.body.classList.add("overflow-hidden");
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [showSidebar]);
-
-  useEffect(() => {
     window.addEventListener("resize", handleWidthResize, false);
   }, []);
 
   useEffect(() => {
+    if (showSidebar) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
     if (windowWidth > 768) {
       setShowSidebar(false);
     }
   }, [windowWidth]);
+
+  const logoutConfirmHandler = () => {
+    swal
+      .fire({
+        title: "Keluar?",
+        icon: "question",
+        ...deleteAlertStyle,
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Keluar",
+      })
+      .then((res) => {
+        if (res.isConfirmed) {
+          return logoutHandler();
+        }
+      });
+  };
 
   return (
     <>
@@ -49,9 +59,6 @@ export default function NavTopBar(props: Props) {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
-                // data-drawer-target="sidebar"
-                // data-drawer-toggle="sidebar"
-                // aria-controls="sidebar"
                 onClick={() => setShowSidebar(!showSidebar)}
                 type="button"
                 className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
@@ -74,29 +81,16 @@ export default function NavTopBar(props: Props) {
             <div className="flex items-center">
               <div className="flex items-center ml-3">
                 <div>
-                  <button
-                    type="button"
-                    onClick={() => setShowProfMenu(!showProfMenu)}
-                    className="flex text-sm bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-300"
-                    // aria-expanded="false"
-                    // data-dropdown-toggle="dropdown-user"
-                  >
-                    <span className="sr-only">Open menu</span>
-                    <Avatar
-                      name={fullname}
-                      round={false}
-                      className="m-auto"
-                      bgColor="bg-palepurple"
-                    />
+                  <button onClick={() => logoutConfirmHandler()}>
+                    <MdLogout className="text-2xl hover:text-errorRed" />
                   </button>
                 </div>
-                <UserMenuTopBar username={fullname} email={userEmail} show={showProfMenu} />
               </div>
             </div>
           </div>
         </div>
       </nav>
-      <UserSideBar show={showSidebar} />
+      <AdminSideBar show={showSidebar} />
       {showSidebar ? (
         <div
           drawer-backdrop=""
