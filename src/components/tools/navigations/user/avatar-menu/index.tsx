@@ -1,6 +1,6 @@
 import { UserPath } from "@/utils/global/route-path";
 import { logoutHandler } from "@/utils/helper/axios-helper";
-import TopDropdownOption from "./menu-option";
+import AvatarMenuOption from "./menu-option";
 
 interface Props {
   username: string;
@@ -8,7 +8,7 @@ interface Props {
   show: boolean;
 }
 
-export default function UserMenuTopBar(props: Props) {
+export default function UserAvatarMenu(props: Props) {
   return (
     <div
       className={
@@ -24,9 +24,9 @@ export default function UserMenuTopBar(props: Props) {
         </p>
       </div>
       <ul className="py-1" role="none">
-        <TopDropdownOption linkTo={UserPath.PROFILE} text="Profil" />
-        <TopDropdownOption linkTo={UserPath.INFORMATION} text="Informasi" />
-        <TopDropdownOption text="Keluar" onClick={logoutHandler} />
+        <AvatarMenuOption linkTo={UserPath.PROFILE} text="Profil" />
+        <AvatarMenuOption linkTo={UserPath.INFORMATION} text="Informasi" />
+        <AvatarMenuOption text="Keluar" onClick={logoutHandler} />
         {/* <TopDropdownOption linkTo="#" text="Settings" /> */}
       </ul>
     </div>

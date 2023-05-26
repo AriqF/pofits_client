@@ -1,12 +1,10 @@
-import UserSideBar from "@/components/tools/sidebar/user/sidebar";
-import NavTopBar from "@/components/tools/sidebar/user/top-bar";
+import UserNavigation from "@/components/tools/navigations/user";
 import { AuthPath } from "@/utils/global/route-path";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { NextResponse } from "next/server";
 import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
@@ -42,9 +40,7 @@ export default function UserBaseLayout(props: Props) {
 
   return (
     <>
-      <NavTopBar firstname={firstname} lastname={lastname} userEmail={userEmail} />
-      {/* <Sidebar.Item></Sidebar> */}
-
+      <UserNavigation firstname={firstname} lastname={lastname} userEmail={userEmail} />
       <main className={" p-4 md:ml-64 md:bg-white bg-white max-h-fit"}>
         <div className={props.classname + " flex flex-col mt-20 md:mx-5"}>{props.children}</div>
       </main>

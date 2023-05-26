@@ -2,8 +2,6 @@ import { UserPath } from "@/utils/global/route-path";
 import { ReactNode, useEffect, useState } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import UserBaseLayout from "../layouts";
-import UserSideBar from "@/components/tools/sidebar/user/sidebar";
-import NavTopBar from "@/components/tools/sidebar/user/top-bar";
 import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import Link from "next/link";
@@ -39,11 +37,11 @@ export default function TransactionLayout(props: Props) {
   return (
     <>
       <UserBaseLayout>
-        <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-4 md:mb-2">
+        <header className="p-0 min-h-fit flex flex-col gap-y-4 mb-4 md:mb-2">
           {props.backTo ? (
             <Link
               href={props.backTo}
-              className="text-blue hover:text-hovblue font-semibold inline-flex cursor-pointer">
+              className="text-blue hover:text-hovblue font-semibold flex w-fit cursor-pointer">
               <MdChevronLeft className="my-auto text-2xl" /> <p>Kembali</p>
             </Link>
           ) : (

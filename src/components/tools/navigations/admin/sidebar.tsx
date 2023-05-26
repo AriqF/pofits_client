@@ -1,12 +1,20 @@
 import { MdGroups, MdHistory, MdHome, MdManageAccounts } from "react-icons/md";
-import SidebarItem from "../user/sidebar/sidebar-item";
 import { AdminPath } from "@/utils/global/route-path";
+import SidebarItem from "../../sidebar/sidebar-item";
 
-export default function AdminSideBar() {
+interface Props {
+  show: boolean;
+}
+
+export default function AdminSideBar(props: Props) {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-gradient-to-b from-palepurple to-blue sm:translate-x-0 "
+      className={
+        "fixed top-0 left-0 z-40 h-screen pt-20 transition-transform bg-gradient-to-b from-palepurple to-blue " +
+        "w-64 transition-transform fixed top-0 left-0 z-40 h-screen " +
+        (props.show ? " transform-none" : "-translate-x-full md:translate-x-0 ")
+      }
       aria-label="Sidebar">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-palepurple to-blue text-white ">
         <ul className="space-y-3">

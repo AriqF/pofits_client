@@ -18,8 +18,9 @@ import {
   MdAnalytics,
   MdStickyNote2,
 } from "react-icons/md";
+
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
-import SidebarItem from "./sidebar-item";
+import SidebarItem from "@/components/tools/sidebar/sidebar-item";
 
 interface SidebarProps {
   show: boolean;

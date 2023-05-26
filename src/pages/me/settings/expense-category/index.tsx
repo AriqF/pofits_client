@@ -98,7 +98,7 @@ export default function UserExpenseCategory() {
             type="button"
             text={"Tambah"}
             color={"default"}
-            linkTo={"expense-category/add"}
+            linkTo={UserPath.EXPENSE_CATEGORY_ADD}
             className="w-full lg:w-[10%]"
           />
         </div>

@@ -6,7 +6,7 @@ interface Props {
   onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }
 
-export default function TopDropdownOption(props: Props) {
+export default function AvatarMenuOption(props: Props) {
   return (
     <li>
       <a
