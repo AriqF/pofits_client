@@ -24,7 +24,7 @@ export default function InformationPage() {
       <header className="p-0 min-h-fit inline-flex flex-col gap-y-4 mb-4 md:mb-2">
         <a
           href={UserPath.HOME}
-          className="text-blue hover:text-hovblue font-semibold inline-flex cursor-pointer">
+          className="text-blue hover:text-hovblue font-semibold w-fit inline-flex cursor-pointer">
           <MdChevronLeft className="my-auto text-2xl" /> <p>Kembali</p>
         </a>
       </header>
@@ -34,7 +34,7 @@ export default function InformationPage() {
           Informasi Aplikasi dan Pengembang
         </h1>
       </div>
-      <section className="flex flex-col lg:flex-row gap-5">
+      <section className="flex flex-col lg:flex-row gap-x-9 gap-y-7">
         <article className="flex flex-col gap-2 col-span-2">
           <h5 className="text-lg font-semibold capitalize my-auto">Apa itu PofitsApp?</h5>
           <p className="text-base leading-8 text-justify">
