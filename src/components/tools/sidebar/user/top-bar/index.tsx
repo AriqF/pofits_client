@@ -7,6 +7,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import Avatar from "@/components/tools/avatar";
 import Image from "next/image";
 import UserSideBar from "../sidebar";
+import SidebarRC from "../sidebar/sidebar-rc";
 interface Props {
   firstname: string;
   lastname: string;
@@ -17,6 +18,29 @@ export default function NavTopBar(props: Props) {
   const { firstname, lastname, userEmail } = props;
   const fullname = firstname + " " + lastname;
   const [showProfMenu, setShowProfMenu] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  const handleWidthResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showSidebar]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWidthResize, false);
+  }, []);
+
+  useEffect(() => {
+    if (windowWidth > 768) {
+      setShowSidebar(false);
+    }
+  }, [windowWidth]);
 
   return (
     <>
@@ -25,9 +49,10 @@ export default function NavTopBar(props: Props) {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
-                data-drawer-target="sidebar"
-                data-drawer-toggle="sidebar"
-                aria-controls="sidebar"
+                // data-drawer-target="sidebar"
+                // data-drawer-toggle="sidebar"
+                // aria-controls="sidebar"
+                onClick={() => setShowSidebar(!showSidebar)}
                 type="button"
                 className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
                 <span className="sr-only">Open sidebar</span>
@@ -71,7 +96,14 @@ export default function NavTopBar(props: Props) {
           </div>
         </div>
       </nav>
-      <UserSideBar />
+      <UserSideBar show={showSidebar} />
+      {showSidebar ? (
+        <div
+          drawer-backdrop=""
+          className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30"></div>
+      ) : (
+        ""
+      )}
     </>
   );
 }
