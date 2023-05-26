@@ -21,12 +21,20 @@ import {
 import SidebarItemDropdown from "./dropdown/sidebar-dropdown";
 import SidebarItem from "./sidebar-item";
 
-export default function UserSideBar() {
+interface SidebarProps {
+  show: boolean;
+}
+
+export default function UserSideBar(props: SidebarProps) {
   return (
     <aside
-      id="sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0 bg-gradient-to-b from-palepurple to-blue  "
-      aria-label="sidebar">
+      className={
+        "fixed top-0 left-0 z-40 h-screen pt-20 transition-transform bg-gradient-to-b from-palepurple to-blue " +
+        "w-fit transition-transform fixed top-0 left-0 z-40 h-screen " +
+        (props.show ? " transform-none" : "-translate-x-full md:translate-x-0 ")
+      }
+      role="dialog"
+      aria-modal="true">
       <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-palepurple to-blue text-white ">
         <ul className="space-y-3">
           <SidebarItem text={"Beranda"} linkTo={UserPath.HOME} icon={MdHome} />

@@ -45,7 +45,7 @@ export default function UserBaseLayout(props: Props) {
       <NavTopBar firstname={firstname} lastname={lastname} userEmail={userEmail} />
       {/* <Sidebar.Item></Sidebar> */}
 
-      <main className={" p-4 sm:ml-64 md:bg-white bg-white max-h-fit"}>
+      <main className={" p-4 md:ml-64 md:bg-white bg-white max-h-fit"}>
         <div className={props.classname + " flex flex-col mt-20 md:mx-5"}>{props.children}</div>
       </main>
     </>
