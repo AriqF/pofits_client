@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import UserSideBar from "./sidebar";
 import UserAvatarMenu from "./avatar-menu";
+import Backdrop from "../../backdrop";
 interface Props {
   firstname: string;
   lastname: string;
@@ -93,13 +94,7 @@ export default function UserNavigation(props: Props) {
         </div>
       </nav>
       <UserSideBar show={showSidebar} />
-      {showSidebar ? (
-        <div
-          drawer-backdrop=""
-          className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30"></div>
-      ) : (
-        ""
-      )}
+      {showSidebar ? <Backdrop /> : ""}
     </>
   );
 }
