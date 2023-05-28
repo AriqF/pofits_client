@@ -4,6 +4,7 @@ import { UserPath } from "@/utils/global/route-path";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, Pie } from "react-chartjs-2";
 import {
+  MdAllInbox,
   MdAttachMoney,
   MdExpandLess,
   MdExpandMore,
@@ -16,6 +17,7 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import moment from "moment";
 import { AllocationChart, TransactionAllocation } from "@/utils/interfaces/server-props";
+import { baseFormStyle } from "@/utils/global/style";
 
 const bgColors: string[] = [
   "rgba(255, 99, 132, 0.2)",
@@ -68,14 +70,14 @@ export default function MonthlyReportIndex() {
     //   },
     // },
   };
-
   const [showExpDetail, setShowExpDetail] = useState(false);
   const [showIncDetail, setShowIncDetail] = useState(false);
-  const [monthQuery, setMonthQuery] = useState(new Date());
+  const [monthInput, setMonthInput] = useState(moment(new Date()).format("YYYY-MM"));
   const [transactionInfo, setTransactionInfo] = useState({
     totalExpense: 0,
     totalIncome: 0,
     amountDiff: 0,
+    totalBudget: 0,
   });
   const [expensesAllocation, setExpensesAllocation] = useState<TransactionAllocation[]>([]);
   const [incomesAllocation, setIncomesAllocation] = useState<TransactionAllocation[]>([]);
@@ -90,7 +92,7 @@ export default function MonthlyReportIndex() {
 
   const fetchMonthlyReport = async () => {
     await requestAxios({
-      url: baseUrl + `/transactions/me/month-recap?month=${monthQuery}`,
+      url: baseUrl + `/transactions/me/month-recap?month=${monthInput}`,
       method: "GET",
     })
       .then((res) => {
@@ -101,6 +103,7 @@ export default function MonthlyReportIndex() {
           totalExpense: res.data.totalExpenses,
           totalIncome: res.data.totalIncomes,
           amountDiff: res.data.amountDiff,
+          totalBudget: res.data.totalBudget,
         });
         setExpensesAllocation(expData);
         setIncomesAllocation(incData);
@@ -126,21 +129,34 @@ export default function MonthlyReportIndex() {
   // });
   useEffect(() => {
     fetchMonthlyReport();
-  }, []);
+  }, [monthInput]);
 
   return (
     <ReportLayout backTo={UserPath.HOME}>
       <section id="header" className="grid grid-cols-1 gap-y-3 mb-2">
         <h2 className="text-2xl text-gray-600">
-          Laporan Keuangan {moment(monthQuery).format("MMMM YYYY")}
+          Laporan Keuangan {moment(monthInput).format("MMMM YYYY")}
         </h2>
+        <div className="flex flex-col lg:flex-row gap-3 mr-auto w-full lg:w-fit">
+          <input
+            type="month"
+            id="month"
+            className={baseFormStyle}
+            onChange={(e) => setMonthInput(e.target.value)}
+            defaultValue={monthInput}
+            lang="id"
+          />
+          {/* <DefaultButton type={"submit"} color={"info"}>
+            Atur
+          </DefaultButton> */}
+        </div>
         {/* <h4 className="text-lg text-gray-500 ">
           Saved: <span className="text-moneySafe font-bold">Rp 2.549.500</span>
         </h4> */}
       </section>
       <section
         id="recap-info"
-        className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-3 mb-5">
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         <ReportCard
           icon={MdTrendingUp}
           iconBgColor="bg-[#bcf4f6]"
@@ -149,18 +165,25 @@ export default function MonthlyReportIndex() {
           amount={transactionInfo.totalIncome}
         />
         <ReportCard
-          icon={MdAttachMoney}
-          iconBgColor="bg-[#c3d4ef]"
-          iconColor="text-infoBlue"
-          title="Neraca"
-          amount={transactionInfo.amountDiff}
-        />
-        <ReportCard
           icon={MdTrendingDown}
           iconBgColor="bg-[#f4d9d7]"
           iconColor="text-moneyDanger"
           title="Pengeluaran"
           amount={transactionInfo.totalExpense}
+        />
+        <ReportCard
+          icon={MdAttachMoney}
+          iconBgColor="bg-[#e0c4ee]"
+          iconColor="text-palepurple"
+          title="Neraca"
+          amount={transactionInfo.amountDiff}
+        />
+        <ReportCard
+          icon={MdAllInbox}
+          iconBgColor="bg-[#c3d4ef]"
+          iconColor="text-infoBlue"
+          title="Total Anggaran"
+          amount={transactionInfo.totalBudget}
         />
       </section>
       <section
