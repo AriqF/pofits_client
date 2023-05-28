@@ -80,30 +80,32 @@ export default function MyWallets() {
                 </div>
               </h5>
             </div>
-            <div className="grid grid-cols-2 gap-3" id="wallet-menu-buttons">
-              <LinkButton
-                linkTo={UserPath.WALLETS_ADD}
-                type={"button"}
-                text={"Tambah Dompet"}
-                color={"default"}
-                className="w-full"
-                icon={MdAddCircleOutline}
-              />
-              <LinkButton
-                linkTo={UserPath.WALLETS_TRANSFER}
-                type={"button"}
-                text={"Pemindahan Dana"}
-                color={"info"}
-                className="w-full"
-                icon={MdSwapHoriz}
-              />
-            </div>
           </div>
         </div>
 
         <div
           id="wallet-list"
           className="grid grid-cols-1 gap-x-4 m-auto max-[300px]:grid-cols-1 max-[300px]:gap-y-3">
+          <div
+            className="grid grid-cols-1 lg:grid-cols-2 lg:mr-auto gap-3 mb-3"
+            id="wallet-menu-buttons">
+            <LinkButton
+              linkTo={UserPath.WALLETS_ADD}
+              type={"button"}
+              text={"Tambah Dompet"}
+              color={"default"}
+              className="w-full"
+              icon={MdAddCircleOutline}
+            />
+            <LinkButton
+              linkTo={UserPath.WALLETS_TRANSFER}
+              type={"button"}
+              text={"Pemindahan Dana"}
+              color={"info"}
+              className="w-full"
+              icon={MdSwapHoriz}
+            />
+          </div>
           {wallets.length > 0 ? (
             wallets.map((wallet, index) => (
               <WalletListItem

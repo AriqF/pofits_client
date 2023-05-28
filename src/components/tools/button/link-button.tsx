@@ -43,7 +43,7 @@ export default function LinkButton(props: ButtonProps) {
         " inline-flex place-content-center text-center focus:ring-1 focus:outline-none " +
         "rounded-md text-base px-4 py-3 md:py-2.5 w-full lg:w-fit m-auto transition-colors duration-200 "
       }>
-      {props.icon ? React.createElement(props.icon, { className: "text-xl my-auto" }) : ""}
+      {props.icon ? React.createElement(props.icon, { className: "text-xl my-auto mr-1" }) : ""}
       <span className="my-auto">{text}</span>
     </a>
   );
