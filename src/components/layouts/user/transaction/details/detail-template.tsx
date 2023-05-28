@@ -11,6 +11,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import router from "next/router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import DefaultButton from "@/components/tools/button";
 
 interface Props {
   amount: number;
@@ -21,6 +22,7 @@ interface Props {
   date: Date;
   category: string;
   dataId: number | string;
+  description?: string;
   // deleteFunc: MouseEventHandler<HTMLAnchorElement>;
 }
 
@@ -84,29 +86,32 @@ export default function TransactionDetails(props: Props) {
             textLeft={"Jenis"}
             textRight={props.type === "income" ? "Pemasukan" : "Pengeluaran"}
           />
+          <div className="border-b border-gray-200 py-3 gap-2 justify-between flex flex-col">
+            <p className="text-base text-mute text-left">Deskripsi</p>
+            <p className="text-base text-left text-palepurple">
+              {props.description ? props.description : "-"}
+            </p>
+          </div>
         </div>
-        <div
-          id="detail-interact"
-          className="flex flex-row md:flex-row md:ml-auto w-full lg:w-[30%] gap-2">
-          <LinkButton
-            type={"button"}
-            text={"Edit"}
-            color={"default"}
-            linkTo={
-              (props.type === "expense"
-                ? UserPath.TRANSACTION_EXPENSE_EDIT
-                : UserPath.TRANSACTION_INCOME_EDIT) + props.dataId
-            }
-          />
-          <button
-            type="button"
-            onClick={submitDelete}
-            className={
-              defaultButtonStyle +
-              " border focus:ring-moneyDanger border-moneyDanger text-moneyDanger bg-transparent hover:bg-moneyDanger hover:text-white"
-            }>
-            Hapus
-          </button>
+        <div id="detail-interact" className="flex flex-col lg:flex-row lg:ml-auto gap-2">
+          <div>
+            <LinkButton
+              className="w-full"
+              type={"button"}
+              text={"Edit"}
+              color={"default"}
+              linkTo={
+                (props.type === "expense"
+                  ? UserPath.TRANSACTION_EXPENSE_EDIT
+                  : UserPath.TRANSACTION_INCOME_EDIT) + props.dataId
+              }
+            />
+          </div>
+          <div>
+            <DefaultButton type={"button"} onClick={submitDelete} color={"danger"}>
+              Hapus
+            </DefaultButton>
+          </div>
         </div>
       </section>
     </TransactionLayout>
