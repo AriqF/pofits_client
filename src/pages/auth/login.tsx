@@ -72,7 +72,7 @@ export default function Login() {
           : router.replace(UserPath.HOME).then(() => router.reload());
         // return NextResponse.next();
       })
-      .catch((error) => {
+      .catch((error: AxiosError<any>) => {
         SetIsServerError(true);
         console.log(error);
 
