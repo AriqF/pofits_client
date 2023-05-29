@@ -193,7 +193,7 @@ export default function EditBudgetAllocation() {
   };
 
   return (
-    <BudgetPageLayout backTo={UserPath.BUDGET}>
+    <BudgetPageLayout backTo={UserPath.BUDGET + dataId}>
       <section className="flex flex-col col-span-2">
         <Container className="w-full p-1 md:p-6">
           <div className="mb-3 space-y-4">
@@ -214,6 +214,9 @@ export default function EditBudgetAllocation() {
                 </h5>
               </div>
             </div>
+          </div>
+          <div className="lg:hidden col-span-1">
+            <ChartBox />
           </div>
           <form id="edit-budget-form" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-5 w-full lg:w-[75%]">
@@ -257,7 +260,7 @@ export default function EditBudgetAllocation() {
           </form>
         </Container>
       </section>
-      <section className="col-span-1">
+      <section className="hidden lg:block col-span-1">
         <ChartBox />
       </section>
     </BudgetPageLayout>

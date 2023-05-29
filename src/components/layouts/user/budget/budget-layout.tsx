@@ -7,7 +7,7 @@ import Link from "next/link";
 
 interface Props {
   children: ReactNode;
-  backTo: UserPath;
+  backTo: string;
 }
 
 export default function BudgetPageLayout(props: Props) {
