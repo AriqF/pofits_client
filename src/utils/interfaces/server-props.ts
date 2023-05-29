@@ -321,6 +321,13 @@ export interface TransactionAllocation {
     percentage: number,
 }
 
+export interface BudgetAllocation {
+    categoryId: number,
+    category: string,
+    amount: number,
+    percentage: number,
+}
+
 export interface AllocationChart {
     data: number[],
     labels: string[],
