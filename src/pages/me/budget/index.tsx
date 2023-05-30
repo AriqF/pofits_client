@@ -6,9 +6,9 @@ import { requestAxios } from "@/utils/helper/axios-helper";
 import { baseUrl } from "@/utils/interfaces/constants";
 import { BudgetMonthRecap, ProBudgetData } from "@/utils/interfaces/server-props";
 import { useRouter } from "next/router";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { MdExpandMore, MdHistory, MdLibraryAdd, MdRequestPage, MdSearch } from "react-icons/md";
+import { MdLibraryAdd } from "react-icons/md";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import BudgetPageLayout from "@/components/layouts/user/budget/budget-layout";
 import { CustomAlert, numFormatter } from "@/utils/helper";
@@ -21,13 +21,6 @@ interface FilterProps {
 }
 
 export default function BudgetPage() {
-  // const [monthRecap, setMonthRecap] = useState({
-  //   totalUsed: 0,
-  //   totalRemaining: 0,
-  //   percentageUsed: 0,
-  //   totalBudget: 0,
-  //   borderBudget: 0,
-  // });
   const [budgets, setBudget] = useState<ProBudgetData[]>([]);
   const [monthRecap, setMonthRecap] = useState<BudgetMonthRecap>({
     borderBudget: 0,
@@ -36,16 +29,10 @@ export default function BudgetPage() {
     totalRemaining: 0,
     totalUsed: 0,
   });
-  const [monthFilter, setMonthFilter] = useState(new Date());
-  const [selectedMonth, setSelectedMonth] = useState(new Date());
+  const [monthFilter, setMonthFilter] = useState(moment(new Date()).format("YYYY-MM"));
   const router = useRouter();
 
-  const getFiltered = async (e: any) => {
-    e.preventDefault();
-    setSelectedMonth(monthFilter);
-  };
-
-  const getMonthRecapBudget = async (month: Date) => {
+  const getMonthRecapBudget = async (month: string) => {
     await requestAxios({
       url: baseUrl + "/budget/me/month-recap" + `?month=${month}`,
       method: "GET",
@@ -58,7 +45,7 @@ export default function BudgetPage() {
       });
   };
 
-  const getBudgets = async (month: Date) => {
+  const getBudgets = async (month: string) => {
     await requestAxios({
       url: baseUrl + "/budget/me" + `?month=${month}`,
       method: "GET",
@@ -84,15 +71,9 @@ export default function BudgetPage() {
   };
 
   useEffect(() => {
-    setMonthFilter(new Date());
     getBudgets(monthFilter);
     getMonthRecapBudget(monthFilter);
-  }, []);
-
-  useEffect(() => {
-    getBudgets(selectedMonth);
-    getMonthRecapBudget(selectedMonth);
-  }, [selectedMonth]);
+  }, [monthFilter]);
 
   return (
     <BudgetPageLayout backTo={UserPath.HOME}>
@@ -120,9 +101,9 @@ export default function BudgetPage() {
             </div>
             <div className="space-y-2 text-center">
               <h3 className="text-base">
-                Anggaran Pengeluaran {moment(selectedMonth).format("MMMM YYYY")}
+                Anggaran Pengeluaran {moment(monthFilter).format("MMMM YYYY")}
               </h3>
-              <p className="text-sm text-mute">
+              <p className="text-sm ">
                 <span
                   className={
                     (monthRecap.totalRemaining <= monthRecap.borderBudget
@@ -132,7 +113,9 @@ export default function BudgetPage() {
                   Rp {numFormatter(monthRecap.totalRemaining)}
                 </span>{" "}
                 Tersisa dari{" "}
-                <span className="font-bold">Rp {numFormatter(monthRecap.totalBudget)}</span>
+                <span className="font-bold text-blue">
+                  Rp {numFormatter(monthRecap.totalBudget)}
+                </span>
               </p>
             </div>
             <div className="w-full grid grid-cols-1 gap-y-2">
@@ -159,21 +142,22 @@ export default function BudgetPage() {
       <section id="budget-content" className={"md:col-span-2 w-full space-y-4 "}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
           <h3 className="text-2xl text-gray-600">
-            Anggaran Bulan {moment(selectedMonth).format("MMMM YYYY")}
+            Anggaran Bulan {moment(monthFilter).format("MMMM YYYY")}
           </h3>
         </div>
-        <form className="inline-flex w-full" onSubmit={getFiltered}>
+        <form className="inline-flex w-full">
           <input
-            onChange={(e) => setMonthFilter(new Date(e.target.value))}
-            className="cursor-pointer z-10 inline-flex items-center py-2.5 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-md hover:bg-gray-200"
+            defaultValue={monthFilter}
+            onChange={(e) => setMonthFilter(e.target.value)}
+            className="cursor-pointer z-10 inline-flex items-center py-2.5 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200"
             type="month"
           />
-          <button
+          {/* <button
             type="submit"
             className="p-2.5 text-sm font-medium text-white bg-blue rounded-r-md border border-blue hover:bg-hovblue">
             <MdSearch className="text-xl" />
             <span className="sr-only">Search</span>
-          </button>
+          </button> */}
         </form>
         {/* <hr className="border-b border-2 w-[50%] border-gray-500 hidden md:flex" /> */}
         {budgets.length > 0 ? (
@@ -182,7 +166,7 @@ export default function BudgetPage() {
 
             <BudgetCard
               usedBudget={budget.amountUsed}
-              budget={budget.amount}
+              budget={Number(budget.amount)}
               title={budget.category.title}
               icon={budget.category.icon}
               id={budget.id}
