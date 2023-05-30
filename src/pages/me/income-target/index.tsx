@@ -96,12 +96,14 @@ export default function IncomeTargetIndex() {
               <h3 className="text-base">
                 Target Pemasukan {moment(new Date()).format("MMMM YYYY")}
               </h3>
-              <p className="text-sm text-mute">
+              <p className="text-sm">
                 <span className="text-moneySafe font-bold">
                   Rp {numFormatter(monthRecap.totalAchieved)}
                 </span>{" "}
                 Tercapai dari{" "}
-                <span className="font-bold">Rp {numFormatter(monthRecap.totalTarget)}</span>
+                <span className="font-bold text-blue">
+                  Rp {numFormatter(monthRecap.totalTarget)}
+                </span>
               </p>
             </div>
             <div className="w-full grid grid-cols-1 gap-y-2">
