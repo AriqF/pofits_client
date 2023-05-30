@@ -1,5 +1,5 @@
 import { UserPath } from "@/utils/global/route-path";
-import { numFormatter } from "@/utils/helper";
+import { currencyFormatter, numFormatter } from "@/utils/helper";
 import moment from "moment";
 import Image from "next/image";
 import { MdChevronRight } from "react-icons/md";
@@ -12,6 +12,7 @@ interface Props {
   title: string;
   icon: string;
   targetAmount: number;
+  achievedAmount: number;
   id: number | string;
   date: Date;
   isAchieved: boolean;
@@ -30,13 +31,16 @@ export default function IncomeTargetList(props: Props) {
       <div className="flex flex-row justify-between">
         <div className="flex flex-row gap-x-4">
           <Image src={`/assets/icons/svg/${icon}.svg`} alt="icon-category" width={40} height={40} />
-          <div className="grid grid-cols-1">
+          <div className="flex flex-col">
             <div className="inline-flex gap-x-2">
               <h4 className="my-auto text-lg">{title}</h4>
               {props.isAchieved ? <CheckBadge /> : ""}
             </div>
-            <p className="text-mute text-sm my-auto">
-              {startDate} - {endDate}
+            <p className="text-blue text-sm my-auto">
+              <span className={props.isAchieved ? "text-moneySafe" : ""}>
+                {currencyFormatter(props.achievedAmount)}
+              </span>{" "}
+              / {currencyFormatter(props.targetAmount)}
             </p>
           </div>
         </div>

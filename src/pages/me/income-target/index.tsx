@@ -23,8 +23,8 @@ const chartOptions = {
   cutout: "70%",
 };
 export default function IncomeTargetIndex() {
-  const [monthFilter, setMonthFilter] = useState(new Date());
-  const [selectedMonth, setSelectedMonth] = useState(new Date());
+  // const [selectedMonth, setSelectedMonth] = useState(new Date());
+  const [monthFilter, setMonthFilter] = useState(moment(new Date()).format("YYYY-MM"));
   const [incomeTarget, setIncomeTarget] = useState<IncomeEstimationData[]>([]);
   const [monthRecap, setMonthRecap] = useState<IncomeEstimationRecap>({
     totalAchieved: 0,
@@ -34,12 +34,7 @@ export default function IncomeTargetIndex() {
   });
   const router = useRouter();
 
-  const getFiltered = async (e: any) => {
-    e.preventDefault();
-    setSelectedMonth(monthFilter);
-  };
-
-  const getIncomeTargets = async (month: Date) => {
+  const getIncomeTargets = async (month: string) => {
     await requestAxios({
       url: baseUrl + "/income-estimation/me" + `?month=${month}`,
       method: "GET",
@@ -54,7 +49,7 @@ export default function IncomeTargetIndex() {
       });
   };
 
-  const getMonthRecap = async (month: Date) => {
+  const getMonthRecap = async (month: string) => {
     await requestAxios({
       url: baseUrl + "/income-estimation/me/month-recap" + `?month=${month}`,
     })
@@ -69,15 +64,9 @@ export default function IncomeTargetIndex() {
   };
 
   useEffect(() => {
-    setMonthFilter(new Date());
     getMonthRecap(monthFilter);
     getIncomeTargets(monthFilter);
-  }, []);
-
-  useEffect(() => {
-    getMonthRecap(selectedMonth);
-    getIncomeTargets(selectedMonth);
-  }, [selectedMonth]);
+  }, [monthFilter]);
 
   return (
     <BudgetPageLayout backTo={UserPath.HOME}>
@@ -142,18 +131,13 @@ export default function IncomeTargetIndex() {
             Target Pemasukan {moment(monthFilter).format("MMMM YYYY")}
           </h3>
         </div>
-        <form className="inline-flex w-full" onSubmit={getFiltered}>
+        <form className="inline-flex w-full">
           <input
-            onChange={(e) => setMonthFilter(new Date(e.target.value))}
-            className="cursor-pointer z-10 inline-flex items-center py-2.5 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-md hover:bg-gray-200"
+            onChange={(e) => setMonthFilter(e.target.value)}
+            defaultValue={monthFilter}
+            className="cursor-pointer z-10 inline-flex items-center py-2.5 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200"
             type="month"
           />
-          <button
-            type="submit"
-            className="p-2.5 text-sm font-medium text-white bg-blue rounded-r-md border border-blue hover:bg-hovblue">
-            <MdSearch className="text-xl" />
-            <span className="sr-only">Search</span>
-          </button>
         </form>
         {incomeTarget.length > 0 ? (
           incomeTarget.map((data, index) => (
@@ -162,6 +146,7 @@ export default function IncomeTargetIndex() {
               title={data.category.title}
               icon={data.category.icon}
               targetAmount={data.amount}
+              achievedAmount={data.amountAchieved}
               id={data.id}
               date={data.start_date}
               isAchieved={data.isAchieved}
