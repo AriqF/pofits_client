@@ -31,9 +31,6 @@ interface OptionsObject {
 export default function AddFinanceGoalPage() {
   const router = useRouter();
   const swal = withReactContent(Swal);
-  const [errMessage, setErrMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isServerError, setIsServerError] = useState(false);
   const [isFlexible, setIsFlexible] = useState(true);
   const [isTimebound, setIsTimebound] = useState(false);
   const [walletsOpt, setWalletsOpt] = useState([]);
@@ -87,11 +84,10 @@ export default function AddFinanceGoalPage() {
     reset,
     control,
     getValues,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FinanceGoalForm>({
     defaultValues: {
-      // amount_per_frequency: "0",
-      // amount_target: "0",
       timebound: new Date(),
       frequencies: {
         label: "Harian",
@@ -100,14 +96,14 @@ export default function AddFinanceGoalPage() {
     },
   });
 
-  const wAmountTarget: number = getValues("amount_target")
-    ? getNumOnlyFromStr(getValues("amount_target"))
+  const wAmountTarget: number = watch("amount_target")
+    ? getNumOnlyFromStr(watch("amount_target"))
     : 0;
-  const wAmountPerFrequence: number = getValues("amount_per_frequency")
-    ? getNumOnlyFromStr(getValues("amount_per_frequency"))
+  const wAmountPerFrequence: number = watch("amount_per_frequency")
+    ? getNumOnlyFromStr(watch("amount_per_frequency"))
     : 0;
-  const wTargetDate: Date = getValues("timebound");
-  const wFrequency: number = getValues("frequencies.value");
+  const wTargetDate: Date = watch("timebound");
+  const wFrequency: number = watch("frequencies.value");
 
   const switchTimeboundType = (type: "flexible" | "date") => {
     if (type === "flexible") {
@@ -135,6 +131,10 @@ export default function AddFinanceGoalPage() {
   };
 
   const countEstimatedDate = (): Date => {
+    //check if form has filled
+    if (wAmountPerFrequence === 0 || wAmountTarget === 0 || !wFrequency) {
+      return new Date();
+    }
     const currDate = new Date();
     if (wAmountTarget === 0) {
       setHasEstimatedDate(true);
@@ -143,7 +143,6 @@ export default function AddFinanceGoalPage() {
     }
     const daysToGo = (wAmountTarget / wAmountPerFrequence) * wFrequency - 1; // including today
     const estimatedDate = new Date(currDate.setDate(currDate.getDate() + daysToGo));
-    // console.log({ daysToGo, estimatedDate });
     setHasEstimatedDate(true);
     setEstimatedDate(estimatedDate);
     return estimatedDate;
@@ -189,25 +188,45 @@ export default function AddFinanceGoalPage() {
     fetchUserWallet();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(getValues("frequencies"));
-  // }, [getValues("frequencies")]);
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isFlexible) {
-        countEstimatedDate();
-      } else {
-        countAmountPerFrequency();
-      }
-    }, 1);
-
-    return () => clearTimeout(timer);
-  }, [wAmountTarget, wFrequency, wTargetDate, wAmountPerFrequence]);
+    if (isFlexible) {
+      countEstimatedDate();
+    } else {
+      countAmountPerFrequency();
+    }
+  }, [
+    watch("amount_target"),
+    watch("frequencies"),
+    watch("timebound"),
+    watch("amount_per_frequency"),
+  ]);
 
   const switchStyle =
     "rounded-md shadow-md p-3 border border-gray-300 hover:bg-hovblue hover:text-white " +
     " transition-colors ease-in duration-150 text-sm";
+
+  const SelectTimebound = () => {
+    return (
+      <>
+        <h4 className="text-lg">Pilih jenis tenggat waktu rencana keuangamu</h4>
+        <div className="flex flex-row gap-3" id="select-timebound-type">
+          <button
+            type="button"
+            onClick={() => switchTimeboundType("flexible")}
+            className={switchStyle + (isFlexible ? " bg-blue text-white " : "")}>
+            Flexibel
+          </button>
+          <button
+            type="button"
+            onClick={() => switchTimeboundType("date")}
+            className={switchStyle + (isTimebound ? " bg-blue text-white " : "")}>
+            Pilih Tanggal
+          </button>
+        </div>
+      </>
+    );
+  };
+
   return (
     <GoalsLayout backTo={UserPath.FINANCE_GOAL}>
       <section
@@ -235,21 +254,7 @@ export default function AddFinanceGoalPage() {
             ) : (
               ""
             )}
-            <h4 className="text-lg">Pilih jenis tenggat waktu rencana keuangamu</h4>
-            <div className="flex flex-row gap-3">
-              <button
-                type="button"
-                onClick={() => switchTimeboundType("flexible")}
-                className={switchStyle + (isFlexible ? " bg-blue text-white " : "")}>
-                Flexibel
-              </button>
-              <button
-                type="button"
-                onClick={() => switchTimeboundType("date")}
-                className={switchStyle + (isTimebound ? " bg-blue text-white " : "")}>
-                Pilih Tanggal
-              </button>
-            </div>
+            <SelectTimebound />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <InputForm label="Judul Rencana" id="form-title" errors={errors.title?.message}>
@@ -301,34 +306,6 @@ export default function AddFinanceGoalPage() {
               </div>
             </InputForm>
             <InputForm
-              label="Tingkat Prioritas"
-              id="form-priority"
-              errors={errors.priority?.message}>
-              <Controller
-                name="priority"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <ReactSelect
-                      classNames={{
-                        control: (state) => selectFormStyle,
-                        // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
-                      }}
-                      placeholder="Tingkat Prioritas Rencana"
-                      value={field.value}
-                      options={prioritiesOpt}
-                      onChange={field.onChange}
-                      formatOptionLabel={(item) => (
-                        <div className="inline-flex space-x-3 my-auto">
-                          <p className="my-auto">{item.label}</p>
-                        </div>
-                      )}
-                    />
-                  );
-                }}
-              />
-            </InputForm>
-            <InputForm
               label={"Setiap kapan ingin menabung?"}
               id={"form-frequency"}
               errors={errors.frequencies?.message}>
@@ -338,6 +315,7 @@ export default function AddFinanceGoalPage() {
                 render={({ field }) => {
                   return (
                     <ReactSelect
+                      isSearchable={false}
                       classNames={{
                         control: (state) => selectFormStyle,
                         // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
@@ -356,21 +334,6 @@ export default function AddFinanceGoalPage() {
                 }}
               />
             </InputForm>
-            {isFlexible ? (
-              ""
-            ) : (
-              <InputForm label={"Pilih Tanggal"} id="form-date" errors={errors.timebound?.message}>
-                <input
-                  {...register("timebound", { required: "Tanggal transaksi perlu diisi" })}
-                  type="date"
-                  id="timebound"
-                  className={
-                    baseFormStyle +
-                    (errors.timebound ? "border-errorRed focus:border-errorRed" : "")
-                  }
-                />
-              </InputForm>
-            )}
             <InputForm
               label="Nominal per Nabung"
               id="form-amount"
@@ -404,7 +367,50 @@ export default function AddFinanceGoalPage() {
                 />
               </div>
             </InputForm>
-
+            {isFlexible ? (
+              ""
+            ) : (
+              <InputForm label={"Pilih Tanggal"} id="form-date" errors={errors.timebound?.message}>
+                <input
+                  {...register("timebound", { required: "Tanggal transaksi perlu diisi" })}
+                  type="date"
+                  id="timebound"
+                  className={
+                    baseFormStyle +
+                    (errors.timebound ? "border-errorRed focus:border-errorRed" : "")
+                  }
+                />
+              </InputForm>
+            )}
+            <InputForm
+              label="Tingkat Prioritas"
+              id="form-priority"
+              errors={errors.priority?.message}>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <ReactSelect
+                      isSearchable={false}
+                      classNames={{
+                        control: (state) => selectFormStyle,
+                        // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
+                      }}
+                      placeholder="Tingkat Prioritas Rencana"
+                      value={field.value}
+                      options={prioritiesOpt}
+                      onChange={field.onChange}
+                      formatOptionLabel={(item) => (
+                        <div className="inline-flex space-x-3 my-auto">
+                          <p className="my-auto">{item.label}</p>
+                        </div>
+                      )}
+                    />
+                  );
+                }}
+              />
+            </InputForm>
             <InputForm
               label="Sumber Keuangan (Opsional)"
               id="wallet-select"
@@ -448,16 +454,6 @@ export default function AddFinanceGoalPage() {
             className="text-center flex place-content-center lg:w-[20%] mt-3">
             Simpan
           </DefaultButton>
-          {/* <button
-            type="submit"
-            className={
-              "border bg-palepurple text-white hover:bg-hovpalepurple mt-3 " +
-              "inline-flex place-content-center text-center font-semibold focus:ring-1 focus:outline-none " +
-              "rounded-md text-md px-4 py-3 w-full m-auto transition-colors duration-200 " +
-              "w-full lg:w-[20%]"
-            }>
-            Simpan
-          </button> */}
         </form>
       </section>
     </GoalsLayout>

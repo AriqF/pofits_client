@@ -255,9 +255,9 @@ export default function EditFinanceGoalPage() {
     return () => clearTimeout(timer);
   }, [
     watch("frequencies"),
-    getValues("amount_target"),
-    getValues("timebound"),
-    getValues("amount_per_frequency"),
+    watch("amount_target"),
+    watch("timebound"),
+    watch("amount_per_frequency"),
   ]);
 
   useEffect(() => {
@@ -363,34 +363,6 @@ export default function EditFinanceGoalPage() {
               </div>
             </InputForm>
             <InputForm
-              label="Tingkat Prioritas"
-              id="form-priority"
-              errors={errors.priority?.message}>
-              <Controller
-                name="priority"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <ReactSelect
-                      classNames={{
-                        control: (state) => selectFormStyle,
-                        // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
-                      }}
-                      placeholder="Tingkat Prioritas Rencana"
-                      value={field.value}
-                      options={prioritiesOpt}
-                      onChange={field.onChange}
-                      formatOptionLabel={(item) => (
-                        <div className="inline-flex space-x-3 my-auto">
-                          <p className="my-auto">{item.label}</p>
-                        </div>
-                      )}
-                    />
-                  );
-                }}
-              />
-            </InputForm>
-            <InputForm
               label={"Setiap kapan ingin menabung?"}
               id={"form-frequency"}
               errors={errors.frequencies?.message}>
@@ -465,6 +437,34 @@ export default function EditFinanceGoalPage() {
                   })}
                 />
               </div>
+            </InputForm>
+            <InputForm
+              label="Tingkat Prioritas"
+              id="form-priority"
+              errors={errors.priority?.message}>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <ReactSelect
+                      classNames={{
+                        control: (state) => selectFormStyle,
+                        // (errors.category ? " border-errorRed focus:border-errorRed" : ""),
+                      }}
+                      placeholder="Tingkat Prioritas Rencana"
+                      value={field.value}
+                      options={prioritiesOpt}
+                      onChange={field.onChange}
+                      formatOptionLabel={(item) => (
+                        <div className="inline-flex space-x-3 my-auto">
+                          <p className="my-auto">{item.label}</p>
+                        </div>
+                      )}
+                    />
+                  );
+                }}
+              />
             </InputForm>
             <InputForm
               label="Sumber Keuangan (Opsional)"
