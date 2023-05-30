@@ -18,6 +18,7 @@ import { baseUrl } from "@/utils/interfaces/constants";
 import moment from "moment";
 import { AllocationChart, TransactionAllocation } from "@/utils/interfaces/server-props";
 import { baseFormStyle } from "@/utils/global/style";
+import Alert from "@/components/tools/alerts/alert";
 
 const bgColors: string[] = [
   "rgba(255, 99, 132, 0.2)",
@@ -210,15 +211,19 @@ export default function MonthlyReportIndex() {
               )}
             </a>
             <div className={`${showIncDetail ? "" : "hidden"}`}>
-              {incomesAllocation.map((data, index) => (
-                <ReportTransactionItem
-                  key={index}
-                  category={data.cat_title}
-                  amount={data.total_spent}
-                  percentage={data.percentage}
-                  icon={data.cat_icon}
-                />
-              ))}
+              {incomesAllocation.length == 0 ? (
+                <Alert text={"Belum ada pemasukan"} type={"info"} />
+              ) : (
+                incomesAllocation.map((data, index) => (
+                  <ReportTransactionItem
+                    key={index}
+                    category={data.cat_title}
+                    amount={data.total_spent}
+                    percentage={data.percentage}
+                    icon={data.cat_icon}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -243,15 +248,19 @@ export default function MonthlyReportIndex() {
               )}
             </a>
             <div className={`${showExpDetail ? "" : "hidden"}`}>
-              {expensesAllocation.map((data, index) => (
-                <ReportTransactionItem
-                  key={index}
-                  category={data.cat_title}
-                  amount={data.total_spent}
-                  percentage={data.percentage}
-                  icon={data.cat_icon}
-                />
-              ))}
+              {expensesAllocation.length == 0 ? (
+                <Alert text={"Belum ada pengeluaran"} type={"info"} />
+              ) : (
+                expensesAllocation.map((data, index) => (
+                  <ReportTransactionItem
+                    key={index}
+                    category={data.cat_title}
+                    amount={data.total_spent}
+                    percentage={data.percentage}
+                    icon={data.cat_icon}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -279,21 +288,25 @@ interface CBProps {
 const ChartBox = (props: CBProps) => {
   return (
     <div className="w-fit mx-auto">
-      <Doughnut
-        data={{
-          labels: props.labels,
-          datasets: [
-            {
-              label: "Rp",
-              data: props.data,
-              backgroundColor: bgColors,
-              borderColor: borderColors,
-              borderWidth: 1,
-            },
-          ],
-        }}
-        options={props.chartOptions}
-      />
+      {props.data.length == 0 ? (
+        <Alert text={"Belum ada grafik data"} type={"info"} />
+      ) : (
+        <Doughnut
+          data={{
+            labels: props.labels,
+            datasets: [
+              {
+                label: "Rp",
+                data: props.data,
+                backgroundColor: bgColors,
+                borderColor: borderColors,
+                borderWidth: 1,
+              },
+            ],
+          }}
+          options={props.chartOptions}
+        />
+      )}
     </div>
   );
 };
