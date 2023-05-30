@@ -1,16 +1,15 @@
 import { UserPath } from "@/utils/global/route-path";
-import { numFormatter } from "@/utils/helper";
+import { currencyFormatter } from "@/utils/helper";
 import moment from "moment";
 import Image from "next/image";
 import { MdChevronRight } from "react-icons/md";
-import ProgressBar from "../bar/progress-bar";
-import Container from "../container";
 import LinkContainer from "../container/LinkContainer";
+import WarningBadge from "../badges/warning-badge";
 
 interface Props {
   title: string;
   icon: string;
-  budget: string;
+  budget: number;
   usedBudget: number;
   id: number | string;
   date: Date;
@@ -25,13 +24,6 @@ export default function BudgetCard(props: Props) {
   let startDate = moment(props.date).startOf("month").format("D MMMM YYYY");
   let endDate = moment(props.date).endOf("month").format("D MMMM YYYY");
 
-  const getProgressBarColor = (percentage: number): string => {
-    if (percentage >= 80) {
-      return "bg-moneyDanger";
-    }
-    return "bg-blue";
-  };
-
   return (
     <LinkContainer
       className="drop-shadow-sm hover:drop-shadow-md transition-all duration-500 text-md border-2"
@@ -40,9 +32,15 @@ export default function BudgetCard(props: Props) {
         <div className="flex flex-row gap-x-4">
           <Image src={`/assets/icons/svg/${icon}.svg`} alt="icon-category" width={40} height={40} />
           <div className="flex flex-col">
-            <h4 className="my-auto text-lg">{title}</h4>
-            <p className="text-mute text-sm my-auto">
-              {startDate} - {endDate}
+            <div className="inline-flex gap-x-2">
+              <h4 className="my-auto text-lg">{title}</h4>
+              {props.percentage >= 85 ? <WarningBadge /> : ""}
+            </div>
+            <p className="text-blue text-sm my-auto">
+              <span className={props.percentage >= 85 ? "text-moneyDanger" : ""}>
+                {currencyFormatter(props.usedBudget)}
+              </span>{" "}
+              / {currencyFormatter(props.budget)}
             </p>
           </div>
         </div>
