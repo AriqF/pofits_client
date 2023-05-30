@@ -26,6 +26,7 @@ import Image from "next/image";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
+import Alert from "@/components/tools/alerts/alert";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const chartOptions = {
@@ -311,23 +312,27 @@ export default function AddBudgetPage() {
         <div
           className={
             "w-56 m-auto flex flex-col gap-3 transition-transform " +
-            (showAllocation ? "hidden translate-y-full " : "transform-none")
+            (showAllocation ? "transform-none" : " hidden translate-y-full ")
           }>
-          <Doughnut
-            data={{
-              labels: expChartData.labels,
-              datasets: [
-                {
-                  label: "Rp",
-                  data: expChartData.data,
-                  backgroundColor: bgColors,
-                  borderColor: borderColors,
-                  borderWidth: 1,
-                },
-              ],
-            }}
-            options={chartOptions}
-          />
+          {totalAllocated == 0 ? (
+            <Alert text={"Belum ada anggaran"} type={"warning"} />
+          ) : (
+            <Doughnut
+              data={{
+                labels: expChartData.labels,
+                datasets: [
+                  {
+                    label: "Rp",
+                    data: expChartData.data,
+                    backgroundColor: bgColors,
+                    borderColor: borderColors,
+                    borderWidth: 1,
+                  },
+                ],
+              }}
+              options={chartOptions}
+            />
+          )}
           <div className="flex flex-col mx-auto text-center gap-1">
             <h3 className="text-base font-semibold">
               Anggaran {moment(month).format("MMMM YYYY")}
