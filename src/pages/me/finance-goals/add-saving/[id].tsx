@@ -326,7 +326,7 @@ export default function AddGoalSavingPage() {
               Target tanggal: {moment(goalData.timebound).format("D MMM YYYY")}
             </p>
           ) : (
-            <p className="text-sm text-gray-600">Tabungan Fleksibel</p>
+            <p className="text-sm text-gray-600 text-right">Tabungan Fleksibel</p>
           )}
         </div>
       </div>

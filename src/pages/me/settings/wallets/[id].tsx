@@ -234,6 +234,7 @@ export default function AddWallet() {
                     render={({ field }) => {
                       return (
                         <ReactSelect
+                          isSearchable={false}
                           styles={{
                             control: (baseStyles, state) => ({
                               borderColor: errors.category

@@ -132,6 +132,7 @@ export default function IncomeCategoryDetails() {
                   render={({ field }) => {
                     return (
                       <ReactSelect
+                        isSearchable={false}
                         styles={{
                           control: (baseStyles, state) => ({
                             borderColor: errors.income_type
