@@ -11,9 +11,10 @@ export default function AddTransactionSelectModal(props: Props) {
   return (
     <div
       id="modal"
+      drawer-backdrop=""
       className={
-        (props.show ? "flex" : "hidden") +
-        " fixed bg-gray-400/[.50] top-0 bottom-0 left-0 right-0 z-50 pt-10 md:pt-0  w-full items-center justify-center h-[calc(100%-1rem)] md:h-full"
+        (props.show ? "flex bg-gray-900 bg-opacity-50 fixed inset-0 overflow-y-hidden" : "hidden") +
+        "  z-50 pt-10 md:pt-0  w-full items-center justify-center "
       }>
       <div className="relative flex flex-col gap-y-5 bg-white overflow-y-auto rounded-lg p-6 pb-8 shadow w-full max-w-md min-h-max">
         <div id="header-interact" className="flex justify-between flex-row">
