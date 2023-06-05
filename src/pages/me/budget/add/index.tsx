@@ -117,7 +117,7 @@ export default function AddBudgetPage() {
         category: data.category.value,
         amount: parseInt(data.amount.replace(/\./g, "")),
         start_date: new Date(data.start_date + "-01"),
-        isRepeat: data.isRepeat,
+        isRepeat: isRepeat,
         end_date: endDate,
       },
     })
@@ -275,8 +275,8 @@ export default function AddBudgetPage() {
               <input
                 id="isRepeat"
                 type="checkbox"
-                {...register("isRepeat")}
                 onChange={() => setIsRepeat(!isRepeat)}
+                checked={isRepeat}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-500 rounded focus:ring-blue-500 cursor-pointer"
               />
               <label htmlFor="keepSigned" className="ml-2 text-sm font-medium text-gray-900">
