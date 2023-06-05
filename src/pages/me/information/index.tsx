@@ -46,7 +46,7 @@ export default function InformationPage() {
             jangan lupa untuk mengisi form kepuasan pengguna ini yaa. Terima kasih!
             <br />
             <a
-              href="#"
+              href="http://bit.ly/pofitsapp-user-acceptance-survey"
               target="_blank"
               rel="noreferrer"
               className="text-blue font-semibold hover:text-hovblue hover:underline">
