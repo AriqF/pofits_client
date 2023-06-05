@@ -8,10 +8,12 @@ import { User } from "@/utils/interfaces/server-props";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 import { SubmitHandler, useForm } from "react-hook-form";
-import { MdInfo, MdSearch } from "react-icons/md";
+import { MdDownload, MdInfo, MdSearch } from "react-icons/md";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { CSVLink, CSVDownload } from "react-csv";
 
 interface SearchForm {
   search: string;
@@ -140,20 +142,25 @@ export default function UserListPage() {
 
   const SearchBar = () => {
     return (
-      <form className="inline-flex w-full" onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("search")}
-          className="cursor-pointer inline-flex items-center py-2.5 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-md hover:bg-gray-200"
-          type="text"
-          placeholder="Cari nama atau email"
-        />
-        <button
-          type="submit"
-          className="p-2.5 text-sm font-medium text-white bg-blue rounded-r-md border border-blue hover:bg-hovblue">
-          <MdSearch className="text-xl" />
-          <span className="sr-only">Search</span>
-        </button>
-      </form>
+      <div className="flex justify-between">
+        <form className="inline-flex w-full" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            {...register("search")}
+            className="cursor-pointer inline-flex items-center py-2.5 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-md hover:bg-gray-200"
+            type="text"
+            placeholder="Cari nama atau email"
+          />
+          <button
+            type="submit"
+            className="p-2.5 text-sm font-medium text-white bg-blue rounded-r-md border border-blue hover:bg-hovblue">
+            <MdSearch className="text-xl" />
+            <span className="sr-only">Search</span>
+          </button>
+        </form>
+        <CSVLink filename="pofitsapp-users" className="flex my-auto" data={users} target="_blank">
+          <MdDownload className="text-3xl my-auto hover:text-hovblue" />
+        </CSVLink>
+      </div>
     );
   };
 
