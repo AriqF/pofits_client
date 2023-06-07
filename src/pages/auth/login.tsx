@@ -80,7 +80,7 @@ export default function Login() {
         // console.log(error);
         const clientOs = getMobileOS();
         // alert(clientOs);
-        if (clientOs === "iOS" || clientOs === "unknown") {
+        if (clientOs === "iOS") {
           return swal.fire({
             title: "Pengguna iOS?",
             icon: "question",
