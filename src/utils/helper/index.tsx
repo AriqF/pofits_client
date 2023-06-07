@@ -277,3 +277,19 @@ export const getGoalSeverityStr = (severity: number): string => {
       return "Rendah";
   }
 };
+
+export function getMobileOS(): "Android" | "iOS" | "Windows" | "unknown" {
+  const ua = navigator.userAgent;
+  if (/Android/i.test(ua) || navigator.userAgent.match(/Android/i)) {
+    return "Android";
+  } else if (
+    /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.userAgent.match(/iPhone/i) && navigator.maxTouchPoints > 1)
+  ) {
+    return "iOS";
+  } else if (/Windows/i.test(ua) || navigator.userAgent.match(/Windows/i)) {
+    return "Windows";
+  } else {
+    return "unknown";
+  }
+}
