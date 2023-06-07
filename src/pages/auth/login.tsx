@@ -61,11 +61,10 @@ export default function Login() {
         SetIsSuccess(res.data.message);
         const token: string = res.data.accessToken;
         const decoded: JWTServer = jwt_decode(token);
-
-        cookies.set("accessToken", res.data.accessToken, {
+        cookies.set("accessToken", encodeURI(res.data.accessToken), {
           expires: new Date(decoded.exp * 1000),
-          path: "/",
           secure: true,
+          path: encodeURI("/"),
         });
         res.data.role === "admin"
           ? router.replace(AdminPath.HOME).then(() => router.reload())
