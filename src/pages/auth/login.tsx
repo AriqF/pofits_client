@@ -14,9 +14,12 @@ import jwt_decode from "jwt-decode";
 import { NextResponse } from "next/server";
 import { AdminPath, AuthPath, UserPath } from "@/utils/global/route-path";
 import InputForm from "@/components/tools/form/input-form";
-import { baseFormStyle, checkBoxStyle } from "@/utils/global/style";
+import { baseAlertStyle, baseFormStyle, checkBoxStyle } from "@/utils/global/style";
 import Spinner from "@/components/tools/spinner";
 import Link from "next/link";
+import { getMobileOS } from "@/utils/helper";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 interface FormState {
   email: string;
   password: string;
@@ -35,6 +38,7 @@ export default function Login() {
 
   const ref = useRef<any>();
   const router = useRouter();
+  const swal = withReactContent(Swal);
 
   const {
     register,
@@ -73,8 +77,17 @@ export default function Login() {
       })
       .catch((error: AxiosError<any>) => {
         SetIsServerError(true);
-        console.log(error);
-
+        // console.log(error);
+        const clientOs = getMobileOS();
+        // alert(clientOs);
+        if (clientOs === "iOS") {
+          return swal.fire({
+            title: "Pengguna iOS?",
+            icon: "question",
+            ...baseAlertStyle,
+            text: "Mohon maaf, untuk saat ini terjadi kesalahan pada sistem untuk sistem operasi iOS. Untuk sementara mohon untuk menggunakan sistem operasi lainnya",
+          });
+        }
         error.response?.data?.message
           ? SetErrMessage(error.response.data.message)
           : SetErrMessage(ServerMessage.RequestError);
