@@ -95,7 +95,7 @@ export default function EditIncomeDataPage() {
 
   const submitHandler: SubmitHandler<IncomeForm> = async (data: IncomeForm) => {
     await requestAxios({
-      url: baseUrl + "/transaction/expense/edit/" + dataId,
+      url: baseUrl + "/transaction/income/edit/" + dataId,
       method: "PATCH",
       data: {
         category: data.category.value,
