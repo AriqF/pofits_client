@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MdChevronRight } from "react-icons/md";
 import LinkContainer from "../container/LinkContainer";
 import WarningBadge from "../badges/warning-badge";
+import BudgetItemBadge from "../badges/budget-item-badge";
 
 interface Props {
   title: string;
@@ -32,12 +33,25 @@ export default function BudgetCard(props: Props) {
         <div className="flex flex-row gap-x-4">
           <Image src={`/assets/icons/svg/${icon}.svg`} alt="icon-category" width={40} height={40} />
           <div className="flex flex-col">
-            <div className="inline-flex gap-x-2">
+            <div className="flex flex-col lg:flex-row gap-x-2">
               <h4 className="my-auto text-lg">{title}</h4>
-              {props.percentage >= 85 ? <WarningBadge /> : ""}
+              {props.percentage >= 85 && props.percentage < 100 ? (
+                <BudgetItemBadge text={"Anggaran Hampir Habis"} bgColor={"bg-moneyWarn"} />
+              ) : props.percentage >= 100 ? (
+                <BudgetItemBadge text={"Anggaran Melewati Batas"} bgColor={"bg-moneyDanger"} />
+              ) : (
+                ""
+              )}
             </div>
             <p className="text-blue text-sm my-auto">
-              <span className={props.percentage >= 85 ? "text-moneyDanger" : ""}>
+              <span
+                className={
+                  props.percentage >= 85 && props.percentage < 100
+                    ? "text-moneyDanger"
+                    : props.percentage >= 100
+                    ? "text-moneyDanger"
+                    : ""
+                }>
                 {currencyFormatter(props.usedBudget)}
               </span>{" "}
               / {currencyFormatter(props.budget)}

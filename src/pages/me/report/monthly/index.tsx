@@ -176,7 +176,7 @@ export default function MonthlyReportIndex() {
           icon={MdAttachMoney}
           iconBgColor="bg-[#e0c4ee]"
           iconColor="text-palepurple"
-          title="Neraca"
+          title="Saldo"
           amount={transactionInfo.amountDiff}
         />
         <ReportCard

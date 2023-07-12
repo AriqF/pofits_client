@@ -5,7 +5,7 @@ interface ButtonProps {
   type: "button" | "submit" | "reset" | undefined;
   className?: string;
   text: string;
-  color: "default" | "warning" | "success" | "danger" | "info";
+  color: "default" | "warning" | "success" | "danger" | "info" | "custom";
   linkTo: string;
   icon?: IconType;
 }
@@ -30,6 +30,7 @@ export default function LinkButton(props: ButtonProps) {
       colorClass = "text-white bg-infoBlue hover:bg-hovInfoBlue focus:ring-hovInfoBlue";
       break;
     default:
+      colorClass = "";
   }
 
   return (
