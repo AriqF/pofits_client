@@ -42,6 +42,11 @@ export default function UserSideBar(props: SidebarProps) {
           <SidebarItem text={"Anggaran"} linkTo={UserPath.BUDGET} icon={MdRequestQuote} />
           <SidebarItem text={"Target Pemasukan"} linkTo={UserPath.ESTIMATION} icon={MdFactCheck} />
           <SidebarItem text={"Transaksi"} linkTo={UserPath.TRANSACTION} icon={MdReceiptLong} />
+          {/* <SidebarItem
+            text={"Transaksi REV"}
+            linkTo={UserPath.NEW_TRANSACTION}
+            icon={MdReceiptLong}
+          /> */}
           <SidebarItem
             text={"Laporan Keuangan"}
             linkTo={UserPath.MONTHLY_REPORT}

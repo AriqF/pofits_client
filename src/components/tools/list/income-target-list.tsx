@@ -7,6 +7,7 @@ import ProgressBar from "../bar/progress-bar";
 import Container from "../container";
 import LinkContainer from "../container/LinkContainer";
 import CheckBadge from "../badges/check-badges";
+import BudgetItemBadge from "../badges/budget-item-badge";
 
 interface Props {
   title: string;
@@ -34,7 +35,11 @@ export default function IncomeTargetList(props: Props) {
           <div className="flex flex-col">
             <div className="inline-flex gap-x-2">
               <h4 className="my-auto text-lg">{title}</h4>
-              {props.isAchieved ? <CheckBadge /> : ""}
+              {props.isAchieved ? (
+                <BudgetItemBadge text={"Target Tercapai"} bgColor={"bg-moneySafe"} />
+              ) : (
+                <BudgetItemBadge text={"Target Belum Tercapai"} bgColor={"bg-moneyDanger"} />
+              )}
             </div>
             <p className="text-blue text-sm my-auto">
               <span className={props.isAchieved ? "text-moneySafe" : ""}>

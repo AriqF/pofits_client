@@ -36,11 +36,13 @@ export default function TransactionListItem(props: Props) {
           <h4 className="my-auto md:text-base text-sm font-semibold text-gray-700">
             {props.title}
           </h4>
-          <p className="md:text-sm text-xs text-mute ">{props.wallet ? props.wallet : "-"}</p>
+          <p className="md:text-sm text-xs text-mute ">
+            {moment(props.date).format("DD MMM YYYY")}
+          </p>
         </div>
       </div>
       <div className="trans-right flex-col my-auto text-right">
-        <p className="md:text-sm text-xs text-mute ">{moment(props.date).format("DD MMM YYYY")}</p>
+        <p className="md:text-sm text-xs text-mute ">{props.wallet ? props.wallet : "-"}</p>
         <p
           className={
             (props.type == "income" ? "text-moneySafe" : "text-moneyDanger") +
